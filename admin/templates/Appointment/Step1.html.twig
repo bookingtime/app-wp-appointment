@@ -1,0 +1,23 @@
+{% extends 'Base.html.twig' %}
+
+{% block content %}
+
+<div class="flashMessages">
+   {% for flashMessage in flashMessages %}
+      {% include 'Flashmessage.html.twig' with {'title':flashMessage.title,'message':flashMessage.message,'alertclass':flashMessage.alertclass} %}
+   {% endfor %}
+</div>
+<br /><br /><br />
+<div class="step" id="step1">
+   <div class="box1 border border-3 rounded-3 p-3 mt-5 mx-auto" id="step1">
+      <h4 class="text-center m-3 fw-bold">{{'step1.h4.1'|trans}}</h4>
+      <p class="text-center m-3">{{'step1.p.1'|trans}}</p>
+      <p class="text-center m-3"><a class="btn btn-primary rounded-2 fw-bold" href="{{WP_HOME}}/wp-admin/admin.php?page=appointment-step2">{{'step1.link.action.step2'|trans}}</a></p>
+  </div>
+   <div class="box2 border border-3 rounded-3 p-3 mt-0 mx-auto" id="step1">
+      <h4 class="text-center m-3 fw-bold">{{'step1.h4.2'|trans}}</h4>
+      <p class="text-center"><a class="btn btn-outline-primary rounded-2 fw-bold" href="{{WP_HOME}}/wp-admin/admin.php?page=appointment-add">{{'step1.link.action.add'|trans}}</a></p>
+  </div>
+</div>
+
+{% endblock content %}

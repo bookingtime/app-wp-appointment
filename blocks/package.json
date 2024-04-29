@@ -1,0 +1,28 @@
+{
+  "name": "blocks",
+  "version": "1.0.0",
+  "description": "Test description",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "format": "wp-scripts format",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "packages-update": "wp-scripts packages-update"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^25.1.0"
+  },
+  "dependencies": {
+    "@wordpress/block-editor": "^11.1.0",
+    "@wordpress/blocks": "^12.1.0",
+    "@wordpress/data": "^8.1.0",
+    "@wordpress/i18n": "^4.24.0",
+    "jquery": "^3.6.3",
+    "react-select": "^5.7.0"
+  }
+}

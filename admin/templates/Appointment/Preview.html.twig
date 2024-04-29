@@ -1,0 +1,34 @@
+{% extends 'Base.html.twig' %}
+
+{% block content %}
+<div class="flashMessages">
+   {% for flashMessage in flashMessages %}
+      {% include 'Flashmessage.html.twig' with {'title':flashMessage.title,'message':flashMessage.message,'alertclass':flashMessage.alertclass} %}
+   {% endfor %}
+</div>
+<div id="preview">
+   <div class="d-flex align-items-center m-3">
+      <a class="btn btn-light rounded-2 me-2" href="{{WP_HOME}}/wp-admin/admin.php?page=appointment-list"><i class="bi bi-arrow-left-short"></i> {{'link.back'|trans}}</a>
+      <h4 class="m-0 fw-bold">{{'preview.header'|trans}}</h4>
+   </div>
+
+{% if bookingtimepageurl %}
+   <div class="box border border-3 rounded-3 m-3">
+      <div class="border-bottom">
+         <h5 class="p-3 m-0">{{bookingtimepageurl.title}}</h5>
+      </div>
+      <div class="ratio ratio-16x9 my-3">
+         <iframe src="{{bookingtimepageurl.url}}" title="{{bookingtimepageurl.title}}" class="embed-responsive-item iframe_{{bookingtimepageurl.id}}" allowfullscreen></iframe>
+      </div>
+      <div class="border-top">
+         <p class="p-3 m-0">{{'shortcode'|trans}} <b>[appointment id="{{bookingtimepageurl.id}}"]</b></p>
+      </div>
+   </div>
+{% else %}
+   <div class="box border border-3 rounded-3 p-3 m-3">
+      <h5 class="text-center text-danger">{{'preview.h5.2'|trans}}</h5>
+   </div>
+{% endif %}
+</div>
+
+{% endblock content %}

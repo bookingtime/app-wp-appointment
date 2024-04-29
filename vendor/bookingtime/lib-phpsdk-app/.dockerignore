@@ -1,0 +1,10 @@
+# no git source / docker files
+/.git/
+/.gitignore
+/Dockerfile
+/.dockerignore
+
+
+
+# symfony/individual
+/vendor/

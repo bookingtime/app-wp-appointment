@@ -1,0 +1,41 @@
+{% import 'Macro.html.twig' as macro %}
+{% extends 'Base.html.twig' %}
+
+{% block content %}
+<div class="flashMessages">
+   {% for flashMessage in flashMessages %}
+      {% include 'Flashmessage.html.twig' with {'title':flashMessage.title,'message':flashMessage.message,'alertclass':flashMessage.alertclass} %}
+   {% endfor %}
+</div>
+<div id="add">
+   <div class="d-flex align-items-center m-3">
+      <a class="backButton btn btn-light rounded-2 me-2" href="{{WP_HOME}}/wp-admin/admin.php?page=appointment-list"><i class="bi bi-arrow-left-short"></i> {{'link.back'|trans}}</a>
+      <h4 class="m-0 fw-bold">{{'add.header'|trans}}</h4>
+   </div>
+   <form name="add" class="form form_add m-3" id="form_add" action="{{WP_HOME}}/wp-admin/admin.php?page=appointment-add" method="post">
+   <fieldset class="fieldset1 border border-3 rounded-3 p-3 mt-3" id="add">
+      <em class="mb-3 d-block">{{'required.info'|trans}}</em>
+      <div class="mb-3">
+         <label for="title" class="form-label col-12">{{'add_edit.form.title.label'|trans}}</label>
+         <input placeholder="{{'add_edit.form.title.placeholder'|trans}}" class="rounded-2 p-2 w-100" id="title" type="text" name="appointment[title]" required="required" />
+         <label for="title" class="form-label col-12 text-muted">{{'add_edit.form.title.label.bottom'|trans}}</label>
+      </div>
+      <div class="mb-3">
+         <label for="url" class="form-label col-12">{{'add_edit.form.url.label'|trans}}</label>
+         <input placeholder="{{'add_edit.form.url.placeholder'|trans}}" class="rounded-2 p-2 w-100" id="url" type="url" name="appointment[url]" required="required" />
+         <label for="url" class="form-label col-12 text-muted">{{'add_edit.form.url.label.bottom'|trans}}</label>
+      </div>
+   </fieldset>
+   <fieldset class="fieldset2 border border-3 rounded-3 p-3 mt-0">
+      <div class="d-flex justify-content-end">
+         <a class="btn btn-light rounded-2 me-2" href="{{WP_HOME}}/wp-admin/admin.php?page=appointment-list">{{'link.cancel'|trans}}</a>
+         <button class="btn btn-primary rounded-2" type="submit" name="" value="">
+            {{'add_edit.form.button.submit'|trans}}
+         </button>
+      </div>
+   </fieldset>
+   {{ macro.modalUnsavedForm('list',WP_HOME) }}
+   </form>
+</div>
+{% include 'Appointment/Documentation.html.twig' %}
+{% endblock content %}

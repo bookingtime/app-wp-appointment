@@ -1,0 +1,93 @@
+{% import 'Macro.html.twig' as macro %}
+{% extends 'Base.html.twig' %}
+
+{% block content %}
+<div class="flashMessages">
+   {% for flashMessage in flashMessages %}
+      {% include 'Flashmessage.html.twig' with {'title':flashMessage.title,'message':flashMessage.message,'alertclass':flashMessage.alertclass} %}
+   {% endfor %}
+</div>
+<br /><br /><br />
+<form name="step2" class="form form_step" id="form_step2" action="{{WP_HOME}}/wp-admin/admin.php?page=appointment-step2" method="post">
+  <fieldset class="fieldset1 border border-3 rounded-3 p-3 mt-5 mx-auto" id="step2">
+   <h4 class="mt-3 my-1 fw-bold">{{'step2.h4.1'|trans}}</h4>
+   <em class="mb-3 d-block">{{'required.info'|trans}}</em>
+   <div class="row">
+      <div class="mb-3 col-12">
+         <label for="email" class="form-label col-12">{{'step2.form.email.label'|trans}}</label>
+         <input placeholder="{{'step2.form.email.placeholder'|trans}}" class="rounded-2 col-12 p-2" id="email" type="email" name="appointment[email]" required="required" />
+      </div>
+      <div class="mb-3 col-6">
+         <label for="firstname" class="form-label col-12">{{'step2.form.firstname.label'|trans}}</label>
+         <input placeholder="{{'step2.form.firstname.placeholder'|trans}}" class="rounded-2 col-12 p-2" id="firstname" type="text" name="appointment[firstname]" required="required">
+      </div>
+      <div class="mb-3 col-6">
+         <label for="lastname" class="form-label col-12">{{'step2.form.lastname.label'|trans}}</label>
+         <input placeholder="{{'step2.form.lastname.placeholder'|trans}}" class="rounded-2 col-12 p-2" id="lastname" type="text" name="appointment[lastname]" required="required">
+      </div>
+      <div class="mb-3 col-12">
+         <label for="company" class="form-label col-12">{{'step2.form.company.label'|trans}}</label>
+         <input placeholder="{{'step2.form.company.placeholder'|trans}}" class="rounded-2 col-12 p-2" id="company" type="text" name="appointment[company]" required="required">
+      </div>
+      <div class="mb-3 col-12">
+         <label for="address[street]" class="form-label col-12">{{'step2.form.address.street.label'|trans}}</label>
+         <input placeholder="{{'step2.form.address.street.placeholder'|trans}}" class="rounded-2 col-12 p-2" id="address[street]" type="text" name="appointment[address][street]" value="{{'step2.form.address.street.placeholder'|trans}}" required="required">
+      </div>
+      <div class="mb-3 col-6">
+         <label for="address[zip]" class="form-label col-12">{{'step2.form.address.zip.label'|trans}}</label>
+         <input placeholder="{{'step2.form.address.zip.placeholder'|trans}}" class="rounded-2 col-12 p-2" id="address[zip]" type="text" name="appointment[address][zip]" value="12345" required="required">
+      </div>
+      <div class="mb-3 col-6">
+         <label for="address[city]" class="form-label col-12">{{'step2.form.address.city.label'|trans}}</label>
+         <input placeholder="{{'step2.form.address.city.placeholder'|trans}}" class="rounded-2 col-12 p-2" id="address[city]" type="text" name="appointment[address][city]" value="Musterstadt" required="required">
+      </div>
+      <div class="mb-3 col-12">
+         <label for="address[country]" class="form-label col-12">{{'step2.form.address.country.label'|trans}}</label>
+         <select class="form-select" required="required" name="appointment[address][country]">
+            {% for country in countries %}
+               {% if country.code == 'DE' %}
+                  <option selected="selected" value="{{country.code}}">{{country.name}}</option>
+               {% else %}
+                  <option value="{{country.code}}">{{country.name}}</option>
+               {% endif %}
+            {% endfor %}
+         </select>
+      </div>
+   </div>
+   <div class="mb-3 col-12 form-check d-flex align-items-start">
+      <input required="required" class="form-check-input me-2" id="terms" type="checkbox" name="terms" value="1">
+      <label for="terms" class="form-check-label d-inline">
+         {% if locale == 'de' %}
+            {{'step2.form.checkbox.terms'|trans({'link1':'https://service.bookingtime.com/legal/de/agb/bookingtime_AGB.pdf'})|raw}}
+         {% else %}
+            {{'step2.form.checkbox.terms'|trans({'link1':'https://service.bookingtime.com/legal/en/terms/bookingtime_Terms_and_Conditions.pdf'})|raw}}
+         {% endif %}
+      </label>
+   </div>
+   <div class="mb-3 col-12 form-check d-flex align-items-start">
+      <input required="required" class="form-check-input me-2" id="dsgvo" type="checkbox" name="dsgvo" value="1">
+      <label for="dsgvo" class="form-check-label d-inline">
+
+         {% if locale == 'de' %}
+            {{'step2.form.checkbox.dsgvo'|trans({'link1':'https://service.bookingtime.com/legal/de/datenschutz/bookingtime_Datenschutzbestimmungen.pdf'})|raw}}
+         {% else %}
+            {{'step2.form.checkbox.dsgvo'|trans({'link1':'https://service.bookingtime.com/legal/en/privacy/bookingtime_Privacy_Policy.pdf'})|raw}}
+         {% endif %}
+      </label>
+   </div>
+  </fieldset>
+  <fieldset class="fieldset2 border border-3 rounded-3 p-3 mt-0 mx-auto" id="step2bottom">
+   <div class="container text-center m-0 p-0">
+      <div class="row m-0 p-0">
+         <div class="col d-flex justify-content-start m-0 p-0">
+            <a class="backButton btn btn-light rounded-2" href="{{WP_HOME}}/wp-admin/admin.php?page=appointment-step1"><i class="bi bi-arrow-left-short"></i> {{'step2.link.action.step1'|trans}}</a>
+         </div>
+         <div class="col d-flex justify-content-end m-0 p-0">
+            <button class="btn btn-primary rounded-2" type="submit">{{'step2.form.button.submit'|trans}}</button>
+         </div>
+      </div>
+   </div>
+  </fieldset>
+   {{ macro.modalUnsavedForm('step1',WP_HOME) }}
+</form>
+{% endblock content %}

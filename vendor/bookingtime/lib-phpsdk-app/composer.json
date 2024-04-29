@@ -1,0 +1,26 @@
+{
+    "name": "bookingtime/lib-phpsdk-app",
+    "type": "library",
+    "description": "php SDK for bt3.0 App-API",
+    "authors": [
+        {
+            "name": "bookingtime GmbH",
+            "email": "support@bookingtime.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3||^8.0",
+        "nyholm/psr7": "^1.0",
+        "kriswallsmith/buzz": "^1.2"
+    },
+    "require-dev": {
+        "symfony/console": "^5.2",
+        "symfony/phpunit-bridge": "^3.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "bookingtime\\phpsdkapp\\": "src"
+        }
+    }
+}

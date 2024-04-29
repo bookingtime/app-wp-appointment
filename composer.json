@@ -1,0 +1,53 @@
+{
+    "name": "bookingtime/module-wp-appointment",
+    "type": "project",
+    "description": "Conveniently integrate bookingtime's online appointment booking into your website.",
+    "keywords": [
+        "wordpress",
+        "backend",
+        "plugin",
+        "content",
+        "responsive",
+        "bootstrap",
+        "Api",
+        "appointment",
+        "calendar",
+        "event",
+        "Twig",
+        "Frontend",
+        "booking",
+        "bookingtime",
+        "date",
+        "ics",
+        "reservation",
+        "scheduling",
+        "cms",
+        "week",
+        "WORDPRESS CMS"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "bookingtime GmbH",
+            "role": "Developer",
+            "email": "support@bookingtime.com",
+            "homepage": "https://www.bookingtime.com/"
+        }
+    ],
+    "support": {
+        "issues": "https://www.bookingtime.com/"
+    },
+    "config": {
+        "vendor-dir": "./vendor"
+    },
+    "require": {
+        "php": "^8.1",
+        "bookingtime/lib-phpsdk-app": "^1.0",
+        "twig/twig": "^3.5",
+        "symfony/translation": "^5.4",
+        "symfony/config": "^5.4",
+        "symfony/twig-bridge": "^5.4"
+    },
+    "autoload": {
+    }
+}

@@ -1,0 +1,5 @@
+{% extends 'Base.html.twig' %}
+
+{% block content %}
+<iframe name="{{onlinetermin.title}}" class="iframe bookingtime_iframe iframe_{{onlinetermin.id}} ratio ratio-16x9" src="{{onlinetermin.url}}" allowfullscreen=""></iframe>
+{% endblock content %}

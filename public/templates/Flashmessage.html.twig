@@ -1,0 +1,26 @@
+<div class="appointment-messages">
+   <div class="alert alert-{{alertclass}}">
+      <div class="media d-flex">
+         <div class="media-left me-4">
+            <span class="fs-1">
+               {% if alertclass == 'success'%}
+               <i class="text-success bi bi-check-circle-fill"></i>
+               {% endif %}
+               {% if alertclass == 'error'%}
+               <i class="text-danger bi bi-exclamation-triangle-fill"></i>
+               {% endif %}
+               {% if alertclass == 'info'%}
+               <i class="text-info bi bi-info-square-fill"></i>
+               {% endif %}
+               {% if alertclass == 'notice'%}
+               <i class="text-primary bi bi-exclamation-square-fill"></i>
+               {% endif %}
+             </span>
+         </div>
+         <div class="media-body">
+            <h4 class="alert-title fw-bold">{{title|raw}}</h4>
+            <p class="alert-message">{{message|raw}}</p>
+         </div>
+      </div>
+   </div>
+</div>
