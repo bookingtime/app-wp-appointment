@@ -1,5 +1,5 @@
 {
-    "name": "bookingtime/module-wp-appointment",
+    "name": "bookingtime/app-wp-appointment",
     "type": "project",
     "description": "Conveniently integrate bookingtime's online appointment booking into your website.",
     "keywords": [
