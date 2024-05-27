@@ -19,7 +19,7 @@
  * Version:           6.0.2
  * Author:            bookingtime
  * Author URI:        https://www.bookingtime.com/
- * License: 			 GPLv3
+ * License: 			 MIT
  * License URI: 		 https://opensource.org/licenses/GPL-3.0
  * Text Domain:       bt_appointment
  * Domain Path:       /languages

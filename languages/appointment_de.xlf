@@ -2,12 +2,10 @@
 <xliff version="1.2"	xmlns="urn:oasis:names:tc:xliff:document:1.2">
 	<file source-language="de" target-language="de" datatype="plaintext" original="\wp-content\plugins\appointment\languages\appointment.de.xlf">
 		<body>
-
 			<trans-unit id="header.link.external.2">
 				<source>header.link.external.2</source>
 				<target>Zu bookingtime</target>
 			</trans-unit>
-
 			<trans-unit id="required.info">
 				<source>required.info</source>
 				<target>Alle Felder sind Pflichtfelder.</target>
@@ -32,8 +30,6 @@
 				<source>step1.link.action.add</source>
 				<target>Buchungsseiten verbinden</target>
 			</trans-unit>
-
-
 			<trans-unit id="step2.h4.1">
 				<source>step2.h4.1</source>
 				<target>Erstellen Sie Ihr bookingtime Konto</target>
@@ -200,7 +196,6 @@
 				<source>flashmessage.delete.body</source>
 				<target>Sie haben erfolgreich gelöscht: &lt;u&gt;var1&lt;/u&gt;</target>
 			</trans-unit>
-
 			<trans-unit id="flashmessage.delete.title.error">
 				<source>flashmessage.delete.title.error</source>
 				<target>LÖSCHEN der Buchungsseite-URL fehlgeschlagen!</target>
@@ -209,7 +204,6 @@
 				<source>flashmessage.delete.body.error</source>
 				<target>Sie haben Ihre Buchungsseiten-URL nicht erfolgreich gelöscht.</target>
 			</trans-unit>
-
 			<trans-unit id="flashmessage.add_edit.body">
 				<source>flashmessage.add_edit.body</source>
 				<target>SPEICHERN der Buchungsseite-URL: &lt;u&gt;var1&lt;/u&gt;</target>
@@ -323,12 +317,10 @@
 				<source>shortcode</source>
 				<target>Shortcode:</target>
 			</trans-unit>
-
 			<trans-unit id="preview.header">
 				<source>preview.header</source>
 				<target>Vorschau</target>
 			</trans-unit>
-
 			<trans-unit id="link.back">
 				<source>link.back</source>
 				<target>Zurück</target>
@@ -345,7 +337,6 @@
 				<source>link.delete</source>
 				<target>Löschen</target>
 			</trans-unit>
-
 			<trans-unit id="modal.delete.header">
 				<source>modal.delete.header</source>
 				<target>Buchungsseite löschen</target>
@@ -370,7 +361,6 @@
 				<source>modal.unsavedForm.submit</source>
 				<target>Speichern</target>
 			</trans-unit>
-
 			<trans-unit id="list.header">
 				<source>list.header</source>
 				<target>Ihre Buchungsseiten</target>

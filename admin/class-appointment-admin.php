@@ -123,7 +123,7 @@ class Appointment_Admin {
 		//init translator
 		$this->translator = new Translator($this->locale);
       $this->translator->addLoader('xlf', new XliffFileLoader());
-		$this->translator->addResource('xlf',__DIR__.'/../languages/appointment.'.$this->locale.'.xlf',$this->locale);
+		$this->translator->addResource('xlf',__DIR__.'/../languages/appointment_'.$this->locale.'.xlf',$this->locale);
 
 		//init twig
       $this->twig = new Environment(new FilesystemLoader(__DIR__.'/templates/'));
@@ -212,8 +212,6 @@ class Appointment_Admin {
 		 * class.
 		 */
 
-
-		wp_enqueue_script( $this->plugin_name . '-jquery', '/wp-content/plugins/bt_appointment/assets/js/jquery-3.6.1.min.js', $this->version, false);
 		wp_enqueue_script( $this->plugin_name . '-lightbox', '/wp-content/plugins/bt_appointment/assets/js/lightbox.min.js', $this->version, false);
 		wp_enqueue_script( $this->plugin_name . '-bootstrap-bundle', '/wp-content/plugins/bt_appointment/assets/bootstrap/js/bootstrap.bundle.min.js', $this->version, false);
 		wp_enqueue_script( $this->plugin_name . '-script', plugin_dir_url( __FILE__ ) . 'js/appointment-admin.js', array( 'jquery' ), $this->version, false );

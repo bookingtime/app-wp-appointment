@@ -2,12 +2,10 @@
 <xliff version="1.2"	xmlns="urn:oasis:names:tc:xliff:document:1.2">
 	<file source-language="de" target-language="en" datatype="plaintext" original="\wp-content\plugins\appointment\languages\appointment.en.xlf">
 		<body>
-
 			<trans-unit id="header.link.external.2">
 				<source>header.link.external.2</source>
 				<target>Go to bookingtime</target>
 			</trans-unit>
-
 			<trans-unit id="required.info">
 				<source>required.info</source>
 				<target>All fields are required.</target>
@@ -32,7 +30,6 @@
 				<source>step1.link.action.add</source>
 				<target>Connect Your Booking Page</target>
 			</trans-unit>
-
 			<trans-unit id="step2.h4.1">
 				<source>step2.h4.1</source>
 				<target>Create a new bookingtime account</target>
@@ -101,7 +98,6 @@
 				<source>step2.form.address.street.placeholder</source>
 				<target>Musterstasse 1</target>
 			</trans-unit>
-
 			<trans-unit id="step2.form.address.zip.label">
 				<source>step2.form.address.zip.label</source>
 				<target>ZIP code</target>
@@ -126,7 +122,6 @@
 				<source>step2.form.sector.prependOptionLabel</source>
 				<target>Please Select</target>
 			</trans-unit>
-
 			<trans-unit id="add.header">
 				<source>add.header</source>
 				<target>Add Bookingpage</target>
@@ -171,7 +166,6 @@
 				<source>add_edit.form.button.cancel</source>
 				<target>Cancel</target>
 			</trans-unit>
-
 			<trans-unit id="documentation.h5.1">
 				<source>documentation.h5.1</source>
 				<target>How to find your booking page URL</target>
@@ -200,7 +194,6 @@
 				<source>flashmessage.delete.body</source>
 				<target>You have succesfully deleted: &lt;u&gt;var1&lt;/u&gt;</target>
 			</trans-unit>
-
 			<trans-unit id="flashmessage.delete.title.error">
 				<source>flashmessage.delete.title.error</source>
 				<target>DELETE Booking page URL failed!</target>
@@ -209,7 +202,6 @@
 				<source>flashmessage.delete.body.error</source>
 				<target>You have not succesfully deleted your bookingpageurl.</target>
 			</trans-unit>
-
 			<trans-unit id="flashmessage.add_edit.body">
 				<source>flashmessage.add_edit.body</source>
 				<target>Save Booking page URL: &lt;u&gt;var1&lt;/u&gt;</target>
@@ -242,8 +234,6 @@
 				<source>flashmessage.validateTitle.title</source>
 				<target>Name validation failed!</target>
 			</trans-unit>
-
-
 			<trans-unit id="step3.h3.1">
 				<source>step3.h3.1</source>
 				<target>Your bookingtime is ready!</target>
@@ -324,12 +314,10 @@
 				<source>shortcode</source>
 				<target>Shortcode:</target>
 			</trans-unit>
-
 			<trans-unit id="preview.header">
 				<source>preview.header</source>
 				<target>Preview</target>
 			</trans-unit>
-
 			<trans-unit id="link.back">
 				<source>link.back</source>
 				<target>Back</target>
@@ -346,7 +334,6 @@
 				<source>link.delete</source>
 				<target>Delete</target>
 			</trans-unit>
-
 			<trans-unit id="modal.delete.header">
 				<source>modal.delete.header</source>
 				<target>Delete bookingpage</target>
@@ -371,7 +358,6 @@
 				<source>modal.unsavedForm.submit</source>
 				<target>Save</target>
 			</trans-unit>
-
 			<trans-unit id="list.header">
 				<source>list.header</source>
 				<target>Your Bookingpages</target>
@@ -392,7 +378,6 @@
 				<source>list.add_first</source>
 				<target>Add your first Bookingpage</target>
 			</trans-unit>
-
 			<trans-unit id="list.add_first.header">
 				<source>list.add_first.header</source>
 				<target>Add your first bookingpage</target>
