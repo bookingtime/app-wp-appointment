@@ -300,8 +300,8 @@ class Appointment_Admin {
 				} catch(RequestException $e) {
 					//flashmessage
 					$_SESSION['flashmessage'][] = [
-						'title' => $this->translator->trans('flashmessage.step2.error.contractAccount.title',['var1'=>$e->getCode()]),
-						'message' => $this->translator->trans('flashmessage.step2.error.contractAccount.body',['var1'=>$e->getMessage()]),
+						'title' => sanitize_text_field($this->translator->trans('flashmessage.step2.error.contractAccount.title',['var1'=>$e->getCode()])),
+						'message' => sanitize_text_field($this->translator->trans('flashmessage.step2.error.contractAccount.body',['var1'=>$e->getMessage()])),
 						'alertclass' => 'error'
 					];
 					//redirect
@@ -315,8 +315,8 @@ class Appointment_Admin {
 				} catch(RequestException $e) {
 					//flashmessage
 					$_SESSION['flashmessage'][] = [
-						'title' => $this->translator->trans('flashmessage.step2.error.organization.title',['var1'=>$e->getCode()]),
-						'message' => $this->translator->trans('flashmessage.step2.error.organization.body',['var1'=>$e->getMessage()]),
+						'title' => sanitize_text_field($this->translator->trans('flashmessage.step2.error.organization.title',['var1'=>$e->getCode()])),
+						'message' => sanitize_text_field($this->translator->trans('flashmessage.step2.error.organization.body',['var1'=>$e->getMessage()])),
 						'alertclass' => 'error'
 					];
 					//redirect
@@ -327,8 +327,8 @@ class Appointment_Admin {
 				if($this->writeOrganizationResponseToDB($organizantion['recordList'])) {
 					//flashmessage
 					$_SESSION['flashmessage'][] = [
-						'title' => $this->translator->trans('flashmessage.step2.title'),
-						'message' => $this->translator->trans('flashmessage.step2.body'),
+						'title' => sanitize_text_field($this->translator->trans('flashmessage.step2.title')),
+						'message' => sanitize_text_field($this->translator->trans('flashmessage.step2.body')),
 						'alertclass' => 'success'
 					];
 					//redirect to step3
@@ -336,8 +336,8 @@ class Appointment_Admin {
 				} else {
 					//flashmessage
 					$_SESSION['flashmessage'][] = [
-						'title' => $this->translator->trans('flashmessage.step2.title.error'),
-						'message' => $this->translator->trans('flashmessage.step2.body.error'),
+						'title' => sanitize_text_field($this->translator->trans('flashmessage.step2.title.error')),
+						'message' => sanitize_text_field($this->translator->trans('flashmessage.step2.body.error')),
 						'alertclass' => 'error'
 					];
 					exit(wp_redirect(WP_HOME . '/wp-admin/admin.php?page=appointment-step2'));
@@ -398,7 +398,10 @@ class Appointment_Admin {
 
 		//create
 		if(isset($_POST['appointment']) && !empty($_POST['appointment']['url']) && $this->validateUrl($_POST['appointment']['url']) && $this->validateTitle($_POST['appointment']['title'])) {
-			$this->appointment_create($_POST['appointment']);
+
+			$data['url'] = sanitize_url($_POST['appointment']['url']);
+			$data['title'] = sanitize_text_field($_POST['appointment']['title']);
+			$this->appointment_create($data);
 			exit(wp_redirect(WP_HOME . '/wp-admin/admin.php?page=appointment-list'));
 		}
 
@@ -482,15 +485,15 @@ class Appointment_Admin {
 			if($wpdb->delete( $table_name, ['id' => $bookingtimepageurl])) {
 				//flashmessage
 				$_SESSION['flashmessage'][] = [
-					'title' => $this->translator->trans('flashmessage.delete.title',['var1'=>htmlentities($res['title'])]),
-					'message' => $this->translator->trans('flashmessage.delete.body',['var1'=>$res['url']]),
+					'title' => sanitize_text_field($this->translator->trans('flashmessage.delete.title',['var1'=>htmlentities($res['title'])])),
+					'message' => sanitize_text_field($this->translator->trans('flashmessage.delete.body',['var1'=>$res['url']])),
 					'alertclass' => 'success'
 				];
 			} else {
 				//flashmessage
 				$_SESSION['flashmessage'][] = [
-					'title' => $this->translator->trans('flashmessage.delete.title.error'),
-					'message' => $this->translator->trans('flashmessage.delete.body.error'),
+					'title' => sanitize_text_field($this->translator->trans('flashmessage.delete.title.error')),
+					'message' => sanitize_text_field($this->translator->trans('flashmessage.delete.body.error')),
 					'alertclass' => 'error'
 				];
 			}
@@ -582,8 +585,8 @@ class Appointment_Admin {
 		} else {
 			//flashmessage
 			$_SESSION['flashmessage'][] = [
-				'title' => $this->translator->trans('flashmessage.validateTitle.title'),
-				'message' => $this->translator->trans('flashmessage.validateTitle.body'),
+				'title' => sanitize_text_field($this->translator->trans('flashmessage.validateTitle.title')),
+				'message' => sanitize_text_field($this->translator->trans('flashmessage.validateTitle.body')),
 				'alertclass' => 'error'
 			];
 			return false;
@@ -602,8 +605,8 @@ class Appointment_Admin {
 		} else {
 			//flashmessage
 			$_SESSION['flashmessage'][] = [
-				'title' => $this->translator->trans('flashmessage.validateUrl.title'),
-				'message' => $this->translator->trans('flashmessage.validateUrl.body'),
+				'title' => sanitize_text_field($this->translator->trans('flashmessage.validateUrl.title')),
+				'message' => sanitize_text_field($this->translator->trans('flashmessage.validateUrl.body')),
 				'alertclass' => 'error'
 			];
 			return false;
@@ -783,8 +786,8 @@ class Appointment_Admin {
 
 		//flashmessage
 		$_SESSION['flashmessage'][] = [
-			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>htmlentities(trim($data['title']))]),
-			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>$data['url']]),
+			'title' => sanitize_text_field($this->translator->trans('flashmessage.add_edit.title',['var1'=>htmlentities(trim($data['title']))])),
+			'message' => sanitize_text_field($this->translator->trans('flashmessage.add_edit.body',['var1'=>$data['url']])),
 			'alertclass' => 'success'
 		];
 
@@ -805,8 +808,8 @@ class Appointment_Admin {
 
 		//flashmessage
 		$_SESSION['flashmessage'][] = [
-			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>htmlentities(trim($data['title']))]),
-			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>$data['url']]),
+			'title' => sanitize_text_field($this->translator->trans('flashmessage.add_edit.title',['var1'=>htmlentities(trim($data['title']))])),
+			'message' => sanitize_text_field($this->translator->trans('flashmessage.add_edit.body',['var1'=>$data['url']])),
 			'alertclass' => 'success'
 		];
 
