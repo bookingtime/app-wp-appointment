@@ -11,7 +11,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
 /**
  * command, see desciption for more infos
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class SdkCommand extends Command {
 
@@ -33,7 +33,9 @@ class SdkCommand extends Command {
 	 * {@inheritDoc}
 	 */
 	protected function execute(InputInterface $input,OutputInterface $output):int {
-		$sdk=new Sdk('c5oxaa5uae7FdGIE9JihxKfzViz1cjemZ1zjsFT2QM8SMbU9ZW2H2B3pd8FHz4H8','hXiDWo4Z21SUMryMH4j8RngYAmn65L5UvRNdiLGlCaP4eeHrpPW8Yo3ScTKQtQ8v',[
+		if(!file_exists(__DIR__.'/secret.json')) {throw new \RuntimeException(__METHOD__.'() #'.__LINE__.': Abort command, no secret.json found!');}
+		$secret=json_decode(file_get_contents(__DIR__.'/secret.json'),TRUE);
+		$sdk=new Sdk($secret['client_id'],$secret['client_secret'],[
 			'appApiUrl'=>'http://host.docker.internal:4102/app/v3/',
 			'oauthUrl'=>'http://host.docker.internal:4101/oauth/token',
 			'locale'=>'de',
@@ -53,8 +55,8 @@ class SdkCommand extends Command {
 		// 		['key'=>'appSetting5_time','value'=>'09:33:00'],
 		// 		['key'=>'appSetting6_dateTime','value'=>'2021-09-29T12:00:00+01:00'],
 		// 		['key'=>'appSetting7_color','value'=>'#ffcc00'],
-		// 		['key'=>'appSetting9_email','value'=>'developmentdev@bookingtime.com'],
-		// 		['key'=>'appSetting10_mobile','value'=>'+4917012345678'],
+		// 		['key'=>'appSetting9_email','value'=>'devtest@bookingtime.com'],
+		// 		['key'=>'appSetting10_mobile','value'=>'+491701234567'],
 		// 		['key'=>'appSetting11_url','value'=>'http://wwwmusterfirma.de'],
 		// 		['key'=>'appSetting12_number','value'=>'123456'],
 		// 		['key'=>'appSetting13_alpha','value'=>'abcdefghijkm'],
@@ -88,21 +90,21 @@ class SdkCommand extends Command {
 		// $appointment=$sdk->appointment_add(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO'],$data);
 		// $appointment=$sdk->appointment_show(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX']);
 		// $appointment=$sdk->appointment_identify(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customId'=>'123']);
-		// $appointmentArray=$sdk->appointment_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','page'=>'2']);#page optional
-		// $appointmentArray=$sdk->appointment_indexAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','page'=>'1']);#page optional
-		// $appointmentArray=$sdk->appointment_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','searchQuery'=>'test','page'=>'2']);#page optional
-		// $appointmentArray=$sdk->appointment_filterAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','searchQuery'=>'test','page'=>'1']);#page optional
-		// $appointmentArray=$sdk->appointment_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
 		// $appointmentArray=$sdk->appointment_listDay(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','year'=>'2021','month'=>'9','day'=>'28']);
 		// $appointmentArray=$sdk->appointment_listWeek(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','year'=>'2021','week'=>'39']);
 		// $appointmentArray=$sdk->appointment_listMonth(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','year'=>'2021','month'=>'9']);
-		// $appointmentArray=$sdk->appointment_listAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
+		//$appointmentArray=$sdk->appointment_bookingResourceReplaceList(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX']);
 		// $data=['notes'=>'Test Appointment edited'];
+		// $data=['bookingSlotId'=>'4f6gl70xpd6oeqis236e1f80ac7acd54'];
+		// $appointment=$sdk->appointment_move(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX'],$data);
+		// $this->assertEquals($appointment['mock-content'],1);
 		// $sdk->appointment_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX'],$data);
 		// $sdk->appointment_cancel(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX']);
 		// $appointmentArray=$sdk->appointment_customer_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customerId'=>'d3k1qW5uf3pInMnanVLzRABG1H6XOGHC','page'=>'1']);
 		// $appointmentArray=$sdk->appointment_customer_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customerId'=>'d3k1qW5uf3pInMnanVLzRABG1H6XOGHC','searchQuery'=>'test','page'=>'2']);
 		// $appointmentArray=$sdk->appointment_customer_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customerId'=>'d3k1qW5uf3pInMnanVLzRABG1H6XOGHC']);
+		// $appointment=$sdk->appointment_customer_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX','customerId'=>'d3cTwmaQHY6vAZTZFwjcAsrLhuFNiKN8']);
+		// $appointment=$sdk->appointment_customer_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX','customerId'=>'d3cTwmaQHY6vAZTZFwjcAsrLhuFNiKN8']);
 
 		#APPOINTMENTTEMPLATE
 		//$appointmentTemplateArray=$sdk->appointmentTemplate_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','page'=>'2']);#page optional
@@ -191,6 +193,21 @@ class SdkCommand extends Command {
 		// $sdk->appointmentTemplateStep_bookingResource_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'eaURedwhApwgw5YAe3kNBPiDsUKJxS3P','appointmentTemplateStepId'=>'b8liy4o7AItwRPoct0akZBHG6UPX52j8','bookingResourceId'=>'browuBQJWSylERkRQIHHrlXHVpCeyfqN']);
 		// $sdk->appointmentTemplateStep_bookingResource_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'eaURedwhApwgw5YAe3kNBPiDsUKJxS3P','appointmentTemplateStepId'=>'b8liy4o7AItwRPoct0akZBHG6UPX52j8','bookingResourceId'=>'browuBQJWSylERkRQIHHrlXHVpCeyfqN']);
 
+		#APPOINTMENTTEMPLATE_EVENT_DATE_TIME
+		// $data=[
+		// 	'customId'=>'sdk1',
+		// 	'start'=>'2024-10-29T12:00:00+01:00',
+		// 	'bookingResourceIdList'=>['brDqyrfum3JUiBUni0o70wyeoMiIpRLG'],
+		// 	'appointmentEventAttendanceCountMax'=>10,
+		// ];
+		// $appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_add(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'6tAlWWMmOS7u75bKhvdZiaAGMLlYZdVb'],$data);
+		// $data=['customId'=>'sdk1edited'];
+		// $appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'6tAlWWMmOS7u75bKhvdZiaAGMLlYZdVb','appointmentTemplateEventDateTimeId'=>'psCBIC5nrBNvBNk7uapuqbUuUkuNCmdo'],$data);
+		// $appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_bookingResource_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'6tAlWWMmOS7u75bKhvdZiaAGMLlYZdVb','appointmentTemplateEventDateTimeId'=>'psCBIC5nrBNvBNk7uapuqbUuUkuNCmdo','bookingResourceId'=>'browuBQJWSylERkRQIHHrlXHVpCeyfqN']);
+		// $appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_bookingResource_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'6tAlWWMmOS7u75bKhvdZiaAGMLlYZdVb','appointmentTemplateEventDateTimeId'=>'psCBIC5nrBNvBNk7uapuqbUuUkuNCmdo','bookingResourceId'=>'browuBQJWSylERkRQIHHrlXHVpCeyfqN']);
+		// $appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_delete(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'6tAlWWMmOS7u75bKhvdZiaAGMLlYZdVb','appointmentTemplateEventDateTimeId'=>'psCBIC5nrBNvBNk7uapuqbUuUkuNCmdo']);
+		#die(BasicLib::debug($appointmentTemplateEventDateTime));
+
 		#AVAILABILITYEXCEPTION
 		// $data=[
 		// 	'name'=>'Ausnahme Test',
@@ -228,6 +245,11 @@ class SdkCommand extends Command {
 		// $bookingResourceArray=$sdk->bookingResource_filterAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','searchQuery'=>'test','page'=>'1']);#page optional
 		// $bookingResourceArray=$sdk->bookingResource_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
 		// $bookingResourceArray=$sdk->bookingResource_listAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
+		//$bookingResourceArray=$sdk->bookingResource_availability_listDay(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingResourceId'=>'brOayV9d7lcj5vjeG0Pl1qFuK92v4Uaf','year'=>'2021','month'=>'9','day'=>'28']);
+		//$bookingResourceArray=$sdk->bookingResource_availability_listWeek(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingResourceId'=>'brOayV9d7lcj5vjeG0Pl1qFuK92v4Uaf','year'=>'2021','week'=>'39']);
+		//$bookingResourceArray=$sdk->bookingResource_availability_listMonth(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingResourceId'=>'brOayV9d7lcj5vjeG0Pl1qFuK92v4Uaf','year'=>'2021','month'=>'9']);
+		#die(BasicLib::debug($bookingResourceArray));
+
 
 		#BOOKINGSLOT
 		// $bookingSlotArray=$sdk->bookingSlot_earliest(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingTemplateId'=>'fcrVx2aWQzDnd1MZkEeVbVDt6wuFCJIL']);
@@ -262,7 +284,7 @@ class SdkCommand extends Command {
 		// 		'firstName'=>'Max',
 		// 		'lastName'=>'Mustermann',
 		// 		'email'=>'dk@acme-gmbh.de',
-		// 		'mobile'=>'+491737660334',
+		// 		'mobile'=>'+491701234567',
 		// 	],
 
 		// 	'contactPerson'=>[
@@ -272,7 +294,7 @@ class SdkCommand extends Command {
 		// 		'lastName'=>'Mustermann',
 		// 		'telephone'=>'040/12345678',
 		// 		'email'=>'dk@acme-gmbh.de',
-		// 		'mobile'=>'+491737660334',
+		// 		'mobile'=>'+491701234567',
 		// 	],
 
 		// 	'address'=>[
@@ -284,6 +306,7 @@ class SdkCommand extends Command {
 		// 		'country'=>'DE',
 		// 	],
 		// 	'invoiceEmail'=>'dk@acme-gmbh.de',
+		// 	'memberList'=>[],
 		// ];
 		// $contractAccount=$sdk->contractAccount_add([],$data);
 
@@ -303,27 +326,43 @@ class SdkCommand extends Command {
 		// $customEntityArray=$sdk->customEntity_appointment_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX','customEntityType'=>'rentalCar','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_appointment_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX','customEntityType'=>'rentalCar','searchQuery'=>'Testentity','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_appointment_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX','customEntityType'=>'rentalCar']);
+		// $customEntityArray=$sdk->customEntity_appointment_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
+		// $customEntityArray=$sdk->customEntity_appointment_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentId'=>'eddXX23behodfOJck69hZW1y8dJYbDkX','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
 		// $customEntityArray=$sdk->customEntity_appointmentTemplate_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'ea5viEwqzcz55RGwF6vR8U9UywkW6m2X','customEntityType'=>'rentalCar','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_appointmentTemplate_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'ea5viEwqzcz55RGwF6vR8U9UywkW6m2X','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		// $customEntityArray=$sdk->customEntity_appointmentTemplate_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'ea5viEwqzcz55RGwF6vR8U9UywkW6m2X','customEntityType'=>'rentalCar']);
+		// $customEntityArray=$sdk->customEntity_appointmentTemplate_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'ea5viEwqzcz55RGwF6vR8U9UywkW6m2X','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
+		// $customEntityArray=$sdk->customEntity_appointmentTemplate_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','appointmentTemplateId'=>'ea5viEwqzcz55RGwF6vR8U9UywkW6m2X','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
 		// $customEntityArray=$sdk->customEntity_bookingResource_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingResourceId'=>'brDqyrfum3JUiBUni0o70wyeoMiIpRLG','customEntityType'=>'rentalCar','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_bookingResource_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingResourceId'=>'brDqyrfum3JUiBUni0o70wyeoMiIpRLG','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		// $customEntityArray=$sdk->customEntity_bookingResource_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingResourceId'=>'brDqyrfum3JUiBUni0o70wyeoMiIpRLG','customEntityType'=>'rentalCar']);
+		// $customEntityArray=$sdk->customEntity_bookingResource_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingResourceId'=>'brDqyrfum3JUiBUni0o70wyeoMiIpRLG','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
+		// $customEntityArray=$sdk->customEntity_bookingResource_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingResourceId'=>'brDqyrfum3JUiBUni0o70wyeoMiIpRLG','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
 		// $customEntityArray=$sdk->customEntity_bookingTemplate_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingTemplateId'=>'fcrVx2aWQzDnd1MZkEeVbVDt6wuFCJIL','customEntityType'=>'rentalCar','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_bookingTemplate_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingTemplateId'=>'fcrVx2aWQzDnd1MZkEeVbVDt6wuFCJIL','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		// $customEntityArray=$sdk->customEntity_bookingTemplate_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingTemplateId'=>'fcrVx2aWQzDnd1MZkEeVbVDt6wuFCJIL','customEntityType'=>'rentalCar']);
+		// $customEntityArray=$sdk->customEntity_bookingTemplate_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingTemplateId'=>'fcrVx2aWQzDnd1MZkEeVbVDt6wuFCJIL','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
+		// $customEntityArray=$sdk->customEntity_bookingTemplate_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','bookingTemplateId'=>'fcrVx2aWQzDnd1MZkEeVbVDt6wuFCJIL','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
 		// $customEntityArray=$sdk->customEntity_customEntity_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox','customEntityType'=>'rentalCar','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_customEntity_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		// $customEntityArray=$sdk->customEntity_customEntity_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox','customEntityType'=>'rentalCar']);
+		// $customEntityArray=$sdk->customEntity_customEntity_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox','customEntityType'=>'rentalCar','customEntityRelatedId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
+		// $customEntityArray=$sdk->customEntity_customEntity_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox','customEntityType'=>'rentalCar','customEntityRelatedId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
 		// $customEntityArray=$sdk->customEntity_customer_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customerId'=>'d3k1qW5uf3pInMnanVLzRABG1H6XOGHC','customEntityType'=>'rentalCar','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_customer_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customerId'=>'d3k1qW5uf3pInMnanVLzRABG1H6XOGHC','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		// $customEntityArray=$sdk->customEntity_customer_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customerId'=>'d3k1qW5uf3pInMnanVLzRABG1H6XOGHC','customEntityType'=>'rentalCar']);
+		// $customEntityArray=$sdk->customEntity_customer_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customerId'=>'d3k1qW5uf3pInMnanVLzRABG1H6XOGHC','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
+		// $customEntityArray=$sdk->customEntity_customer_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customerId'=>'d3k1qW5uf3pInMnanVLzRABG1H6XOGHC','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
 		// $customEntityArray=$sdk->customEntity_employee_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3','customEntityType'=>'rentalCar','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_employee_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		// $customEntityArray=$sdk->customEntity_employee_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3','customEntityType'=>'rentalCar']);
+		// $customEntityArray=$sdk->customEntity_employee_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
+		// $customEntityArray=$sdk->customEntity_employee_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
 		// $customEntityArray=$sdk->customEntity_resource_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73VXNMJ2LbvoHagLfAgXrwbyGODh8Txt','customEntityType'=>'rentalCar','page'=>'1']);
 		// $customEntityArray=$sdk->customEntity_resource_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73VXNMJ2LbvoHagLfAgXrwbyGODh8Txt','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		// $customEntityArray=$sdk->customEntity_resource_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73VXNMJ2LbvoHagLfAgXrwbyGODh8Txt','customEntityType'=>'rentalCar']);
+		// $customEntityArray=$sdk->customEntity_resource_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73VXNMJ2LbvoHagLfAgXrwbyGODh8Txt','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
+		// $customEntityArray=$sdk->customEntity_resource_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73VXNMJ2LbvoHagLfAgXrwbyGODh8Txt','customEntityType'=>'rentalCar','customEntityId'=>'6TW0kOIdHlZh0EzwtWODyMatn7fU3Aox']);
 		// $sdk->customEntity_delete(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customEntityId'=>'6TTpMLUAUyTXKXQiETIMnY9PiuOMuVQo','customEntityType'=>'rentalCar']);
 
 		#CUSTOMER
@@ -331,7 +370,7 @@ class SdkCommand extends Command {
 		// 	'firstName'=>'Kunde',
 		// 	'lastName'=>'van Test',
 		// 	'gender'=>'FEMALE',
-		// 	'email'=>'c.bott@bookingtime.com',
+		// 	'email'=>'support@bookingtime.com',
 		// 	'locale'=>'de',
 		// ];
 		// $customer=$sdk->customer_add(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO'],$data);
@@ -412,7 +451,7 @@ class SdkCommand extends Command {
 		// 	'firstName'=>'CB',
 		// 	'lastName'=>'van Test',
 		// 	'gender'=>'MALE',
-		// 	'email'=>'c.bott@bookingtime.com',
+		// 	'email'=>'support@bookingtime.com',
 		// 	'description'=>['value'=>'Das ist ein Mitarbeiter','inheritance'=>'OFF'],
 		// 	'descriptionI18nList'=>['value'=>[['key'=>'en','value'=>'This is an employee']],'inheritance'=>'OFF'],
 		// ];
@@ -427,13 +466,16 @@ class SdkCommand extends Command {
 		// $employeeArrayemployee=$sdk->employee_listAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
 		// $employeeArrayemployee=$sdk->employee_permission(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq']);
 		// $data=['notes'=>'test edit'];
-		// $sdk->employee_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3'],$data);
-		// $sdk->employee_employeeGroup_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq','employeeGroupId'=>'jsOejOwIwUmT59SGrKC770A9GmTs0ej7']);
-		// $sdk->employee_employeeGroup_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq','employeeGroupId'=>'jsOejOwIwUmT59SGrKC770A9GmTs0ej7']);
-		// $sdk->employee_availability_listWeek(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq','year'=>'2021','week'=>'41']);
+		// $employee=$sdk->employee_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3'],$data);
+		// $employee=$sdk->employee_employeeGroup_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq','employeeGroupId'=>'jsOejOwIwUmT59SGrKC770A9GmTs0ej7']);
+		// $employee=$sdk->employee_employeeGroup_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq','employeeGroupId'=>'jsOejOwIwUmT59SGrKC770A9GmTs0ej7']);
+		#$employee=$sdk->employee_availability_listDay(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3','year'=>'2021','month'=>'1','day'=>'30']);
+		// $employee=$sdk->employee_availability_listWeek(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq','year'=>'2021','week'=>'41']);
+		#$employee=$sdk->employee_availability_listMonth(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhJrjoTXZwwvZ4VI7vUKFvZoWpV0OYr3','year'=>'2021','month'=>'1']);
 		// $data=['rangeStart'=>'2021-11-11T12:00:00+02:00','rangeEnd'=>'2021-11-19T19:00:00+02:00','availability'=>[['start'=>'2021-11-11T12:00:00+02:00','end'=>'2021-11-11T12:30:00+02:00']]];
-		// $sdk->employee_availability_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq'],$data);
+		// $employee=$sdk->employee_availability_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq'],$data);
 		// $sdk->employee_delete(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','employeeId'=>'EhbLpHdJczWhtVPC9QMzoQZZd66VBsSq']);
+		#die(BasicLib::debug($employee));
 
 		#EMPLOYEEGROUP
 		// $data=[
@@ -536,7 +578,7 @@ class SdkCommand extends Command {
 		// 		['key'=>'moduleSetting5_time','value'=>'09:33:00'],
 		// 		['key'=>'moduleSetting6_dateTime','value'=>'2021-09-29T12:00:00+01:00'],
 		// 		['key'=>'moduleSetting7_color','value'=>'#ffcc00'],
-		// 		['key'=>'moduleSetting9_email','value'=>'developmentdev@bookingtime.com'],
+		// 		['key'=>'moduleSetting9_email','value'=>'testtest@bookingtime.com'],
 		// 		['key'=>'moduleSetting10_mobile','value'=>'+4917012345678'],
 		// 		['key'=>'moduleSetting11_url','value'=>'http://wwwmusterfirma.de'],
 		// 		['key'=>'moduleSetting12_number','value'=>'123456'],
@@ -557,6 +599,8 @@ class SdkCommand extends Command {
 		// $moduleConfigArray=$sdk->moduleConfig_listAll(['organizationId'=>'f6OB6HtSBX1fgo46p4SigKtsiQwZz4Vs']);
 		// $data=['name'=>'Test Module edited2'];
 		// $sdk->moduleConfig_edit(['organizationId'=>'f6OB6HtSBX1fgo46p4SigKtsiQwZz4Vs','moduleConfigId'=>'5fc5FGM96G1UncqO2HBsZxeoDvSC8jKH'],$data);
+		// $sdk->moduleConfig_appointmentTemplate_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','moduleConfigId'=>'5f5ueoQSsb1P2liAVtuRuIpJn1lHSz6R','appointmentTemplateId'=>'eaURedwhApwgw5YAe3kNBPiDsUKJxS3P']);
+		// $sdk->moduleConfig_appointmentTemplate_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','moduleConfigId'=>'5f5ueoQSsb1P2liAVtuRuIpJn1lHSz6R','appointmentTemplateId'=>'eaURedwhApwgw5YAe3kNBPiDsUKJxS3P']);
 		// $sdk->moduleConfig_delete(['organizationId'=>'f6OB6HtSBX1fgo46p4SigKtsiQwZz4Vs','moduleConfigId'=>'5fc5FGM96G1UncqO2HBsZxeoDvSC8jKH']);
 
 		#MODULESTORE
@@ -564,6 +608,31 @@ class SdkCommand extends Command {
 		// $moduleArray=$sdk->module_index(['organizationId'=>'f6OB6HtSBX1fgo46p4SigKtsiQwZz4Vs','page'=>'1']);#page optional
 		// $moduleArray=$sdk->module_filter(['organizationId'=>'f6OB6HtSBX1fgo46p4SigKtsiQwZz4Vs','searchQuery'=>'test','page'=>'1']);#page optional
 		// $moduleArray=$sdk->module_list(['organizationId'=>'f6OB6HtSBX1fgo46p4SigKtsiQwZz4Vs',]);
+
+		#ONLINEMEETINGCONNECTION
+		#$data=[
+		#	'type'=>'TEAMS',
+		#	'email'=>'c.scheerer@bookingtime.com',
+		#	'bookingResourceId'=>'broOMpalIzPaMjHdDC5qh6p2uhHnZmyR',
+		#	'customId'=>'777',
+		#];
+		#$onlineMeetingConnection=$sdk->onlineMeetingConnection_add(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO'],$data);
+		#$onlineMeetingConnection=$sdk->onlineMeetingConnection_show(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','onlineMeetingConnectionId'=>'bKyZyFkGSfP17brc8PloH4bxTMz3cxdq']);
+		#$onlineMeetingConnection=$sdk->onlineMeetingConnection_identify(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customId'=>'777']);
+		#$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','page'=>'1']);#page optional
+		#$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_indexAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','page'=>'1']);#page optional
+		#$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','searchQuery'=>'test','page'=>'1']);#page optional
+		#$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_filterAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','searchQuery'=>'test','page'=>'1']);#page optional
+		#$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
+		#$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_listAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
+		#$data=['email'=>'c.scheerer3@bookingtime.com'];
+		#$onlineMeetingConnection=$sdk->onlineMeetingConnection_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','onlineMeetingConnectionId'=>'bKyZyFkGSfP17brc8PloH4bxTMz3cxdq'],$data);
+		#$sdk->onlineMeetingConnection_delete(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','onlineMeetingConnectionId'=>'bKyZyFkGSfP17brc8PloH4bxTMz3cxdq']);
+
+		#ONLINEMEETINGCONNECTIONLOG
+		#$onlineMeetingConnectionLog=$sdk->onlineMeetingConnectionLog_show(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','onlineMeetingConnectionId'=>'bKyZyFkGSfP17brc8PloH4bxTMz3cxdq','onlineMeetingConnectionLogId'=>'v6mK11ChX4iw9l47nihdumFW7uIZcUH3']);
+		#$onlineMeetingConnectionLogArray=$sdk->onlineMeetingConnectionLog_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','onlineMeetingConnectionId'=>'bKyZyFkGSfP17brc8PloH4bxTMz3cxdq','page'=>'1']);#page optional
+		#die(BasicLib::debug($onlineMeetingConnectionLogArray));
 
 		#ORGANIZATION
 		// $data=[
@@ -647,13 +716,16 @@ class SdkCommand extends Command {
 		// $organization=$sdk->organization_app_filter(['appId'=>'70B9EOUxfSN0p866nCa2zGVKma3K3wEy','searchQuery'=>'test','page'=>'1']);#page optional
 		// $organization=$sdk->organization_app_list(['appId'=>'70B9EOUxfSN0p866nCa2zGVKma3K3wEy']);
 		// $organization=$sdk->organization_app_tree(['appId'=>'70B9EOUxfSN0p866nCa2zGVKma3K3wEy']);
-		// $sdk->organization_availability_listWeek(['organizationId'=>'f64byemP9Rip4p3OwQGMSmw9sU11o8Jm','year'=>'2021','week'=>'41']);
+		#$organization=$sdk->organization_availability_listDay(['organizationId'=>'f6BRgjIDurHnDNaWDMEHRHWmABZ8ne5p','year'=>'2021','month'=>'1','day'=>'30']);
+		// $sdk->organization_availability_listWeek(['organizationId'=>'f6BRgjIDurHnDNaWDMEHRHWmABZ8ne5p','year'=>'2021','week'=>'41']);
+		#$organization=$sdk->organization_availability_listMonth(['organizationId'=>'f6BRgjIDurHnDNaWDMEHRHWmABZ8ne5p','year'=>'2021','month'=>'1']);
 		// $data=['rangeStart'=>'2021-11-11T12:00:00+02:00','rangeEnd'=>'2021-11-19T19:00:00+02:00','availability'=>[['start'=>'2021-11-11T12:00:00+02:00','end'=>'2021-11-11T12:30:00+02:00']]];
 		// $sdk->organization_availability_edit(['organizationId'=>'f64byemP9Rip4p3OwQGMSmw9sU11o8Jm'],$data);
 		// $sdk->organization_emailTemplate_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','emailTemplateId'=>'46a6NWcBgly2Wyl2e5sTXF0joar3KOdV']);
 		// $sdk->organization_emailTemplate_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','emailTemplateId'=>'46a6NWcBgly2Wyl2e5sTXF0joar3KOdV']);
 		// $sdk->organization_smsTemplate_link(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','smsTemplateId'=>'6G4qU5lcT3AyZwkRfZtm4eRegr1ma9yl']);
 		// $sdk->organization_smsTemplate_unlink(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','smsTemplateId'=>'6G4qU5lcT3AyZwkRfZtm4eRegr1ma9yl']);
+		#die(BasicLib::debug($organization));
 
 		// $data=[
 		// 	'name'=>'CB Test Orga New Route',
@@ -764,7 +836,7 @@ class SdkCommand extends Command {
 		// 	'descriptionI18nList'=>[['key'=>'en','value'=>'This is a resource']],
 		// ];
 		// $resource=$sdk->resource_add(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO'],$data);
-		// $resource=$sdk->resource_show(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'738Mjdz23LPuBRIpaa1l4aq06loNY9Tz']);
+		// $resource=$sdk->resource_show(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73OwAp1QDyuEYydT197riP0AGhhV6noL']);
 		// $resource=$sdk->resource_identify(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','customId'=>'696']);
 		// $resourceArray=$sdk->resource_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','page'=>'1']);#page optional
 		// $resourceArray=$sdk->resource_indexAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','page'=>'1']);#page optional
@@ -773,11 +845,14 @@ class SdkCommand extends Command {
 		// $resourceArray=$sdk->resource_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
 		// $resourceArray=$sdk->resource_listAll(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
 		// $data=['name'=>'Resource Testedited'];
-		// $sdk->resource_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'738Mjdz23LPuBRIpaa1l4aq06loNY9Tz'],$data);
-		// $sdk->resource_availability_listWeek(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'738Mjdz23LPuBRIpaa1l4aq06loNY9Tz','year'=>'2021','week'=>'41']);
+		// $sdk->resource_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73OwAp1QDyuEYydT197riP0AGhhV6noL'],$data);
+		#$resource=$sdk->resource_availability_listDay(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73OwAp1QDyuEYydT197riP0AGhhV6noL','year'=>'2021','month'=>'1','day'=>'31']);
+		// $sdk->resource_availability_listWeek(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73OwAp1QDyuEYydT197riP0AGhhV6noL','year'=>'2021','week'=>'41']);
+		#$resource=$sdk->resource_availability_listMonth(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73OwAp1QDyuEYydT197riP0AGhhV6noL','year'=>'2021','month'=>'1']);
 		// $data=['rangeStart'=>'2021-11-11T12:00:00+02:00','rangeEnd'=>'2021-11-19T19:00:00+02:00','availability'=>[['start'=>'2021-11-11T12:00:00+02:00','end'=>'2021-11-11T12:30:00+02:00']]];
-		// $sdk->resource_availability_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'738Mjdz23LPuBRIpaa1l4aq06loNY9Tz'],$data);
-		// $sdk->resource_delete(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'738Mjdz23LPuBRIpaa1l4aq06loNY9Tz']);
+		// $sdk->resource_availability_edit(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73OwAp1QDyuEYydT197riP0AGhhV6noL'],$data);
+		// $sdk->resource_delete(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','resourceId'=>'73OwAp1QDyuEYydT197riP0AGhhV6noL']);
+		#die(BasicLib::debug($resource));
 
 		// #REPORTINGJOB
 		// $data=[
@@ -785,7 +860,7 @@ class SdkCommand extends Command {
 		// 	'customId'=>'test',
 		// 	'category'=>'APPOINTMENT_LIST',
 		// 	'sendingInterval'=>'WEEKLY',
-		// 	'recipientEmailList'=>['development@bookingtime.com'],
+		// 	'recipientEmailList'=>['testtest@bookingtime.com'],
 		// ];
 		// $reportingJob=$sdk->reportingJob_add(['organizationId'=>'f6OB6HtSBX1fgo46p4SigKtsiQwZz4Vs'],$data);
 		// $reportingJob=$sdk->reportingJob_show(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','reportingJobId'=>'aYYWUQ7S4u76Fujd8Jr6NylVzqoc0fvo']);
@@ -842,20 +917,21 @@ class SdkCommand extends Command {
 		// $permissionList=$sdk->static_permission_list([]);
 		// $sectorList=$sdk->static_sector_list([]);
 		// $timeZoneList=$sdk->static_timeZone_list([]);
+			#$organizationTemplateDataList=$sdk->static_organizationTemplateData_list([]);
 		// $error=$sdk->static_error_show(['errorCode'=>400]);
 		// $error=$sdk->static_error_show(['errorCode'=>401]);
 		// $error=$sdk->static_error_show(['errorCode'=>403]);
 		// $error=$sdk->static_error_show(['errorCode'=>404]);
 		// $error=$sdk->static_error_show(['errorCode'=>405]);
 		// $error=$sdk->static_error_show(['errorCode'=>500]);
-		#die(BasicLib::debug($error));
+		#die(BasicLib::debug($organizationTemplateDataList));
 
 		#SYNCHRONIZATION
 		// $data=[
 		// 	'bookingResourceId'=>'brOayV9d7lcj5vjeG0Pl1qFuK92v4Uaf',
 		// 	'type'=>'GRAPH',
 		// 	'customId'=>'888',
-		// 	'email'=>'d.kokot@bookingtime.com',
+		// 	'email'=>'support@bookingtime.com',
 		// 	'externalCalendarContentStaff'=>[
 		// 		'value'=>'',
 		// 		'inheritance'=>'ORGANIZATION',
@@ -881,15 +957,6 @@ class SdkCommand extends Command {
 		#$synchronization=$sdk->synchronization_delete(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','synchronizationId'=>'A7CQ0ZOgj6gKnouvjVLRCr3GWizkiD5B']);
 		#$synchronization=$sdk->synchronization_reset(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','synchronizationId'=>'A7CQ0ZOgj6gKnouvjVLRCr3GWizkiD5B']);
 		#die(BasicLib::debug($synchronization));
-
-		#SYNCHRONIZATION_APPOINTMENT
-		#$synchronizationAppointment=$sdk->synchronizationAppointment_show(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','synchronizationAppointmentId'=>'7qydl51FdZjQD5dwXdPrl74FIopumLMV']);
-		#$synchronizationAppointment=$sdk->synchronizationAppointment_index(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','page'=>'1']);#page optional
-		#$synchronizationAppointment=$sdk->synchronizationAppointment_filter(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','searchQuery'=>'test','page'=>'1']);#page optional
-		#$synchronizationAppointmentArray=$sdk->synchronizationAppointment_list(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO']);
-		#$synchronizationAppointmentArray=$sdk->synchronizationAppointment_listDay(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','year'=>'2023','month'=>'9','day'=>'28']);
-		#$synchronizationAppointmentArray=$sdk->synchronizationAppointment_listWeek(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','year'=>'2021','week'=>'39']);
-		#$synchronizationAppointmentArray=$sdk->synchronizationAppointment_listMonth(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','year'=>'2021','month'=>'9']);
 
 		#SYNCHRONIZATION_LOG
 		#$synchronizationLog=$sdk->synchronizationLog_show(['organizationId'=>'f6dS3eSezWO4ohcznIzoTb5JzzMB9nsO','synchronizationId'=>'A7CQ0ZOgj6gKnouvjVLRCr3GWizkiD5B','synchronizationLogId'=>'7qydl51FdZjQD5dwXdPrl74FIopumLMV']);

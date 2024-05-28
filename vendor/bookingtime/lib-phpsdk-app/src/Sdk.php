@@ -39,7 +39,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
  *   ,,,,,,,,,.                .,,,###.####/(((((((,,/          .,,,,*##.###(///////,,,
  *                                 ,,,,,,,,,,,,,,,*                    ,,,,,,,,,,,,
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class Sdk {
 	//class properties
@@ -143,6 +143,7 @@ class Sdk {
 		if(count($args)<1 || count($args)>2) {throw new \InvalidArgumentException('Expected one or two parameters for method: '.$name);}
 		if(!is_array($args[0]) || (count($args)==2 && !is_array($args[1]))) {throw new \InvalidArgumentException('Expected parameters of type array for method: '.$name);}
 
+
 		//make apiRoute object
 		$strpos=strpos($name,'_');
 		if($strpos===FALSE || $strpos<1) {throw new \BadMethodCallException('Undefined method called: '.$name);}
@@ -160,6 +161,9 @@ class Sdk {
 				break(1);
 			} case('appointmentTemplate'): {
 				$apiRoute=new ApiRoute\AppointmentTemplateRoute($this->httpClient);
+				break(1);
+			} case('appointmentTemplateEventDateTime'): {
+				$apiRoute=new ApiRoute\AppointmentTemplateEventDateTimeRoute($this->httpClient);
 				break(1);
 			} case('appointmentTemplateStep'): {
 				$apiRoute=new ApiRoute\AppointmentTemplateStepRoute($this->httpClient);
@@ -221,6 +225,12 @@ class Sdk {
 			} case('module'): {
 				$apiRoute=new ApiRoute\ModuleRoute($this->httpClient);
 				break(1);
+			} case('onlineMeetingConnection'): {
+				$apiRoute=new ApiRoute\OnlineMeetingConnectionRoute($this->httpClient);
+				break(1);
+			} case('onlineMeetingConnectionLog'): {
+				$apiRoute=new ApiRoute\OnlineMeetingConnectionLogRoute($this->httpClient);
+				break(1);
 			} case('organization'): {
 				$apiRoute=new ApiRoute\OrganizationRoute($this->httpClient);
 				break(1);
@@ -244,9 +254,6 @@ class Sdk {
 				break(1);
 			} case('synchronization'): {
 				$apiRoute=new ApiRoute\SynchronizationRoute($this->httpClient);
-				break(1);
-			} case('synchronizationAppointment'): {
-				$apiRoute=new ApiRoute\SynchronizationAppointmentRoute($this->httpClient);
 				break(1);
 			} case('synchronizationLog'): {
 				$apiRoute=new ApiRoute\SynchronizationLogRoute($this->httpClient);
@@ -304,34 +311,36 @@ class Sdk {
 				return $apiRoute->show($args[0],200);
 			} case('appointment_identify'): {
 				return $apiRoute->identify($args[0],200);
-			} case('appointment_index'): {
-				return $apiRoute->index($args[0],FALSE,200);
-			} case('appointment_filter'): {
-				return $apiRoute->filter($args[0],FALSE,200);
-			} case('appointment_list'): {
-				return $apiRoute->list($args[0],FALSE,200);
 			} case('appointment_listDay'): {
 				return $apiRoute->listDay($args[0],200);
 			} case('appointment_listWeek'): {
 				return $apiRoute->listWeek($args[0],200);
 			} case('appointment_listMonth'): {
 				return $apiRoute->listMonth($args[0],200);
-			} case('appointment_indexAll'): {
-				return $apiRoute->index($args[0],TRUE,200);
-			} case('appointment_filterAll'): {
-				return $apiRoute->filter($args[0],TRUE,200);
-			} case('appointment_listAll'): {
-				return $apiRoute->list($args[0],TRUE,200);
+			} case('appointment_bookingResourceReplaceList'): {
+				return $apiRoute->bookingResourceReplaceList($args[0],200);
 			} case('appointment_edit'): {
 				return $apiRoute->edit($args[0],$args[1],200);
+			} case('appointment_move'): {
+				return $apiRoute->move($args[0],$args[1],200);
 			} case('appointment_cancel'): {
 				return $apiRoute->cancel($args[0],200);
+			} case('appointment_customEntity_index'): {
+				return $apiRoute->customEntityIndex($args[0],200);
+			} case('appointment_customEntity_filter'): {
+				return $apiRoute->customEntityFilter($args[0],200);
+			} case('appointment_customEntity_list'): {
+				return $apiRoute->customEntityList($args[0],200);
 			} case('appointment_customer_index'): {
 				return $apiRoute->customerIndex($args[0],200);
 			} case('appointment_customer_filter'): {
 				return $apiRoute->customerFilter($args[0],200);
 			} case('appointment_customer_list'): {
 				return $apiRoute->customerList($args[0],200);
+			} case('appointment_customer_link'): {
+				return $apiRoute->customerLink($args[0],FALSE,200);
+			} case('appointment_customer_unlink'): {
+				return $apiRoute->customerLink($args[0],TRUE,200);
 			} case('appointment_file_link'): {
 				return $apiRoute->fileLink($args[0],FALSE,200);
 			} case('appointment_file_unlink'): {
@@ -367,6 +376,12 @@ class Sdk {
 				return $apiRoute->bookingResourceLink($args[0],FALSE,200);
 			} case('appointmentTemplate_bookingResource_unlink'): {
 				return $apiRoute->bookingResourceLink($args[0],TRUE,200);
+			} case('appointmentTemplate_customEntity_index'): {
+				return $apiRoute->customEntityIndex($args[0],200);
+			} case('appointmentTemplate_customEntity_filter'): {
+				return $apiRoute->customEntityFilter($args[0],200);
+			} case('appointmentTemplate_customEntity_list'): {
+				return $apiRoute->customEntityList($args[0],200);
 			} case('appointmentTemplate_emailTemplate_link'): {
 				return $apiRoute->emailTemplateLink($args[0],FALSE,200);
 			} case('appointmentTemplate_emailTemplate_unlink'): {
@@ -379,6 +394,21 @@ class Sdk {
 				return $apiRoute->timeGridListWeek($args[0],200);
 			} case('appointmentTemplate_timeGrid_edit'): {
 				return $apiRoute->timeGridEdit($args[0],$args[1],200);
+			}
+		}
+
+		//appointmentTemplateEventDateTime
+		switch($name) {
+			case('appointmentTemplateEventDateTime_add'): {
+				return $apiRoute->add($args[0],$args[1],201);
+			} case('appointmentTemplateEventDateTime_edit'): {
+				return $apiRoute->edit($args[0],$args[1],200);
+			} case('appointmentTemplateEventDateTime_delete'): {
+				return $apiRoute->delete($args[0],200);
+			} case('appointmentTemplateEventDateTime_bookingResource_link'): {
+				return $apiRoute->bookingResourceLink($args[0],FALSE,200);
+			} case('appointmentTemplateEventDateTime_bookingResource_unlink'): {
+				return $apiRoute->bookingResourceLink($args[0],TRUE,200);
 			}
 		}
 
@@ -454,6 +484,18 @@ class Sdk {
 				return $apiRoute->filter($args[0],TRUE,200);
 			} case('bookingResource_listAll'): {
 				return $apiRoute->list($args[0],TRUE,200);
+			} case('bookingResource_availability_listDay'): {
+				return $apiRoute->availabilityListDay($args[0],200);
+			} case('bookingResource_availability_listWeek'): {
+				return $apiRoute->availabilityListWeek($args[0],200);
+			} case('bookingResource_availability_listMonth'): {
+				return $apiRoute->availabilityListMonth($args[0],200);
+			} case('bookingResource_customEntity_index'): {
+				return $apiRoute->customEntityIndex($args[0],200);
+			} case('bookingResource_customEntity_filter'): {
+				return $apiRoute->customEntityFilter($args[0],200);
+			} case('bookingResource_customEntity_list'): {
+				return $apiRoute->customEntityList($args[0],200);
 			}
 		}
 
@@ -494,6 +536,12 @@ class Sdk {
 				return $apiRoute->bookingResourceFilter($args[0],200);
 			} case('bookingTemplate_bookingResource_list'): {
 				return $apiRoute->bookingResourceList($args[0],200);
+			} case('bookingTemplate_customEntity_index'): {
+				return $apiRoute->customEntityIndex($args[0],200);
+			} case('bookingTemplate_customEntity_filter'): {
+				return $apiRoute->customEntityFilter($args[0],200);
+			} case('bookingTemplate_customEntity_list'): {
+				return $apiRoute->customEntityList($args[0],200);
 			}
 		}
 
@@ -534,48 +582,86 @@ class Sdk {
 				return $apiRoute->appointmentFilter($args[0],200);
 			} case('customEntity_appointment_list'): {
 				return $apiRoute->appointmentList($args[0],200);
+			} case('customEntity_appointment_link'): {
+				return $apiRoute->appointmentLink($args[0],FALSE,200);
+			} case('customEntity_appointment_unlink'): {
+				return $apiRoute->appointmentLink($args[0],TRUE,200);
 			} case('customEntity_appointmentTemplate_index'): {
 				return $apiRoute->appointmentTemplateIndex($args[0],200);
 			} case('customEntity_appointmentTemplate_filter'): {
 				return $apiRoute->appointmentTemplateFilter($args[0],200);
 			} case('customEntity_appointmentTemplate_list'): {
 				return $apiRoute->appointmentTemplateList($args[0],200);
+			} case('customEntity_appointmentTemplate_link'): {
+				return $apiRoute->appointmentTemplateLink($args[0],FALSE,200);
+			} case('customEntity_appointmentTemplate_unlink'): {
+				return $apiRoute->appointmentTemplateLink($args[0],TRUE,200);
 			} case('customEntity_bookingResource_index'): {
 				return $apiRoute->bookingResourceIndex($args[0],200);
 			} case('customEntity_bookingResource_filter'): {
 				return $apiRoute->bookingResourceFilter($args[0],200);
 			} case('customEntity_bookingResource_list'): {
 				return $apiRoute->bookingResourceList($args[0],200);
+			} case('customEntity_bookingResource_link'): {
+				return $apiRoute->bookingResourceLink($args[0],FALSE,200);
+			} case('customEntity_bookingResource_unlink'): {
+				return $apiRoute->bookingResourceLink($args[0],TRUE,200);
 			} case('customEntity_bookingTemplate_index'): {
 				return $apiRoute->bookingTemplateIndex($args[0],200);
 			} case('customEntity_bookingTemplate_filter'): {
 				return $apiRoute->bookingTemplateFilter($args[0],200);
 			} case('customEntity_bookingTemplate_list'): {
 				return $apiRoute->bookingTemplateList($args[0],200);
+			} case('customEntity_bookingTemplate_link'): {
+				return $apiRoute->bookingTemplateLink($args[0],FALSE,200);
+			} case('customEntity_bookingTemplate_unlink'): {
+				return $apiRoute->bookingTemplateLink($args[0],TRUE,200);
 			} case('customEntity_customEntity_index'): {
 				return $apiRoute->customEntityIndex($args[0],200);
 			} case('customEntity_customEntity_filter'): {
 				return $apiRoute->customEntityFilter($args[0],200);
 			} case('customEntity_customEntity_list'): {
 				return $apiRoute->customEntityList($args[0],200);
+			} case('customEntity_customEntity_link'): {
+				return $apiRoute->customEntityLink($args[0],FALSE,200);
+			} case('customEntity_customEntity_unlink'): {
+				return $apiRoute->customEntityLink($args[0],TRUE,200);
 			} case('customEntity_customer_index'): {
 				return $apiRoute->customerIndex($args[0],200);
 			} case('customEntity_customer_filter'): {
 				return $apiRoute->customerFilter($args[0],200);
 			} case('customEntity_customer_list'): {
 				return $apiRoute->customerList($args[0],200);
+			} case('customEntity_customer_link'): {
+				return $apiRoute->customerLink($args[0],FALSE,200);
+			} case('customEntity_customer_unlink'): {
+				return $apiRoute->customerLink($args[0],TRUE,200);
 			} case('customEntity_employee_index'): {
 				return $apiRoute->employeeIndex($args[0],200);
 			} case('customEntity_employee_filter'): {
 				return $apiRoute->employeeFilter($args[0],200);
 			} case('customEntity_employee_list'): {
 				return $apiRoute->employeeList($args[0],200);
+			} case('customEntity_employee_link'): {
+				return $apiRoute->employeeLink($args[0],FALSE,200);
+			} case('customEntity_employee_unlink'): {
+				return $apiRoute->employeeLink($args[0],TRUE,200);
 			} case('customEntity_resource_index'): {
 				return $apiRoute->resourceIndex($args[0],200);
 			} case('customEntity_resource_filter'): {
 				return $apiRoute->resourceFilter($args[0],200);
 			} case('customEntity_resource_list'): {
 				return $apiRoute->resourceList($args[0],200);
+			} case('customEntity_resource_link'): {
+				return $apiRoute->resourceLink($args[0],FALSE,200);
+			} case('customEntity_resource_unlink'): {
+				return $apiRoute->resourceLink($args[0],TRUE,200);
+			} case('customEntity_file_index'): {
+				return $apiRoute->fileIndex($args[0],200);
+			} case('customEntity_file_filter'): {
+				return $apiRoute->fileFilter($args[0],200);
+			} case('customEntity_file_list'): {
+				return $apiRoute->fileList($args[0],200);
 			} case('customEntity_file_link'): {
 				return $apiRoute->fileLink($args[0],FALSE,200);
 			} case('customEntity_file_unlink'): {
@@ -607,6 +693,12 @@ class Sdk {
 				return $apiRoute->edit($args[0],$args[1],200);
 			} case('customer_delete'): {
 				return $apiRoute->delete($args[0],200);
+			} case('customer_customEntity_index'): {
+				return $apiRoute->customEntityIndex($args[0],200);
+			} case('customer_customEntity_filter'): {
+				return $apiRoute->customEntityFilter($args[0],200);
+			} case('customer_customEntity_list'): {
+				return $apiRoute->customEntityList($args[0],200);
 			} case('customer_customerGroup_link'): {
 				return $apiRoute->customerGroupLink($args[0],FALSE,200);
 			} case('customer_customerGroup_unlink'): {
@@ -729,10 +821,20 @@ class Sdk {
 				return $apiRoute->edit($args[0],$args[1],200);
 			} case('employee_delete'): {
 				return $apiRoute->delete($args[0],200);
+			} case('employee_availability_listDay'): {
+				return $apiRoute->availabilityListDay($args[0],200);
 			} case('employee_availability_listWeek'): {
 				return $apiRoute->availabilityListWeek($args[0],200);
+			} case('employee_availability_listMonth'): {
+				return $apiRoute->availabilityListMonth($args[0],200);
 			} case('employee_availability_edit'): {
 				return $apiRoute->availabilityEdit($args[0],$args[1],200);
+			} case('employee_customEntity_index'): {
+				return $apiRoute->customEntityIndex($args[0],200);
+			} case('employee_customEntity_filter'): {
+				return $apiRoute->customEntityFilter($args[0],200);
+			} case('employee_customEntity_list'): {
+				return $apiRoute->customEntityList($args[0],200);
 			} case('employee_employeeGroup_link'): {
 				return $apiRoute->employeeGroupLink($args[0],FALSE,200);
 			} case('employee_employeeGroup_unlink'): {
@@ -892,6 +994,10 @@ class Sdk {
 				return $apiRoute->list($args[0],TRUE,200);
 			} case('moduleConfig_edit'): {
 				return $apiRoute->edit($args[0],$args[1],200);
+			} case('moduleConfig_appointmentTemplate_link'): {
+				return $apiRoute->appointmentTemplateLink($args[0],FALSE,200);
+			} case('moduleConfig_appointmentTemplate_unlink'): {
+				return $apiRoute->appointmentTemplateLink($args[0],TRUE,200);
 			} case('moduleConfig_delete'): {
 				return $apiRoute->delete($args[0],200);
 			}
@@ -907,6 +1013,43 @@ class Sdk {
 				return $apiRoute->filter($args[0],200);
 			} case('module_list'): {
 				return $apiRoute->list($args[0],200);
+			}
+		}
+
+		//onlineMeetingConnection
+		switch($name) {
+			case('onlineMeetingConnection_add'): {
+				return $apiRoute->add($args[0],$args[1],201);
+			} case('onlineMeetingConnection_show'): {
+				return $apiRoute->show($args[0],200);
+			} case('onlineMeetingConnection_identify'): {
+				return $apiRoute->identify($args[0],200);
+			} case('onlineMeetingConnection_index'): {
+				return $apiRoute->index($args[0],FALSE,200);
+			} case('onlineMeetingConnection_filter'): {
+				return $apiRoute->filter($args[0],FALSE,200);
+			} case('onlineMeetingConnection_list'): {
+				return $apiRoute->list($args[0],FALSE,200);
+			} case('onlineMeetingConnection_indexAll'): {
+				return $apiRoute->index($args[0],TRUE,200);
+			} case('onlineMeetingConnection_filterAll'): {
+				return $apiRoute->filter($args[0],TRUE,200);
+			} case('onlineMeetingConnection_listAll'): {
+				return $apiRoute->list($args[0],TRUE,200);
+			} case('onlineMeetingConnection_edit'): {
+				return $apiRoute->edit($args[0],$args[1],200);
+			} case('onlineMeetingConnection_delete'): {
+				return $apiRoute->delete($args[0],200);
+			}
+		}
+
+
+		//onlineMeetingConnectionLog
+		switch($name) {
+			 case('onlineMeetingConnectionLog_show'): {
+				return $apiRoute->show($args[0],200);
+			} case('onlineMeetingConnectionLog_index'): {
+				return $apiRoute->index($args[0],200);
 			}
 		}
 
@@ -928,8 +1071,12 @@ class Sdk {
 				return $apiRoute->appList($args[0],200);
 			} case('organization_app_tree'): {
 				return $apiRoute->appTree($args[0],200);
+			} case('organization_availability_listDay'): {
+				return $apiRoute->availabilityListDay($args[0],200);
 			} case('organization_availability_listWeek'): {
 				return $apiRoute->availabilityListWeek($args[0],200);
+			} case('organization_availability_listMonth'): {
+				return $apiRoute->availabilityListMonth($args[0],200);
 			} case('organization_availability_edit'): {
 				return $apiRoute->availabilityEdit($args[0],$args[1],200);
 			} case('organization_emailTemplate_link'): {
@@ -976,7 +1123,7 @@ class Sdk {
 			} case('packet_list'): {
 				return $apiRoute->list($args[0],200);
 			} case('packet_purchase'): {
-				return $apiRoute->purchase($args[0],201);
+				return $apiRoute->purchase($args[0],200);
 			}
 		}
 
@@ -1004,10 +1151,20 @@ class Sdk {
 				return $apiRoute->edit($args[0],$args[1],200);
 			} case('resource_delete'): {
 				return $apiRoute->delete($args[0],200);
+			} case('resource_availability_listDay'): {
+				return $apiRoute->availabilityListDay($args[0],200);
 			} case('resource_availability_listWeek'): {
 				return $apiRoute->availabilityListWeek($args[0],200);
+			} case('resource_availability_listMonth'): {
+				return $apiRoute->availabilityListMonth($args[0],200);
 			} case('resource_availability_edit'): {
 				return $apiRoute->availabilityEdit($args[0],$args[1],200);
+			} case('resource_customEntity_index'): {
+				return $apiRoute->customEntityIndex($args[0],200);
+			} case('resource_customEntity_filter'): {
+				return $apiRoute->customEntityFilter($args[0],200);
+			} case('resource_customEntity_list'): {
+				return $apiRoute->customEntityList($args[0],200);
 			}
 		}
 
@@ -1110,6 +1267,8 @@ class Sdk {
 				return $apiRoute->sectorList($args[0],200);
 			} case('static_timeZone_list'): {
 				return $apiRoute->timeZoneList($args[0],200);
+			} case('static_organizationTemplateData_list'): {
+				return $apiRoute->organizationTemplateDataList($args[0],200);
 			}
 		}
 
@@ -1139,25 +1298,6 @@ class Sdk {
 				return $apiRoute->delete($args[0],200);
 			} case('synchronization_reset'): {
 				return $apiRoute->reset($args[0],200);
-			}
-		}
-
-		//synchronizationAppointment
-		switch($name) {
-			case('synchronizationAppointment_show'): {
-				return $apiRoute->show($args[0],200);
-			} case('synchronizationAppointment_index'): {
-				return $apiRoute->index($args[0],200);
-			} case('synchronizationAppointment_filter'): {
-				return $apiRoute->filter($args[0],200);
-			} case('synchronizationAppointment_list'): {
-				return $apiRoute->list($args[0],200);
-			} case('synchronizationAppointment_listDay'): {
-				return $apiRoute->listDay($args[0],200);
-			} case('synchronizationAppointment_listWeek'): {
-				return $apiRoute->listWeek($args[0],200);
-			} case('synchronizationAppointment_listMonth'): {
-				return $apiRoute->listMonth($args[0],200);
 			}
 		}
 

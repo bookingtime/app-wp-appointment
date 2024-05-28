@@ -9,7 +9,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
 /**
  * handle specific API requests
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class StaticRoute extends Route {
 
@@ -138,6 +138,22 @@ class StaticRoute extends Route {
 	public function timeZoneList(array $urlParameter,$expectedResponseCode) {
 		//make request to API
 		$response=$this->httpClient->request('GET','/static/timeZone/list',[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * get list of organizationTemplateData
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function organizationTemplateDataList(array $urlParameter,$expectedResponseCode) {
+		//make request to API
+		$response=$this->httpClient->request('GET','/static/organizationTemplateData/list',[],$expectedResponseCode);
 		#die(BasicLib::debug($response));
 		return $response['content'];
 	}

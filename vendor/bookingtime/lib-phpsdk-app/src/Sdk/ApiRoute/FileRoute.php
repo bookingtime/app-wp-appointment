@@ -9,7 +9,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
 /**
  * handle specific API requests
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class FileRoute extends Route {
 
@@ -61,7 +61,7 @@ class FileRoute extends Route {
 	 *
 	 * @param	array		$urlParameter: list of url paramerts like ids
 	 * @param	integer	$expectedResponseCode: expected http response code for http-client
-	 * @return	array		reponse content
+	 * @return	string	reponse content
 	 */
 	public function download(array $urlParameter,$expectedResponseCode) {
 		//check submitted parameters
@@ -71,7 +71,7 @@ class FileRoute extends Route {
 		$this->checkUrlParameters(['organizationId','fileId'],$urlParameter);
 		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/file/'.$urlParameter['fileId'].'/download',[],$expectedResponseCode,FALSE);
 		#die(BasicLib::debug($response));
-		return $response['content'];
+		return $response;
 	}
 
 
@@ -260,6 +260,7 @@ class FileRoute extends Route {
 		#die(BasicLib::debug($response));
 		return $response['content'];
 	}
+
 
 
 	/**

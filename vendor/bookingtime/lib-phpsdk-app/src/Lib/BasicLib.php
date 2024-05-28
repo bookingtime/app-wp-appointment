@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * base function-library of bookingtime for static use
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class BasicLib {
 

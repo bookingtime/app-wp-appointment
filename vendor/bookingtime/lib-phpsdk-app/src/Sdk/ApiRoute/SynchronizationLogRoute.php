@@ -9,7 +9,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
 /**
  * handle specific API requests
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class SynchronizationLogRoute extends Route {
 
