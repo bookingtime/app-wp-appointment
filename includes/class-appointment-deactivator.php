@@ -32,18 +32,6 @@ class Appointment_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		self::dropDBAppointment();
-	}
 
-	/**
-	 * dropDBAppointment
-	 *
-	 */
-	private static function dropDBAppointment() {
-		global $wpdb;
-		$table_name = $wpdb->prefix . 'appointment';
-		$sql = "DROP TABLE IF EXISTS $table_name";
-		$wpdb->query($sql);
-		delete_option("appointment_db_version");
 	}
 }

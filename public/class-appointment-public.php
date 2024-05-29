@@ -9,7 +9,6 @@
  * @subpackage Appointment/public
  */
 
-require_once(__DIR__ . '/Widgets/Appointment_Widget.php');
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 use Twig\Loader\FilesystemLoader;
@@ -83,12 +82,6 @@ class Appointment_Public {
 		//init twig
       $this->twig = new Environment(new FilesystemLoader(__DIR__.'/templates/'));
 		$this->twig->addExtension(new TranslationExtension($this->translator));
-
-		add_action('widgets_init', function()
-		{
-			return register_widget('Appointment_Widget');
-		});
-
 	}
 
 	/**
@@ -109,9 +102,6 @@ class Appointment_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/appointment-public.css', array(), $this->version, 'all' );
-
 	}
 
 	/**
@@ -167,16 +157,15 @@ class Appointment_Public {
 	 * returns res from table appointment
 	 * @return array
 	 */
-	public function findById($id):array {
+	public function findById($id): array {
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'appointment';
-		$res = $wpdb->get_results("SELECT * FROM $table_name WHERE id = $id");
-		if(count($res)>0) {
+		$res = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}appointment WHERE id = %d", $id));
+		if (count($res) > 0) {
 			return (array) $res[0];
 		} else {
 			return [];
 		}
-
 	}
+
 
 }

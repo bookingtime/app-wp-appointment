@@ -188,7 +188,7 @@ class Appointment {
 		//check if user is logged in
 		if(is_user_logged_in() && isset($_GET['page']) && $_GET['page'] === 'appointment-getbookingtimepageurls') {
 			$plugin_admin = new Appointment_Admin( $this->get_plugin_name(), $this->get_version() );
-			echo $plugin_admin->appointment_getbookingtimepageurls();
+			echo esc_html($plugin_admin->appointment_getbookingtimepageurls());
 			die();
 		}
 

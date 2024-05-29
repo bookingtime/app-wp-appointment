@@ -1,6 +1,6 @@
 === bookingtime appointment ===
 Contributors: bookingtime
-Tags: appointment,booking,service,wordpress,backend,plugin,content,responsive,bootstrap,Api,appointment,calendar,event,Twig,Frontend,booking,bookingtime,date,ics,reservation,scheduling,cms,week,WORDPRESS CMS
+Tags: appointment,booking,appointment,calendar,event
 Donate link: https://www.bookingtime.com/
 Requires at least: 6.0
 Tested up to: 6.4

@@ -122,7 +122,6 @@
 				<source>step2.form.sector.prependOptionLabel</source>
 				<target>Bitte wählen</target>
 			</trans-unit>
-
 			<trans-unit id="edit.header">
 				<source>edit.header</source>
 				<target>Details Ihrer Buchungsseite</target>
@@ -167,7 +166,6 @@
 				<source>add_edit.form.button.cancel</source>
 				<target>Abbrechen</target>
 			</trans-unit>
-
 			<trans-unit id="documentation.h5.1">
 				<source>documentation.h5.1</source>
 				<target>So finden Sie die URL Ihrer Buchungsseite</target>
@@ -236,7 +234,6 @@
 				<source>flashmessage.validateTitle.title</source>
 				<target>Name validation failed!</target>
 			</trans-unit>
-
 			<trans-unit id="step3.h3.1">
 				<source>step3.h3.1</source>
 				<target>bookingtime erfolgreich angelegt!</target>
