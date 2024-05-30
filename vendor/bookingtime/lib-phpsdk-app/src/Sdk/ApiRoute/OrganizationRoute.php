@@ -9,7 +9,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
 /**
  * handle specific API requests
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class OrganizationRoute extends Route {
 
@@ -66,6 +66,21 @@ class OrganizationRoute extends Route {
 	public function show(array $urlParameter,$expectedResponseCode) {
 		//check submitted parameters
 		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make mock request with dummi content
+		if($this->httpClient->getMock()) {
+			$response=$this->httpClient->mockRequest('GET','organization/organization/list',$expectedResponseCode,[
+				'class'=>'ORGANIZATION',
+				'id'=>'f6XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+				'customId'=>'ABC123-12345678',
+				'name'=>'Max Mustermann',
+				'timestampAdd'=>'2024-01-03T17:43:52+01:00',
+				'organizationList'=>[],
+			],[
+				['class'=>'MESSAGE','type'=>'success','parameter'=>NULL,'text'=>''],
+			]);
+			return $response['content'];
+		}
 
 		//make request to API
 		$this->checkUrlParameters(['organizationId'],$urlParameter);
@@ -189,6 +204,32 @@ class OrganizationRoute extends Route {
 		//check submitted parameters
 		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
 
+		//make mock request with dummi content
+		if($this->httpClient->getMock()) {
+			$response=$this->httpClient->mockRequest('GET','app/organization/list',$expectedResponseCode,[
+				'class'=>'LIST',
+				'recordList'=>[
+					[
+						'class'=>'ORGANIZATION_SHORT',
+						'id'=>'f6XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+						'customId'=>'111111111',
+						'name'=>'Max Mustermann',
+						'organizationList'=>[],
+					],
+					[
+						'class'=>'ORGANIZATION_SHORT',
+						'id'=>'f6XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+						'customId'=>'999999999',
+						'name'=>'Max Mustermann',
+						'organizationList'=>[],
+					],
+				],
+			],[
+				['class'=>'MESSAGE','type'=>'success','parameter'=>NULL,'text'=>''],
+			]);
+			return $response['content'];
+		}
+
 		//make request to API
 		$this->checkUrlParameters(['appId',],$urlParameter);
 		$response=$this->httpClient->request('GET','/app/'.$urlParameter['appId'].'/organization/list',[],$expectedResponseCode);
@@ -219,6 +260,26 @@ class OrganizationRoute extends Route {
 
 
 	/**
+	 * availability listDay
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function availabilityListDay(array $urlParameter,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId'],$urlParameter);
+		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/availability/year/'.$urlParameter['year'].'/month/'.$urlParameter['month'].'/day/'.$urlParameter['day'].'/listDay',[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
 	 * availability listWeek
 	 *
 	 * @param	array		$urlParameter: list of url paramerts like ids
@@ -232,6 +293,26 @@ class OrganizationRoute extends Route {
 		//make request to API
 		$this->checkUrlParameters(['organizationId'],$urlParameter);
 		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/availability/year/'.$urlParameter['year'].'/week/'.$urlParameter['week'].'/listWeek',[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * availability listMonth
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function availabilityListMonth(array $urlParameter,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId'],$urlParameter);
+		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/availability/year/'.$urlParameter['year'].'/month/'.$urlParameter['month'].'/listMonth',[],$expectedResponseCode);
 		#die(BasicLib::debug($response));
 		return $response['content'];
 	}
@@ -415,6 +496,32 @@ class OrganizationRoute extends Route {
 	public function subOrganizationList(array $urlParameter,$expectedResponseCode) {
 		//check submitted parameters
 		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make mock request with dummi content
+		if($this->httpClient->getMock()) {
+			$response=$this->httpClient->mockRequest('GET','organization/organization/list',$expectedResponseCode,[
+				'class'=>'LIST',
+				'recordList'=>[
+					[
+						'class'=>'ORGANIZATION_SHORT',
+						'id'=>'f6XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+						'customId'=>'ABC123-12345678',
+						'name'=>'Max Mustermann',
+						'organizationList'=>[],
+					],
+					[
+						'class'=>'ORGANIZATION_SHORT',
+						'id'=>'f6XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+						'customId'=>'DEF456-12345678',
+						'name'=>'Maxi Musterfrau',
+						'organizationList'=>[],
+					],
+				],
+			],[
+				['class'=>'MESSAGE','type'=>'success','parameter'=>NULL,'text'=>''],
+			]);
+			return $response['content'];
+		}
 
 		//make request to API
 		$this->checkUrlParameters(['organizationId',],$urlParameter);

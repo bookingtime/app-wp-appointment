@@ -10,7 +10,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
 /**
  * a test
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class SdkTest extends TestCase {
 
@@ -40,7 +40,7 @@ class SdkTest extends TestCase {
 				['key'=>'appSetting5_time','value'=>'09:33:00'],
 				['key'=>'appSetting6_dateTime','value'=>'2021-09-29T12:00:00+01:00'],
 				['key'=>'appSetting7_color','value'=>'#ffcc00'],
-				['key'=>'appSetting9_email','value'=>'developmentdev@bookingtime.com'],
+				['key'=>'appSetting9_email','value'=>'testest@bookingtime.com'],
 				['key'=>'appSetting10_mobile','value'=>'+4917012345678'],
 				['key'=>'appSetting11_url','value'=>'http://www.musterfirma.de'],
 				['key'=>'appSetting12_number','value'=>'123457'],
@@ -94,29 +94,28 @@ class SdkTest extends TestCase {
 		$this->assertEquals($appointment['mock-content'],1);
 		$appointment=$sdk->appointment_identify(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customId'=>'123']);
 		$this->assertEquals($appointment['mock-content'],1);
-		$appointmentArray=$sdk->appointment_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'2']);#page optional
-		$this->assertEquals($appointmentArray['mock-content'],1);
-		$appointmentArray=$sdk->appointment_indexAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'1']);#page optional
-		$this->assertEquals($appointmentArray['mock-content'],1);
-		$appointmentArray=$sdk->appointment_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'2']);#page optional
-		$this->assertEquals($appointmentArray['mock-content'],1);
-		$appointmentArray=$sdk->appointment_filterAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'1']);#page optional
-		$this->assertEquals($appointmentArray['mock-content'],1);
-		$appointmentArray=$sdk->appointment_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($appointmentArray['mock-content'],1);
 		$appointmentArray=$sdk->appointment_listDay(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'9','day'=>'28']);
 		$this->assertEquals($appointmentArray['mock-content'],1);
 		$appointmentArray=$sdk->appointment_listWeek(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','week'=>'39']);
 		$this->assertEquals($appointmentArray['mock-content'],1);
 		$appointmentArray=$sdk->appointment_listMonth(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'9']);
-		$this->assertEquals($appointmentArray['mock-content'],1);
-		$appointmentArray=$sdk->appointment_listAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($appointmentArray['mock-content'],1);
+		$this->assertEquals($appointmentArray['class'],'RANGE_LIST');
+		$appointmentArray=$sdk->appointment_bookingResourceReplaceList(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentId'=>'edxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($appointmentArray['class'],'BOOKING_RESOURCE_REPLACE');
 		$data=['notes'=>'Test Appointment edited'];
 		$appointment=$sdk->appointment_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentId'=>'edxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($appointment['mock-content'],1);
+		$data=['bookingSlotId'=>'4fxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'];
+		$appointment=$sdk->appointment_move(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentId'=>'edxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
+		$this->assertEquals($appointment['mock-content'],1);
 		$appointment=$sdk->appointment_cancel(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentId'=>'edxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($appointment['mock-content'],1);
+		$appointmentArray=$sdk->appointment_customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
+		$this->assertEquals($appointmentArray['mock-content'],1);
+		$appointmentArray=$sdk->appointment_customEntity_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
+		$this->assertEquals($appointmentArray['mock-content'],1);
+		$appointmentArray=$sdk->appointment_customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($appointmentArray['mock-content'],1);
 		$appointmentArray=$sdk->appointment_customer_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'1']);
 		$this->assertEquals($appointmentArray['mock-content'],1);
 		$appointmentArray=$sdk->appointment_customer_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'2']);
@@ -136,6 +135,12 @@ class SdkTest extends TestCase {
 		$appointmentTemplateArray=$sdk->appointmentTemplate_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($appointmentTemplateArray['mock-content'],1);
 		$appointmentTemplateArray=$sdk->appointmentTemplate_listAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($appointmentTemplateArray['mock-content'],1);
+		$appointmentTemplateArray=$sdk->appointmentTemplate_customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
+		$this->assertEquals($appointmentTemplateArray['mock-content'],1);
+		$appointmentTemplateArray=$sdk->appointmentTemplate_customEntity_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
+		$this->assertEquals($appointmentTemplateArray['mock-content'],1);
+		$appointmentTemplateArray=$sdk->appointmentTemplate_customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
 		$this->assertEquals($appointmentTemplateArray['mock-content'],1);
 
 		#APPOINTMENTTEMPLATESIMPLE
@@ -242,6 +247,25 @@ class SdkTest extends TestCase {
 		$appointmentTemplateComplex=$sdk->appointmentTemplate_delete(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'eaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($appointmentTemplateComplex['mock-content'],1);
 
+		#APPOINTMENTTEMPLATE_EVENT_DATE_TIME
+		$data=[
+			'customId'=>'sdk1test',
+			'start'=>'2024-10-29T12:00:00+01:00',
+			'bookingResourceIdList'=>['brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],
+			'appointmentEventAttendanceCountMax'=>10,
+		];
+		$appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_add(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'6txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
+		$this->assertEquals($appointmentTemplateEventDateTime['mock-content'],1);
+		$data=['customId'=>'sdk1testedited'];
+		$appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'6txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateEventDateTimeId'=>'psxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
+		$this->assertEquals($appointmentTemplateEventDateTime['mock-content'],1);
+		$appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_delete(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'6txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateEventDateTimeId'=>'psxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($appointmentTemplateEventDateTime['mock-content'],1);
+		$appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_bookingResource_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'6txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateEventDateTimeId'=>'psxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($appointmentTemplateEventDateTime['mock-content'],1);
+		$appointmentTemplateEventDateTime=$sdk->appointmentTemplateEventDateTime_bookingResource_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'6txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateEventDateTimeId'=>'psxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($appointmentTemplateEventDateTime['mock-content'],1);
+
 		#APPOINTMENTTEMPLATESTEP
 		$data=[
 			'name'=>'Buchungsschritt',
@@ -323,6 +347,18 @@ class SdkTest extends TestCase {
 		$this->assertEquals($bookingResourceArray['mock-content'],1);
 		$bookingResourceArray=$sdk->bookingResource_listAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($bookingResourceArray['mock-content'],1);
+		$bookingResourceArray=$sdk->bookingResource_availability_listDay(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'1','day'=>'30']);
+		$this->assertEquals($bookingResourceArray['class'],'RANGE_LIST');
+		$bookingResourceArray=$sdk->bookingResource_availability_listWeek(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','week'=>'41']);
+		$this->assertEquals($bookingResourceArray['class'],'RANGE_LIST');
+		$bookingResourceArray=$sdk->bookingResource_availability_listMonth(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'1']);
+		$this->assertEquals($bookingResourceArray['class'],'RANGE_LIST');
+		$bookingResourceArray=$sdk->bookingResource_customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
+		$this->assertEquals($bookingResourceArray['mock-content'],1);
+		$bookingResourceArray=$sdk->bookingResource_customEntity_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
+		$this->assertEquals($bookingResourceArray['mock-content'],1);
+		$bookingResourceArray=$sdk->bookingResource_customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($bookingResourceArray['mock-content'],1);
 
 		#BOOKINGSLOT
 		$bookingSlotArray=$sdk->bookingSlot_earliest(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingTemplateId'=>'fcxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
@@ -357,6 +393,12 @@ class SdkTest extends TestCase {
 		$this->assertEquals($bookingTemplateArray['mock-content'],1);
 		$bookingTemplateArray=$sdk->bookingTemplate_bookingResource_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($bookingTemplateArray['mock-content'],1);
+		$bookingTemplateArray=$sdk->bookingTemplate_customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
+		$this->assertEquals($bookingTemplateArray['mock-content'],1);
+		$bookingTemplateArray=$sdk->bookingTemplate_customEntity_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
+		$this->assertEquals($bookingTemplateArray['mock-content'],1);
+		$bookingTemplateArray=$sdk->bookingTemplate_customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($bookingTemplateArray['mock-content'],1);
 
 		#CONRACTACCOUNT
 		$data=[
@@ -372,7 +414,7 @@ class SdkTest extends TestCase {
 				'firstName'=>'Max',
 				'lastName'=>'Mustermann',
 				'email'=>'dk@acme-gmbh.de',
-				'mobile'=>'+491737660334',
+				'mobile'=>'+491701234567',
 			],
 
 			'contactPerson'=>[
@@ -382,7 +424,7 @@ class SdkTest extends TestCase {
 				'lastName'=>'Mustermann',
 				'telephone'=>'040/12345678',
 				'email'=>'dk@acme-gmbh.de',
-				'mobile'=>'+491737660334',
+				'mobile'=>'+491701234567',
 			],
 
 			'address'=>[
@@ -394,6 +436,7 @@ class SdkTest extends TestCase {
 				'country'=>'DE',
 			],
 			'invoiceEmail'=>'dk@acme-gmbh.de',
+			'memberList'=>[],
 		];
 		$contractAccount=$sdk->contractAccount_add([],$data);
 		$this->assertEquals($contractAccount['mock-content'],1);
@@ -401,11 +444,11 @@ class SdkTest extends TestCase {
 		#CUSTOMENTITY
 		$data=['customId'=>'667','name'=>'CB Testentity'];
 		$customEntity=$sdk->customEntity_add(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar'],$data);
-		$this->assertEquals($customEntity['mock-content'],1);
+		$this->assertEquals($customEntity['class'],'CUSTOM_ENTITY_SHORT');
 		$customEntity=$sdk->customEntity_show(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($customEntity['mock-content'],1);
+		$this->assertEquals($customEntity['class'],'CUSTOM_ENTITY');
 		$customEntity=$sdk->customEntity_identify(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customId'=>'666']);
-		$this->assertEquals($customEntity['mock-content'],1);
+		$this->assertEquals($customEntity['class'],'CUSTOM_ENTITY');
 		$customEntityArray=$sdk->customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'2']);#page optional
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_indexAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);#page optional
@@ -415,9 +458,9 @@ class SdkTest extends TestCase {
 		$customEntityArray=$sdk->customEntity_filterAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'1']);#page optional
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
-		$this->assertEquals($customEntityArray['mock-content'],1);
+		$this->assertEquals($customEntityArray['class'],'LIST');
 		$customEntityArray=$sdk->customEntity_listAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
-		$this->assertEquals($customEntityArray['mock-content'],1);
+		$this->assertEquals($customEntityArray['class'],'LIST');
 		$data=['notes'=>'Test customEntity edited'];
 		$customEntity=$sdk->customEntity_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar'],$data);
 		$this->assertEquals($customEntity['mock-content'],1);
@@ -429,11 +472,19 @@ class SdkTest extends TestCase {
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_appointment_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentId'=>'edxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_appointment_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentId'=>'edxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_appointment_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentId'=>'edxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_appointmentTemplate_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'eaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_appointmentTemplate_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'eaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_appointmentTemplate_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'eaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_appointmentTemplate_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'eaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_appointmentTemplate_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'eaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_bookingResource_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
@@ -441,11 +492,19 @@ class SdkTest extends TestCase {
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_bookingResource_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_bookingResource_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_bookingResource_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_bookingTemplate_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingTemplateId'=>'fcxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_bookingTemplate_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingTemplateId'=>'fcxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_bookingTemplate_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingTemplateId'=>'fcxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_bookingTemplate_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingTemplateId'=>'fcxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_bookingTemplate_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','bookingTemplateId'=>'fcxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
@@ -453,11 +512,19 @@ class SdkTest extends TestCase {
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_customEntity_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityRelatedId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_customEntity_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityRelatedId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_customer_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_customer_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_customer_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_customer_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_customer_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_employee_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
@@ -465,11 +532,19 @@ class SdkTest extends TestCase {
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_employee_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_employee_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_employee_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_resource_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_resource_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 		$customEntityArray=$sdk->customEntity_resource_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_resource_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($customEntityArray['mock-content'],1);
+		$customEntityArray=$sdk->customEntity_resource_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($customEntityArray['mock-content'],1);
 
 		#CUSTOMER
@@ -477,7 +552,7 @@ class SdkTest extends TestCase {
 			'firstName'=>'Kunde',
 			'lastName'=>'van Test',
 			'gender'=>'FEMALE',
-			'email'=>'c.bott@bookingtime.com',
+			'email'=>'support@bookingtime.com',
 			'locale'=>'de',
 		];
 		$customer=$sdk->customer_add(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
@@ -501,6 +576,12 @@ class SdkTest extends TestCase {
 		$data=['notes'=>'test edit'];
 		$customer=$sdk->customer_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($customer['mock-content'],1);
+		$customerArray=$sdk->customer_customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
+		$this->assertEquals($customerArray['mock-content'],1);
+		$customerArray=$sdk->customer_customEntity_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
+		$this->assertEquals($customerArray['mock-content'],1);
+		$customerArray=$sdk->customer_customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($customerArray['mock-content'],1);
 		$customer=$sdk->customer_customerGroup_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerGroupId'=>'7bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($customer['mock-content'],1);
 		$customer=$sdk->customer_customerGroup_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerId'=>'d3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customerGroupId'=>'7bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
@@ -604,7 +685,7 @@ class SdkTest extends TestCase {
 			'firstName'=>'CB',
 			'lastName'=>'van Test',
 			'gender'=>'MALE',
-			'email'=>'c.bott@bookingtime.com',
+			'email'=>'support@bookingtime.com',
 			'description'=>['value'=>'Das ist ein Mitarbeiter','inheritance'=>'OFF'],
 			'descriptionI18nList'=>['value'=>[['key'=>'en','value'=>'This is an employee']],'inheritance'=>'OFF'],
 		];
@@ -623,19 +704,29 @@ class SdkTest extends TestCase {
 		$employeeArray=$sdk->employee_filterAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'1']);#page optional
 		$this->assertEquals($employeeArray['mock-content'],1);
 		$employeeArray=$sdk->employee_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($employeeArray['mock-content'],1);
+		$this->assertEquals($employeeArray['class'],'LIST');
 		$employeeArray=$sdk->employee_listAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($employeeArray['mock-content'],1);
+		$this->assertEquals($employeeArray['class'],'LIST');
 		$employee=$sdk->employee_permission(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($emailTemplate['mock-content'],1);
 		$data=['notes'=>'test edit'];
 		$employee=$sdk->employee_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($employee['mock-content'],1);
+		$employeeArray=$sdk->employee_customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
+		$this->assertEquals($employeeArray['mock-content'],1);
+		$employeeArray=$sdk->employee_customEntity_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
+		$this->assertEquals($employeeArray['mock-content'],1);
+		$employeeArray=$sdk->employee_customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($employeeArray['mock-content'],1);
 		$employee=$sdk->employee_employeeGroup_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeGroupId'=>'jsxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($employee['mock-content'],1);
 		$employee=$sdk->employee_employeeGroup_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeGroupId'=>'jsxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($employee['mock-content'],1);
+		$employee=$sdk->employee_availability_listDay(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'1','day'=>'01']);
+		$this->assertEquals($employee['mock-content'],1);
 		$employee=$sdk->employee_availability_listWeek(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','week'=>'41']);
+		$this->assertEquals($employee['mock-content'],1);
+		$employee=$sdk->employee_availability_listMonth(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'1']);
 		$this->assertEquals($employee['mock-content'],1);
 		$data=['rangeStart'=>'2021-11-11T12:00:00+02:00','rangeEnd'=>'2021-11-19T19:00:00+02:00','availability'=>[['start'=>'2021-11-11T12:00:00+02:00','end'=>'2021-11-11T12:30:00+02:00']]];
 		$employee=$sdk->employee_availability_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
@@ -657,15 +748,9 @@ class SdkTest extends TestCase {
 		$this->assertEquals($employeeGroup['mock-content'],1);
 		$employeeGroupArray=$sdk->employeeGroup_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'1']);#page optional
 		$this->assertEquals($employeeGroupArray['mock-content'],1);
-		$employeeGroupArray=$sdk->employeeGroup_indexAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'1']);#page optional
-		$this->assertEquals($employeeGroupArray['mock-content'],1);
 		$employeeGroupArray=$sdk->employeeGroup_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'1']);#page optional
 		$this->assertEquals($employeeGroupArray['mock-content'],1);
-		$employeeGroupArray=$sdk->employeeGroup_filterAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'1']);#page optional
-		$this->assertEquals($employeeGroupArray['mock-content'],1);
 		$employeeGroupArray=$sdk->employeeGroup_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($employeeGroupArray['mock-content'],1);
-		$employeeGroupArray=$sdk->employeeGroup_listAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($employeeGroupArray['mock-content'],1);
 		$data=['name'=>'CB Mitarbeitergruppe Test edited'];
 		$employeeGroup=$sdk->employeeGroup_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','employeeGroupId'=>'jsxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
@@ -689,7 +774,7 @@ class SdkTest extends TestCase {
 		$file=$sdk->file_show(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','fileId'=>'w1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($file['mock-content'],1);
 		$file=$sdk->file_download(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','fileId'=>'w1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($file['mock-content'],1);
+		$this->assertEquals($file['content']['mock-content'],1);
 		$file=$sdk->file_identify(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customId'=>'123']);
 		$this->assertEquals($file['mock-content'],1);
 		$fileArray=$sdk->file_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'2']);#page optional
@@ -783,7 +868,7 @@ class SdkTest extends TestCase {
 				['key'=>'moduleSetting5_time','value'=>'09:33:00'],
 				['key'=>'moduleSetting6_dateTime','value'=>'2021-09-29T12:00:00+01:00'],
 				['key'=>'moduleSetting7_color','value'=>'#ffcc00'],
-				['key'=>'moduleSetting9_email','value'=>'developmentdev@bookingtime.com'],
+				['key'=>'moduleSetting9_email','value'=>'devtest@bookingtime.com'],
 				['key'=>'moduleSetting10_mobile','value'=>'+4917012345678'],
 				['key'=>'moduleSetting11_url','value'=>'http://wwwmusterfirma.de'],
 				['key'=>'moduleSetting12_number','value'=>'123456'],
@@ -814,6 +899,10 @@ class SdkTest extends TestCase {
 		$data=['name'=>'Test Module edited2'];
 		$moduleConfig=$sdk->moduleConfig_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','moduleConfigId'=>'5fxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($moduleConfig['mock-content'],1);
+		$moduleConfig=$sdk->moduleConfig_appointmentTemplate_link(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','moduleConfigId'=>'5fxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'eaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($moduleConfig['mock-content'],1);
+		$moduleConfig=$sdk->moduleConfig_appointmentTemplate_unlink(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','moduleConfigId'=>'5fxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','appointmentTemplateId'=>'eaxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($moduleConfig['mock-content'],1);
 		$moduleConfig=$sdk->moduleConfig_delete(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','moduleConfigId'=>'5fxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($moduleConfig['mock-content'],1);
 
@@ -826,6 +915,43 @@ class SdkTest extends TestCase {
 		$this->assertEquals($moduleArray['mock-content'],1);
 		$moduleArray=$sdk->module_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($moduleArray['mock-content'],1);
+
+		#ONLINEMEETINGCONNECTION
+		$data=[
+			'type'=>'TEAMS',
+			'email'=>'c.scheerer@bookingtime.com',
+			'bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+			'customId'=>'111',
+		];
+		$onlineMeetingConnection=$sdk->onlineMeetingConnection_add(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
+		$this->assertEquals($onlineMeetingConnection['mock-content'],1);
+		$onlineMeetingConnection=$sdk->onlineMeetingConnection_show(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','onlineMeetingConnectionId'=>'bKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($onlineMeetingConnection['mock-content'],1);
+		$onlineMeetingConnection=$sdk->onlineMeetingConnection_identify(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customId'=>'666']);
+		$this->assertEquals($onlineMeetingConnection['mock-content'],1);
+		$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'2']);#page optional
+		$this->assertEquals($onlineMeetingConnectionArray['mock-content'],1);
+		$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_indexAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'1']);#page optional
+		$this->assertEquals($onlineMeetingConnectionArray['mock-content'],1);
+		$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'2']);#page optional
+		$this->assertEquals($onlineMeetingConnectionArray['mock-content'],1);
+		$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_filterAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'1']);#page optional
+		$this->assertEquals($onlineMeetingConnectionArray['mock-content'],1);
+		$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($onlineMeetingConnectionArray['mock-content'],1);
+		$onlineMeetingConnectionArray=$sdk->onlineMeetingConnection_listAll(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($onlineMeetingConnectionArray['mock-content'],1);
+		$data=['name'=>'Test Module edited2'];
+		$onlineMeetingConnection=$sdk->onlineMeetingConnection_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','onlineMeetingConnectionId'=>'bKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
+		$this->assertEquals($onlineMeetingConnection['mock-content'],1);
+		$onlineMeetingConnection=$sdk->onlineMeetingConnection_delete(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','onlineMeetingConnectionId'=>'bKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($onlineMeetingConnection['mock-content'],1);
+
+		#ONLINEMEETINGCONNECTIONLOG
+		$onlineMeetingConnectionLog=$sdk->onlineMeetingConnectionLog_show(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','onlineMeetingConnectionId'=>'bKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','onlineMeetingConnectionLogId'=>'v6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$this->assertEquals($onlineMeetingConnectionLog['mock-content'],1);
+		$onlineMeetingConnectionLogArray=$sdk->onlineMeetingConnectionLog_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','onlineMeetingConnectionId'=>'bKxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'2']);#page optional
+		$this->assertEquals($onlineMeetingConnectionLogArray['mock-content'],1);
 
 		#ORGANIZATION
 		$data=[
@@ -904,7 +1030,7 @@ class SdkTest extends TestCase {
 		$organization=$sdk->organization_copy(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($organization['mock-content'],1);
 		$organization=$sdk->organization_show(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($organization['mock-content'],1);
+		$this->assertEquals($organization['class'],'ORGANIZATION');
 		$data=['name'=>'CB Test Orga edited',];
 		$organization=$sdk->organization_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($organization['mock-content'],1);
@@ -916,10 +1042,14 @@ class SdkTest extends TestCase {
 		$organization=$sdk->organization_app_filter(['appId'=>'70xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'1']);#page optional
 		$this->assertEquals($organization['mock-content'],1);
 		$organization=$sdk->organization_app_list(['appId'=>'70xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($organization['mock-content'],1);
+		$this->assertEquals($organization['class'],'LIST');
 		$organization=$sdk->organization_app_tree(['appId'=>'70xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($organization['mock-content'],1);
+		$organization=$sdk->organization_availability_listDay(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'1','day'=>'30']);
+		$this->assertEquals($organization['mock-content'],1);
 		$organization=$sdk->organization_availability_listWeek(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','week'=>'41']);
+		$this->assertEquals($organization['mock-content'],1);
+		$organization=$sdk->organization_availability_listMonth(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'1']);
 		$this->assertEquals($organization['mock-content'],1);
 		$data=['rangeStart'=>'2021-11-11T12:00:00+02:00','rangeEnd'=>'2021-11-19T19:00:00+02:00','availability'=>[['start'=>'2021-11-11T12:00:00+02:00','end'=>'2021-11-11T12:30:00+02:00']]];
 		$organization=$sdk->organization_availability_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
@@ -1022,7 +1152,7 @@ class SdkTest extends TestCase {
 		$organization=$sdk->organization_subOrganization_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'1']);#page optional
 		$this->assertEquals($organization['mock-content'],1);
 		$organization=$sdk->organization_subOrganization_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($organization['mock-content'],1);
+		$this->assertEquals($organization['class'],'LIST');
 		$organization=$sdk->organization_subOrganization_tree(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($organization['mock-content'],1);
 		$organization=$sdk->organization_timeGrid_listWeek(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','week'=>'41']);
@@ -1030,7 +1160,7 @@ class SdkTest extends TestCase {
 		$data=['rangeStart'=>'2021-11-11T12:00:00+02:00','rangeEnd'=>'2021-11-19T19:00:00+02:00','timeGrid'=>['2021-11-11T12:00:00+02:00','2021-11-11T12:30:00+02:00']];
 		$organization=$sdk->organization_timeGrid_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($organization['mock-content'],1);
-		$organization=$sdk->organization_delete(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','organizationId'=>'Ehxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
+		$organization=$sdk->organization_delete(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($organization['mock-content'],1);
 
 		#PACKET
@@ -1074,11 +1204,21 @@ class SdkTest extends TestCase {
 		$data=['name'=>'Resource Testedited'];
 		$resource=$sdk->resource_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($resourceArray['mock-content'],1);
+		$resource=$sdk->resource_availability_listDay(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'1','day'=>'30']);
+		$this->assertEquals($resourceArray['mock-content'],1);
 		$resource=$sdk->resource_availability_listWeek(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','week'=>'41']);
+		$this->assertEquals($resourceArray['mock-content'],1);
+		$resource=$sdk->resource_availability_listMonth(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'1']);
 		$this->assertEquals($resourceArray['mock-content'],1);
 		$data=['rangeStart'=>'2021-11-11T12:00:00+02:00','rangeEnd'=>'2021-11-19T19:00:00+02:00','availability'=>[['start'=>'2021-11-11T12:00:00+02:00','end'=>'2021-11-11T12:30:00+02:00']]];
 		$resource=$sdk->resource_availability_edit(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($resource['mock-content'],1);
+		$resourceArray=$sdk->resource_customEntity_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','page'=>'1']);
+		$this->assertEquals($resourceArray['mock-content'],1);
+		$resourceArray=$sdk->resource_customEntity_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar','searchQuery'=>'test','page'=>'2']);
+		$this->assertEquals($resourceArray['mock-content'],1);
+		$resourceArray=$sdk->resource_customEntity_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityId'=>'6Txxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','customEntityType'=>'rentalCar']);
+		$this->assertEquals($resourceArray['mock-content'],1);
 		$resource=$sdk->resource_delete(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','resourceId'=>'73xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($resource['mock-content'],1);
 
@@ -1088,7 +1228,7 @@ class SdkTest extends TestCase {
 			'customId'=>'test',
 			'category'=>'APPOINTMENT_LIST',
 			'sendingInterval'=>'WEEKLY',
-			'recipientEmailList'=>['development@bookingtime.com'],
+			'recipientEmailList'=>['support@bookingtime.com'],
 		];
 		$reportingJob=$sdk->reportingJob_add(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'],$data);
 		$this->assertEquals($reportingJob['mock-content'],1);
@@ -1197,13 +1337,15 @@ class SdkTest extends TestCase {
 		$this->assertEquals($sectorList['mock-content'],1);
 		$timeZoneList=$sdk->static_timeZone_list([]);
 		$this->assertEquals($timeZoneList['mock-content'],1);
+		$organizationTemplateDataList=$sdk->static_organizationTemplateData_list([]);
+		$this->assertEquals($organizationTemplateDataList['mock-content'],1);
 
 		#SYNCHRONIZATION
 		$data=[
-			'bookingResourceId'=>'brOayV9d7lcj5vjeG0Pl1qFuK92v4Uaf',
+			'bookingResourceId'=>'brxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
 			'type'=>'GRAPH',
 			'customId'=>'888',
-			'email'=>'d.kokot@bookingtime.com',
+			'email'=>'support@bookingtime.com',
 			'externalCalendarContentStaff'=>[
 				'value'=>'',
 				'inheritance'=>'ORGANIZATION',
@@ -1240,21 +1382,6 @@ class SdkTest extends TestCase {
 		$this->assertEquals($synchronization['mock-content'],1);
 		$synchronization=$sdk->synchronization_reset(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','synchronizationId'=>'A7xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
 		$this->assertEquals($synchronization['mock-content'],1);
-
-		#SYNCHRONIZATION_APPOINTMENT
-		$synchronizationAppointment=$sdk->synchronizationAppointment_show(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','synchronizationAppointmentId'=>'A7xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($synchronizationAppointment['mock-content'],1);
-		$synchronizationAppointmentArray=$sdk->synchronizationAppointment_index(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','page'=>'1']);#page optional
-		$this->assertEquals($synchronizationAppointmentArray['mock-content'],1);
-		$synchronizationAppointmentArray=$sdk->synchronizationAppointment_filter(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','searchQuery'=>'test','page'=>'1']);#page optional
-		$this->assertEquals($synchronizationAppointmentArray['mock-content'],1);
-		$synchronizationAppointmentArray=$sdk->synchronizationAppointment_list(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);
-		$this->assertEquals($synchronizationAppointmentArray['mock-content'],1);
-		$synchronizationAppointmentArray=$sdk->synchronizationAppointment_listDay(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'9','day'=>'28']);
-		$this->assertEquals($synchronizationAppointmentArray['mock-content'],1);
-		$synchronizationAppointmentArray=$sdk->synchronizationAppointment_listWeek(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','week'=>'39']);
-		$this->assertEquals($synchronizationAppointmentArray['mock-content'],1);
-		$synchronizationAppointmentArray=$sdk->synchronizationAppointment_listMonth(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','year'=>'2021','month'=>'9']);
 
 		#SYNCHRONIZATION_LOG
 		$synchronizationLog=$sdk->synchronizationLog_show(['organizationId'=>'f6xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','synchronizationId'=>'A7xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','synchronizationLogId'=>'7qxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx']);

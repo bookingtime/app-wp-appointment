@@ -9,7 +9,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
 /**
  * handle specific API requests
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class CustomEntityRoute extends Route {
 
@@ -26,6 +26,20 @@ class CustomEntityRoute extends Route {
 	public function add(array $urlParameter,array $requestContent,$expectedResponseCode) {
 		//check submitted parameters
 		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make mock request with dummi content
+		if($this->httpClient->getMock()) {
+			$response=$this->httpClient->mockRequest('GET','customEntity/identify',$expectedResponseCode,[
+				'class'=>'CUSTOM_ENTITY_SHORT',
+				'id'=>'6TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+				'customId'=>'444444444',
+				'name'=>'VW Polo',
+				'organizationId'=>'f6XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+			],[
+				['class'=>'MESSAGE','type'=>'success','parameter'=>NULL,'text'=>''],
+			]);
+			return $response['content'];
+		}
 
 		//make request to API
 		$this->checkUrlParameters(['organizationId','customEntityType'],$urlParameter);
@@ -47,6 +61,25 @@ class CustomEntityRoute extends Route {
 		//check submitted parameters
 		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
 
+		//make mock request with dummi content
+		if($this->httpClient->getMock()) {
+			$response=$this->httpClient->mockRequest('GET','customEntity/identify',$expectedResponseCode,[
+				'class'=>'CUSTOM_ENTITY',
+				'id'=>'6TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+				'customId'=>'111111111',
+				'timestampAdd'=>'23-12-08T11:01:16+01:00',
+				'timestampEdit'=>'',
+				'type'=>'rentalCar',
+				'name'=>'Audi S5',
+				'notes'=>'Beautiful car',
+				'organizationId'=>'f6XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+				'additionalData'=>[],
+			],[
+				['class'=>'MESSAGE','type'=>'success','parameter'=>NULL,'text'=>''],
+			]);
+			return $response['content'];
+		}
+
 		//make request to API
 		$this->checkUrlParameters(['organizationId','customEntityType','customEntityId'],$urlParameter);
 		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/show',[],$expectedResponseCode);
@@ -66,6 +99,25 @@ class CustomEntityRoute extends Route {
 	public function identify(array $urlParameter,$expectedResponseCode) {
 		//check submitted parameters
 		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make mock request with dummi content
+		if($this->httpClient->getMock()) {
+			$response=$this->httpClient->mockRequest('GET','customEntity/identify',$expectedResponseCode,[
+				'class'=>'CUSTOM_ENTITY',
+				'id'=>'6TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+				'customId'=>'111111111',
+				'timestampAdd'=>'23-12-08T11:01:16+01:00',
+				'timestampEdit'=>'',
+				'type'=>'rentalCar',
+				'name'=>'Audi S5',
+				'notes'=>'Beautiful car',
+				'organizationId'=>'f6XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+				'additionalData'=>[],
+			],[
+				['class'=>'MESSAGE','type'=>'success','parameter'=>NULL,'text'=>''],
+			]);
+			return $response['content'];
+		}
 
 		//make request to API
 		$this->checkUrlParameters(['organizationId','customId','customEntityType'],$urlParameter);
@@ -132,6 +184,31 @@ class CustomEntityRoute extends Route {
 		//check submitted parameters
 		BasicLib::checkType('boolean',$all,__METHOD__.'(): all');
 		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make mock request with dummi content
+		if($this->httpClient->getMock()) {
+			if($all==TRUE) {
+				$response=$this->httpClient->mockRequest('GET','customEntity/listAll',$expectedResponseCode,[
+					'class'=>'LIST',
+					'recordTotal'=>0,
+					'recordLimit'=>9999,
+					'recordList'=>[],
+				],[
+					['class'=>'MESSAGE','type'=>'success','parameter'=>NULL,'text'=>''],
+				]);
+				return $response['content'];
+			} else {
+				$response=$this->httpClient->mockRequest('GET','customEntity/list',$expectedResponseCode,[
+					'class'=>'LIST',
+					'recordTotal'=>0,
+					'recordLimit'=>9999,
+					'recordList'=>[],
+				],[
+					['class'=>'MESSAGE','type'=>'success','parameter'=>NULL,'text'=>''],
+				]);
+				return $response['content'];
+			}
+		}
 
 		//make request to API
 		$this->checkUrlParameters(['organizationId','customEntityType'],$urlParameter);
@@ -244,6 +321,28 @@ class CustomEntityRoute extends Route {
 
 
 	/**
+	 * link/unlink entity
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	boolean	$unlink: true - unlink | false - link
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function appointmentLink(array $urlParameter,$unlink,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','appointmentId','customEntityType','customEntityId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/appointment/'.$urlParameter['appointmentId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
 	 * appointmentTemplate index
 	 *
 	 * @param	array		$urlParameter: list of url paramerts like ids
@@ -297,6 +396,28 @@ class CustomEntityRoute extends Route {
 		//make request to API
 		$this->checkUrlParameters(['organizationId','appointmentTemplateId','customEntityType'],$urlParameter);
 		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/appointmentTemplate/'.$urlParameter['appointmentTemplateId'].'/customEntity/'.$urlParameter['customEntityType'].'/list',[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * link/unlink entity
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	boolean	$unlink: true - unlink | false - link
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function appointmentTemplateLink(array $urlParameter,$unlink,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','appointmentTemplateId','customEntityType','customEntityId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/appointmentTemplate/'.$urlParameter['appointmentTemplateId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
 		#die(BasicLib::debug($response));
 		return $response['content'];
 	}
@@ -364,6 +485,28 @@ class CustomEntityRoute extends Route {
 
 
 	/**
+	 * link/unlink entity
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	boolean	$unlink: true - unlink | false - link
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function bookingResourceLink(array $urlParameter,$unlink,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','bookingResourceId','customEntityType','customEntityId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/bookingResource/'.$urlParameter['bookingResourceId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
 	 * bookingTemplate index
 	 *
 	 * @param	array		$urlParameter: list of url paramerts like ids
@@ -417,6 +560,28 @@ class CustomEntityRoute extends Route {
 		//make request to API
 		$this->checkUrlParameters(['organizationId','bookingTemplateId','customEntityType'],$urlParameter);
 		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/bookingTemplate/'.$urlParameter['bookingTemplateId'].'/customEntity/'.$urlParameter['customEntityType'].'/list',[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * link/unlink entity
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	boolean	$unlink: true - unlink | false - link
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function bookingTemplateLink(array $urlParameter,$unlink,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','bookingTemplateId','customEntityType','customEntityId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/bookingTemplate/'.$urlParameter['bookingTemplateId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
 		#die(BasicLib::debug($response));
 		return $response['content'];
 	}
@@ -484,6 +649,28 @@ class CustomEntityRoute extends Route {
 
 
 	/**
+	 * link/unlink entity
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	boolean	$unlink: true - unlink | false - link
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function customEntityLink(array $urlParameter,$unlink,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','customEntityType','customEntityId','customEntityRelatedId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/customEntity/'.$urlParameter['customEntityId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityRelatedId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
 	 * customer index
 	 *
 	 * @param	array		$urlParameter: list of url paramerts like ids
@@ -544,6 +731,28 @@ class CustomEntityRoute extends Route {
 
 
 	/**
+	 * link/unlink entity
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	boolean	$unlink: true - unlink | false - link
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function customerLink(array $urlParameter,$unlink,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','customerId','customEntityType','customEntityId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/customer/'.$urlParameter['customerId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
 	 * employee index
 	 *
 	 * @param	array		$urlParameter: list of url paramerts like ids
@@ -597,6 +806,110 @@ class CustomEntityRoute extends Route {
 		//make request to API
 		$this->checkUrlParameters(['organizationId','employeeId','customEntityType'],$urlParameter);
 		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/employee/'.$urlParameter['employeeId'].'/customEntity/'.$urlParameter['customEntityType'].'/list',[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * link/unlink entity
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	boolean	$unlink: true - unlink | false - link
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function employeeLink(array $urlParameter,$unlink,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','employeeId','customEntityType','customEntityId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/employee/'.$urlParameter['employeeId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * file index
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function fileIndex(array $urlParameter,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','fileId','customEntityType','page'],$urlParameter);
+		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/file/'.$urlParameter['fileId'].'/customEntity/'.$urlParameter['customEntityType'].'/index/'.($urlParameter['page']?$urlParameter['page']:'1'),[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * file filter
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function fileFilter(array $urlParameter,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','fileId','customEntityType','page'],$urlParameter);
+		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/file/'.$urlParameter['fileId'].'/customEntity/'.$urlParameter['customEntityType'].'/filter/'.($urlParameter['page']?$urlParameter['page']:'1').'?searchQuery='.$urlParameter['searchQuery'],[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * file list
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function fileList(array $urlParameter,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','fileId','customEntityType'],$urlParameter);
+		$response=$this->httpClient->request('GET','/organization/'.$urlParameter['organizationId'].'/file/'.$urlParameter['fileId'].'/customEntity/'.$urlParameter['customEntityType'].'/list',[],$expectedResponseCode);
+		#die(BasicLib::debug($response));
+		return $response['content'];
+	}
+
+
+
+	/**
+	 * link/unlink entity
+	 *
+	 * @param	array		$urlParameter: list of url paramerts like ids
+	 * @param	boolean	$unlink: true - unlink | false - link
+	 * @param	integer	$expectedResponseCode: expected http response code for http-client
+	 * @return	array		reponse content
+	 */
+	public function fileLink(array $urlParameter,$unlink,$expectedResponseCode) {
+		//check submitted parameters
+		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
+		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
+
+		//make request to API
+		$this->checkUrlParameters(['organizationId','customEntityType','customEntityId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/file/'.$urlParameter['fileId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
 		#die(BasicLib::debug($response));
 		return $response['content'];
 	}
@@ -671,14 +984,14 @@ class CustomEntityRoute extends Route {
 	 * @param	integer	$expectedResponseCode: expected http response code for http-client
 	 * @return	array		reponse content
 	 */
-	public function fileLink(array $urlParameter,$unlink,$expectedResponseCode) {
+	public function resourceLink(array $urlParameter,$unlink,$expectedResponseCode) {
 		//check submitted parameters
 		BasicLib::checkType('boolean',$unlink,__METHOD__.'(): unlink');
 		BasicLib::checkType('integer',$expectedResponseCode,__METHOD__.'(): expectedResponseCode');
 
 		//make request to API
-		$this->checkUrlParameters(['organizationId','customEntityType','customEntityId'],$urlParameter);
-		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/file/'.$urlParameter['fileId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
+		$this->checkUrlParameters(['organizationId','resourceId','customEntityType','customEntityId'],$urlParameter);
+		$response=$this->httpClient->request($unlink?'UNLINK':'LINK','/organization/'.$urlParameter['organizationId'].'/resource/'.$urlParameter['resourceId'].'/customEntity/'.$urlParameter['customEntityType'].'/'.$urlParameter['customEntityId'].'/'.($unlink?'unlink':'link'),[],$expectedResponseCode);
 		#die(BasicLib::debug($response));
 		return $response['content'];
 	}

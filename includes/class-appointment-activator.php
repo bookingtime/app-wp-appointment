@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 
@@ -47,20 +49,30 @@ class Appointment_Activator {
 		self::installDBAppointment();
 	}
 
-
-	/**
-	 * jsonConfigFile
-	 * set globas for react calls
-	 */
 	private static function jsonConfigFile() {
-		$file = plugin_dir_path( __DIR__ ).'blocks/appointment_globals.json';
-		$json = array(
-			'wp_home'=> WP_HOME
-		);
-		$fp = fopen($file, 'w');
-		fwrite($fp, json_encode($json));
-		fclose($fp);
+		global $wp_filesystem;
+
+		// Überprüfen, ob das Dateisystem initialisiert ist
+		if ( ! is_wp_error( $wp_filesystem ) && WP_Filesystem() ) {
+			$file = plugin_dir_path( __DIR__ ) . 'blocks/appointment_globals.json';
+			$json = array(
+					'wp_home' => WP_HOME
+			);
+
+			// Dateiinhalt vorbereiten
+			$file_content = wp_json_encode( $json );
+
+			// Datei schreiben
+			if ( $wp_filesystem->put_contents( $file, $file_content, FS_CHMOD_FILE ) !== false ) {
+					// Erfolgsmeldung oder weitere Aktionen bei Bedarf
+					return;
+			} else {
+					// Fehlerbehandlung, falls das Schreiben der Datei fehlschlägt
+					return;
+			}
+		}
 	}
+
 
 
 	/**

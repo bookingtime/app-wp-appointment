@@ -41,6 +41,27 @@ If you discover a security vulnerability within this package, please send an ema
 This extension is distributed under the MIT License, see LICENSE file for more information.
 
 
+## Use of Third-Party Services
+This plugin uses external third-party services to provide certain functionalities. Below is a description of the services used in this plugin, along with links to their terms of service and privacy policies.
+
+### Third-Party Services Used
+
+1. BookingTime API
+
+    Description: This plugin accesses the BookingTime API to retrieve and manage booking data.
+    Circumstances of Use: The API is used to synchronize data in real-time and process booking requests.
+    API URL: https://api.bookingtime.com/app/v3/
+    Privacy Policy: https://service.bookingtime.com/legal/de/datenschutz/bookingtime_Datenschutzbestimmungen.pdf (If the link is missing, please check the service's website)
+    Terms of use: https://service.bookingtime.com/legal/de/agb/bookingtime_AGB.pdf (If the link is missing, please check the service's website)
+
+2. BookingTime OAuth Service
+
+    Description: This plugin uses the BookingTime OAuth Service to manage authentication and authorization processes.
+    Circumstances of Use: The OAuth service is used to securely access the BookingTime API.
+    OAuth URL: https://auth.bookingtime.com/oauth/token
+    Privacy Policy: https://service.bookingtime.com/legal/de/datenschutz/bookingtime_Datenschutzbestimmungen.pdf (If the link is missing, please check the service's website)
+    Terms of use: https://service.bookingtime.com/legal/de/agb/bookingtime_AGB.pdf (If the link is missing, please check the service's website)
+
 
 ---
 Copyright 2014 bookingtime GmbH. All Rights Reserved.
