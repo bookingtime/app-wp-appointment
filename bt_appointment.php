@@ -34,11 +34,11 @@ if ( ! defined( 'WPINC' ) ) {
  * The code that runs during plugin activation.
  * This function register_block_type_from_metadata
  */
-function blocks_bookingtime_appointment_init() {
+function bta_blocks_bookingtime_appointment_init() {
 	register_block_type_from_metadata( __DIR__ . '/blocks');
 }
 
-add_action( "init", "blocks_bookingtime_appointment_init" );
+add_action( "init", "bta_blocks_bookingtime_appointment_init" );
 
 /**
  * Currently plugin version.
@@ -56,7 +56,7 @@ if ( ! defined( 'APPOINTMENT_PLUGIN_URL' ) ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-appointment-activator.php
  */
-function activate_appointment() {
+function bta_activate_appointment() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-appointment-activator.php';
 	Appointment_Activator::activate();
 }
@@ -65,13 +65,13 @@ function activate_appointment() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-appointment-deactivator.php
  */
-function deactivate_appointment() {
+function bta_deactivate_appointment() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-appointment-deactivator.php';
 	Appointment_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_appointment' );
-register_deactivation_hook( __FILE__, 'deactivate_appointment' );
+register_activation_hook( __FILE__, 'bta_activate_appointment' );
+register_deactivation_hook( __FILE__, 'bta_deactivate_appointment' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -89,9 +89,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-appointment.php';
  *
  * @since    1.0.0
  */
-function run_appointment() {
+function bta_run_appointment() {
 
-	$plugin = new Appointment();
+	$plugin = new BTA_Appointment();
 	$plugin->run();
 }
-run_appointment();
+bta_run_appointment();

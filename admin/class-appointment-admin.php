@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 include(ABSPATH . "wp-includes/pluggable.php");
@@ -64,8 +65,8 @@ class Appointment_Admin {
 	protected $countries;
 	protected $organizationTemplateLanguageSuffix = 'EN';
 
-   const MODULE_CONFIG_SHORT = 'MODULE_CONFIG_SHORT';
-   const MODULE_ID = '23C4ejWwJt9G78gSYIAmhTrTzs2PoHb2';
+   const APPOINTMENT_MODULE_CONFIG_SHORT = 'MODULE_CONFIG_SHORT';
+   const APPOINTMENT_MODULE_ID = '23C4ejWwJt9G78gSYIAmhTrTzs2PoHb2';
 
 	/**
 	 * Initialize the class and set its properties.
@@ -308,16 +309,16 @@ class Appointment_Admin {
 
 		//validate step2
 		if(!empty($_POST)) {
+			$step2Data = $_POST;
+			if($this->validateStep2($step2Data)) {
 
-			if($this->validateStep2($_POST)) {
-
-				$_POST['appointment']['locale'] = $this->locale;
-				$_POST['appointment']['phpTimeZone'] = $this->timezone;
-				$_SESSION['appointment']['email'] = htmlentities($_POST['appointment']['email']);
+				$step2Data['appointment']['locale'] = $this->locale;
+				$step2Data['appointment']['phpTimeZone'] = $this->timezone;
+				$_SESSION['appointment']['email'] = sanitize_email($step2Data['appointment']['email']);
 
 				//create contractAccount
 				try {
-					$contractAccount=$this->sdk->contractAccount_add([],$this->makeContractAccountDataArray($_POST['appointment']));
+					$contractAccount=$this->sdk->contractAccount_add([],$this->makeContractAccountDataArray($step2Data['appointment']));
 				} catch(RequestException $e) {
 					//flashmessage
 					$_SESSION['flashmessage'][] = [
@@ -331,8 +332,8 @@ class Appointment_Admin {
 
 				//create organization
 				try {
-					$_POST['appointment']['contractAccount'] = $contractAccount;
-					$organizantion = $this->sdk->organization_add([],$this->makeParentOrganizationDataArray($_POST['appointment']));
+					$step2Data['appointment']['contractAccount'] = $contractAccount;
+					$organizantion = $this->sdk->organization_add([],$this->makeParentOrganizationDataArray($step2Data['appointment']));
 				} catch(RequestException $e) {
 					//flashmessage
 					$_SESSION['flashmessage'][] = [
@@ -386,7 +387,7 @@ class Appointment_Admin {
 	public function appointment_step3() {
     	echo wp_kses($this->twig->render('Appointment/Step3.html.twig', [
 			'currentNavItem' => 'step3',
-			'email' => isset($_SESSION['appointment']['email']) ? $_SESSION['appointment']['email'] : $this->translator->trans('step2.form.email.placeholder'),
+			'email' => isset($_SESSION['appointment']['email']) ? sanitize_email($_SESSION['appointment']['email']) : $this->translator->trans('step2.form.email.placeholder'),
 			'locale' => $this->locale,
 			'maxId' => 	$this->getMaxId(),
 			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
@@ -773,14 +774,14 @@ class Appointment_Admin {
     */
    public function writeOrganizationResponseToDB(array $recordList):bool {
       foreach ($recordList as $key => $rec) {
-         if($rec['class'] === self::MODULE_CONFIG_SHORT && $rec['moduleId'] === self::MODULE_ID) {
+         if($rec['class'] === self::APPOINTMENT_MODULE_CONFIG_SHORT && $rec['moduleId'] === self::APPOINTMENT_MODULE_ID) {
             //create new entry to db
             global $wpdb;
 				$tablename = $wpdb->prefix . 'appointment';
 
 				$wpdb->insert($tablename, array(
-					'title' => $rec['moduleName'],
-					'url' => 'https://module.bookingtime.com/booking/organization/'.$rec['organizationId'].'/moduleConfig/' . $rec['id']
+					'title' => sanitize_text_field($rec['moduleName']),
+					'url' => sanitize_url('https://module.bookingtime.com/booking/organization/'.$rec['organizationId'].'/moduleConfig/' . $rec['id'])
 				));
 				return true;
          }

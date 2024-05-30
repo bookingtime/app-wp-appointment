@@ -1,5 +1,7 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 /**
  * The file that defines the core plugin class
  *
@@ -27,7 +29,7 @@
  * @subpackage Appointment/includes
  * @author     bookingtime <appointment@bookingtime.com>
  */
-class Appointment {
+class BTA_Appointment {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power

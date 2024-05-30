@@ -71,6 +71,7 @@ This plugin uses external third-party services to provide certain functionalitie
     Circumstances of Use: The API is used to synchronize data in real-time and process booking requests.
     API URL: https://api.bookingtime.com/app/v3/
     Privacy Policy: https://service.bookingtime.com/legal/de/datenschutz/bookingtime_Datenschutzbestimmungen.pdf (If the link is missing, please check the service's website)
+    Terms of use: https://service.bookingtime.com/legal/de/agb/bookingtime_AGB.pdf (If the link is missing, please check the service's website)
 
 2. BookingTime OAuth Service
 
@@ -78,6 +79,7 @@ This plugin uses external third-party services to provide certain functionalitie
     Circumstances of Use: The OAuth service is used to securely access the BookingTime API.
     OAuth URL: https://auth.bookingtime.com/oauth/token
     Privacy Policy: https://service.bookingtime.com/legal/de/datenschutz/bookingtime_Datenschutzbestimmungen.pdf (If the link is missing, please check the service's website)
+    Terms of use: https://service.bookingtime.com/legal/de/agb/bookingtime_AGB.pdf (If the link is missing, please check the service's website)
 
 == Changelog ==
 = 1.0.0 =
