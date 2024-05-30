@@ -1,11 +1,11 @@
 === bookingtime appointment ===
 Contributors: bookingtime
-Tags: appointment,booking,service,wordpress,backend,plugin,content,responsive,bootstrap,Api,appointment,calendar,event,Twig,Frontend,booking,bookingtime,date,ics,reservation,scheduling,cms,week,WORDPRESS CMS
+Tags: appointment,booking,appointment,calendar,event
 Donate link: https://www.bookingtime.com/
 Requires at least: 6.0
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 6.0.0
+Stable tag: 6.0.2
 License: MIT
 License URI: https://opensource.org/license/mit
 
@@ -59,6 +59,27 @@ https://www.bookingtime.com/faq
 7. This screenshot shows the inserting of your appointment url by gutenberg blocks.
 8. This screenshot shows the inserting of your appointment url by the shortcode method.
 9. This screenshot shows the result of the appointment url in the frontend.
+
+== Use of Third-Party Services ==
+This plugin uses external third-party services to provide certain functionalities. Below is a description of the services used in this plugin, along with links to their terms of service and privacy policies.
+
+=== Third-Party Services Used ===
+
+1. BookingTime API
+
+    Description: This plugin accesses the BookingTime API to retrieve and manage booking data.
+    Circumstances of Use: The API is used to synchronize data in real-time and process booking requests.
+    API URL: https://api.bookingtime.com/app/v3/
+    Privacy Policy: https://service.bookingtime.com/legal/de/datenschutz/bookingtime_Datenschutzbestimmungen.pdf (If the link is missing, please check the service's website)
+    Terms of use: https://service.bookingtime.com/legal/de/agb/bookingtime_AGB.pdf (If the link is missing, please check the service's website)
+
+2. BookingTime OAuth Service
+
+    Description: This plugin uses the BookingTime OAuth Service to manage authentication and authorization processes.
+    Circumstances of Use: The OAuth service is used to securely access the BookingTime API.
+    OAuth URL: https://auth.bookingtime.com/oauth/token
+    Privacy Policy: https://service.bookingtime.com/legal/de/datenschutz/bookingtime_Datenschutzbestimmungen.pdf (If the link is missing, please check the service's website)
+    Terms of use: https://service.bookingtime.com/legal/de/agb/bookingtime_AGB.pdf (If the link is missing, please check the service's website)
 
 == Changelog ==
 = 1.0.0 =

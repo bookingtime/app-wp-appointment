@@ -12,7 +12,7 @@ use bookingtime\phpsdkapp\Lib\BasicLib;
 /**
  * http client for api requests
  *
- * @author DKone <bookingtime GmbH>
+ * @author <bookingtime GmbH>
  */
 class HttpClient {
 	//class properties
@@ -88,9 +88,9 @@ class HttpClient {
 	 * @param	array		$requestContent: send this content to api
 	 * @param	integer	$expectedResponseCode: throw exeption if we got an other response-code
 	 * @param	boolean	$expectedJsonReponse: if TRUEm throw exeption if no JSON responsem otherwise return response-content directly
-	 * @return	array		buzz response with message and content
+	 * @return	mixed		buzz response with message and content or string for file download
 	 */
-	public function request($method,$requestUrlSuffix,array $requestContent,$expectedResponseCode,$expectedJsonReponse=TRUE):array {
+	public function request($method,$requestUrlSuffix,array $requestContent,$expectedResponseCode,$expectedJsonReponse=TRUE) {
 		//check submitted parameters
 		BasicLib::checkType('string',$method,__METHOD__.'(): method');
 		BasicLib::checkType('string',$requestUrlSuffix,__METHOD__.'(): requestUrlSuffix');
