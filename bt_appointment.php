@@ -16,7 +16,7 @@
  * Plugin URI:        https://github.com/bookingtime/app-wp-appointment
  * Description:       Conveniently integrate bookingtime's online appointment booking into your wordpress website.
 
- * Version:           6.0.4
+ * Version:           6.0.5
  * Author:            bookingtime
  * Author URI:        https://www.bookingtime.com/
  * License: 			 MIT

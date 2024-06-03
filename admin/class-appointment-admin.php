@@ -207,12 +207,10 @@ class Appointment_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name . '-lightbox-cdn', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css',[], $this->version, 'all');
-		wp_enqueue_style( $this->plugin_name . '-bootstrap-icons-cdn', 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css',[], $this->version, 'all');
-		wp_enqueue_style( $this->plugin_name . '-bootstrap-cdn', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',[], $this->version, 'all');
+		wp_enqueue_style( $this->plugin_name . '-lightbox', '/wp-content/plugins/bt_appointment/assets/css/lightbox.min.css', [], $this->version, 'all');
+		wp_enqueue_style( $this->plugin_name . '-bootstrap-icons', '/wp-content/plugins/bt_appointment/assets/css/bootstrap-icons.min.css', [], $this->version, 'all');
+		wp_enqueue_style( $this->plugin_name . '-bootstrap', '/wp-content/plugins/bt_appointment/assets/css/bootstrap.min.css', [], $this->version, 'all');
 		wp_enqueue_style( $this->plugin_name . '-style', plugin_dir_url( __FILE__ ) . 'css/appointment-admin.css',[], $this->version, 'all' );
-
 	}
 
 	/**
@@ -233,11 +231,9 @@ class Appointment_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name . '-lightbox-cdn', 'https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js',[], $this->version, false);
-		wp_enqueue_script( $this->plugin_name . '-bootstrap-bundle-cdn', 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',[], $this->version, false);
+		wp_enqueue_script( $this->plugin_name . '-lightbox', '/wp-content/plugins/bt_appointment/assets/js/lightbox.min.js', [], $this->version, false);
+		wp_enqueue_script( $this->plugin_name . '-bootstrap-bundle', '/wp-content/plugins/bt_appointment/assets/js/bootstrap.bundle.min.js', [], $this->version, false);
 		wp_enqueue_script( $this->plugin_name . '-script', plugin_dir_url( __FILE__ ) . 'js/appointment-admin.js',[], $this->version, false );
-
 	}
 
 	/**
