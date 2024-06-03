@@ -743,7 +743,7 @@ class Appointment_Admin {
             'gender' => 'NOT_SPECIFIED',
             'firstName' => sanitize_text_field($formData['firstname']),
             'lastName' => sanitize_text_field($formData['lastname']),
-            'email' => sanitize_email(($formData['email']),
+            'email' => sanitize_email($formData['email']),
          ],
          'settings' => [
             'locale' => sanitize_text_field($formData['locale']),
