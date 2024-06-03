@@ -506,8 +506,8 @@ class Appointment_Admin {
 			if($wpdb->delete( $table_name, ['id' => $bookingtimepageurl])) {
 				//flashmessage
 				$_SESSION['flashmessage'][] = [
-					'title' => $this->translator->trans('flashmessage.delete.title',['var1'=>htmlentities($res['title'])]),
-					'message' => $this->translator->trans('flashmessage.delete.body',['var1'=>$res['url']]),
+					'title' => $this->translator->trans('flashmessage.delete.title',['var1'=>sanitize_text_field($res['title'])]),
+					'message' => $this->translator->trans('flashmessage.delete.body',['var1'=>sanitize_url($res['url'])]),
 					'alertclass' => 'success'
 				];
 			} else {
@@ -692,29 +692,29 @@ class Appointment_Admin {
    public function makeContractAccountDataArray($formData): array
    {
       $contractAccountDataArray = [
-         'name' => $formData['company'],
-         'locale' => $formData['locale'],
-         'timeZone' => $formData['phpTimeZone'],
+         'name' => sanitize_text_field($formData['company']),
+         'locale' => sanitize_text_field($formData['locale']),
+         'timeZone' => sanitize_text_field($formData['phpTimeZone']),
          'admin' => [
             'gender' => 'NOT_SPECIFIED',
-            'firstName' => $formData['firstname'],
-            'lastName' => $formData['lastname'],
-            'email' => $formData['email'],
+            'firstName' => sanitize_text_field($formData['firstname']),
+            'lastName' => sanitize_text_field($formData['lastname']),
+            'email' => sanitize_email($formData['email']),
          ],
          'contactPerson' => [
             'gender' => 'NOT_SPECIFIED',
-            'firstName' => $formData['firstname'],
-            'lastName' => $formData['lastname'],
-            'email' => $formData['email'],
+            'firstName' => sanitize_text_field($formData['firstname']),
+            'lastName' => sanitize_text_field($formData['lastname']),
+            'email' => sanitize_email($formData['email']),
          ],
          'address' => [
-            'name' => $formData['company'],
-            'street' => $formData['address']['street'],
-            'zip' => $formData['address']['zip'],
-            'city' => $formData['address']['city'],
-            'country' => $formData['address']['country']
+            'name' => sanitize_text_field($formData['company']),
+            'street' => sanitize_text_field($formData['address']['street']),
+            'zip' => sanitize_text_field($formData['address']['zip']),
+            'city' => sanitize_text_field($formData['address']['city']),
+            'country' => sanitize_text_field($formData['address']['country'])
          ],
-         'invoiceEmail' => $formData['email'],
+         'invoiceEmail' => sanitize_email($formData['email']),
       ];
       return $contractAccountDataArray;
    }
@@ -731,30 +731,30 @@ class Appointment_Admin {
          'name' => $formData['contractAccount']['name'],
          'contractAccountId' => $formData['contractAccount']['id'],
          'address' => [
-            'name' => $formData['company'],
-            'street' => $formData['address']['street'],
-            'zip' => $formData['address']['zip'],
-            'city' => $formData['address']['city'],
-            'country' => $formData['address']['country']
+            'name' => sanitize_text_field($formData['company']),
+            'street' => sanitize_text_field($formData['address']['street']),
+            'zip' => sanitize_text_field($formData['address']['zip']),
+            'city' => sanitize_text_field($formData['address']['city']),
+            'country' => sanitize_text_field($formData['address']['country'])
          ],
          'sector' => '01ab',
-         'email' => $formData['email'],
+         'email' => sanitize_email($formData['email']),
          'contactPerson' => [
             'gender' => 'NOT_SPECIFIED',
-            'firstName' => $formData['firstname'],
-            'lastName' => $formData['lastname'],
-            'email' => $formData['email'],
+            'firstName' => sanitize_text_field($formData['firstname']),
+            'lastName' => sanitize_text_field($formData['lastname']),
+            'email' => sanitize_email(($formData['email']),
          ],
          'settings' => [
-            'locale' => $formData['locale'],
-            'timeZone' => $formData['phpTimeZone'],
-            'emailReply' => $formData['email'],
+            'locale' => sanitize_text_field($formData['locale']),
+            'timeZone' => sanitize_text_field($formData['phpTimeZone']),
+            'emailReply' => sanitize_email($formData['email']),
          ],
          'admin' => [
             'gender' => 'NOT_SPECIFIED',
-            'firstName' => $formData['firstname'],
-            'lastName' => $formData['lastname'],
-            'email' => $formData['email'],
+            'firstName' => sanitize_text_field($formData['firstname']),
+            'lastName' => sanitize_text_field($formData['lastname']),
+            'email' => sanitize_email($formData['email']),
          ],
          'organizationTemplateList' => [
             'DEFAULT_' . $this->organizationTemplateLanguageSuffix
@@ -802,8 +802,8 @@ class Appointment_Admin {
 
 		//flashmessage
 		$_SESSION['flashmessage'][] = [
-			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>htmlentities(trim($data['title']))]),
-			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>$data['url']]),
+			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>sanitize_text_field(trim($data['title']))]),
+			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>sanitize_url($data['url'])]),
 			'alertclass' => 'success'
 		];
 
