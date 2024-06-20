@@ -40,6 +40,18 @@ function bta_blocks_bookingtime_appointment_init() {
 
 add_action( "init", "bta_blocks_bookingtime_appointment_init" );
 
+function bt_appointment_output_buffer() {
+	ob_start();
+}
+add_action('init', 'bt_appointment_output_buffer');
+
+function bt_appointment_session_start()  {
+	if (session_status() == PHP_SESSION_NONE) {
+		session_start();
+	}
+}
+add_action('init', 'bt_appointment_session_start');
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
@@ -72,6 +84,34 @@ function bta_deactivate_appointment() {
 
 register_activation_hook( __FILE__, 'bta_activate_appointment' );
 register_deactivation_hook( __FILE__, 'bta_deactivate_appointment' );
+
+
+
+
+// In Ihrer theme oder plugin Datei
+function bta_plugin_enqueue_scripts() {
+    wp_enqueue_script(
+        'bta-plugin-script',
+        plugins_url( 'blocks/src/edit.js', __FILE__ ),
+        array( 'wp-blocks', 'wp-element', 'wp-editor' ),
+        filemtime( plugin_dir_path( __FILE__ ) . 'blocks/src/edit.js' )
+    );
+
+    wp_localize_script(
+        'bta-plugin-script',
+        'btaPluginData',
+        array(
+            'nonce' => wp_create_nonce( 'bt_appointment_restApi' ),
+				'home_url' => home_url()
+        )
+    );
+}
+add_action( 'enqueue_block_editor_assets', 'bta_plugin_enqueue_scripts' );
+
+
+
+
+
 
 /**
  * The core plugin class that is used to define internationalization,

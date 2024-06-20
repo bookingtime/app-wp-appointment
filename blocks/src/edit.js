@@ -10,8 +10,10 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { url, title } = attributes;
 	const [services, setServices] = useState([]);
 
-	let appointmentGlobals = require('../appointment_globals.json');
-	let jsonUrl = appointmentGlobals.wp_home + '/wp-admin/admin.php?page=appointment-getbookingtimepageurls';
+	const nonce = btaPluginData.nonce;
+	const home_url = btaPluginData.home_url;
+
+	let jsonUrl = home_url + '/wp-admin/admin.php?page=appointment-getbookingtimepageurls&_wpnonce='+nonce;
 
 	useEffect(() => {
 	fetch(jsonUrl)

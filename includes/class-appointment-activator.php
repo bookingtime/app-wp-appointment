@@ -44,36 +44,8 @@ class Appointment_Activator {
 				define('WP_HOME','');
 			}
 		}
-
-		self::jsonConfigFile();
 		self::installDBAppointment();
 	}
-
-	private static function jsonConfigFile() {
-		global $wp_filesystem;
-
-		// Überprüfen, ob das Dateisystem initialisiert ist
-		if ( ! is_wp_error( $wp_filesystem ) && WP_Filesystem() ) {
-			$file = plugin_dir_path( __DIR__ ) . 'blocks/appointment_globals.json';
-			$json = array(
-					'wp_home' => WP_HOME
-			);
-
-			// Dateiinhalt vorbereiten
-			$file_content = wp_json_encode( $json );
-
-			// Datei schreiben
-			if ( $wp_filesystem->put_contents( $file, $file_content, FS_CHMOD_FILE ) !== false ) {
-					// Erfolgsmeldung oder weitere Aktionen bei Bedarf
-					return;
-			} else {
-					// Fehlerbehandlung, falls das Schreiben der Datei fehlschlägt
-					return;
-			}
-		}
-	}
-
-
 
 	/**
 	 * installDBAppointment

@@ -30,6 +30,9 @@
             <input placeholder="{{'add_edit.form.url.placeholder'|trans}}" class="rounded-2 p-2 w-100" id="url" type="url" name="appointment[url]" required="required" value="{{bookingtimepageurl.url}}" />
             <label for="url" class="form-label col-12 text-muted">{{'add_edit.form.url.label.bottom'|trans}}</label>
          </div>
+         <div class="hidden_fields">
+            {{nonceField|raw}}
+         </div>
       </fieldset>
       <fieldset class="fieldset2 border border-3 rounded-3 p-3 mt-0 mx-auto" id="edit_fieldset2">
          <div class="d-flex justify-content-end">
@@ -43,7 +46,7 @@
             </button>
          </div>
       </fieldset>
-   {{ macro.modalDelete(bookingtimepageurl,WP_HOME) }}
+   {{ macro.modalDelete(bookingtimepageurl,WP_HOME,nonce) }}
    {{ macro.modalUnsavedForm('list',WP_HOME) }}
    </form>
 </div>

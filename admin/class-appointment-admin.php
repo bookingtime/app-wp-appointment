@@ -76,8 +76,6 @@ class Appointment_Admin {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-		ob_start();
-
 		//check for WP_HOME
 		if (!defined('WP_HOME')) {
 			$wp_home_array = $this->getFromOptionsTable('home');
@@ -87,9 +85,6 @@ class Appointment_Admin {
 				define('WP_HOME','');
 			}
 		}
-
-		//check for file with globals for react
-		$this->checkIfFileExists(plugin_dir_path( __DIR__ ).'blocks/appointment_globals.json');
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
@@ -138,11 +133,6 @@ class Appointment_Admin {
 			$this->organizationTemplateLanguageSuffix = 'DE';
 		} else {
 			$this->organizationTemplateLanguageSuffix = 'EN';
-		}
-
-
-		if (!session_id()) {
-			session_start();
 		}
 	}
 
@@ -256,7 +246,10 @@ class Appointment_Admin {
 	 * appointment_getbookingtimepageurls
 	 */
 	public function appointment_getbookingtimepageurls() {
-		return wp_send_json($this->findAll());
+		if(check_admin_referer('bt_appointment_restApi')) {
+			return wp_send_json($this->findAll());
+		}
+
 	}
 
 	/**
@@ -298,13 +291,16 @@ class Appointment_Admin {
 	 */
 	public function appointment_step2() {
 
+		//create nonce
+		$nonce = wp_create_nonce('bt_appointment_nonce_step2');
+
 		//redirect to settings when rows in db
 		if($this->checkDBRows() > 0) {
 			exit(esc_html(wp_redirect(WP_HOME . '/wp-admin/admin.php?page=appointment-add')));
 		}
 
-		//validate step2
-		if(!empty($_POST)) {
+		//validate step2 with nonce
+		if(!empty($_POST) && check_admin_referer('bt_appointment_nonce_step2')) {
 			$step2Data = $_POST;
 			if($this->validateStep2($step2Data)) {
 
@@ -366,12 +362,15 @@ class Appointment_Admin {
 			}
 		}
 
+
     	echo wp_kses($this->twig->render('Appointment/Step2.html.twig', [
 			'currentNavItem' => 'step2',
 			'locale' => $this->locale,
 			'countries' => $this->countries['recordList'],
 			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
+			'nonceField' => wp_nonce_field('bt_appointment_nonce_step2'),
+
 		]),$this->getAllowedHtml());
 
 		unset($_SESSION['flashmessage']);
@@ -397,6 +396,9 @@ class Appointment_Admin {
 	 * appointment_list
 	 */
 	public function appointment_list() {
+
+		$nonce = wp_create_nonce('bt_appointment_nonce_list');
+
 		$bookingtimepageurls = $this->findAll();
     	echo wp_kses($this->twig->render('Appointment/List.html.twig', [
 			'currentNavItem' => 'list',
@@ -404,6 +406,7 @@ class Appointment_Admin {
 			'locale' => $this->locale,
 			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
+			'nonce' => $nonce,
 		]),$this->getAllowedHtml());
 
 		unset($_SESSION['flashmessage']);
@@ -414,9 +417,11 @@ class Appointment_Admin {
 	 */
 	public function appointment_add() {
 
-		//create
-		if(isset($_POST['appointment']) && !empty($_POST['appointment']['url']) && $this->validateUrl($_POST['appointment']['url']) && $this->validateTitle($_POST['appointment']['title'])) {
+		//create nonce
+		$nonce = wp_create_nonce('bt_appointment_nonce_add');
 
+		//create
+		if(isset($_POST['_wpnonce']) && check_admin_referer('bt_appointment_nonce_add') && isset($_POST['appointment']) && !empty($_POST['appointment']['url']) && $this->validateUrl($_POST['appointment']['url']) && $this->validateTitle($_POST['appointment']['title'])) {
 			$data['url'] = sanitize_url($_POST['appointment']['url']);
 			$data['title'] = sanitize_text_field($_POST['appointment']['title']);
 			$this->appointment_create($data);
@@ -428,6 +433,7 @@ class Appointment_Admin {
 			'locale' => $this->locale,
 			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
+			'nonceField' => wp_nonce_field('bt_appointment_nonce_add'),
 		]),$this->getAllowedHtml());
 
 		unset($_SESSION['flashmessage']);
@@ -437,14 +443,18 @@ class Appointment_Admin {
 	 * appointment_edit
 	 */
 	public function appointment_edit() {
+
+		//create nonce
+		$nonce = wp_create_nonce('bt_appointment_nonce_edit');
+
 		//delete
-		if(isset($_GET['delete_bookingtimepageurl']) && is_numeric($_GET['delete_bookingtimepageurl']) && intval($_GET['delete_bookingtimepageurl']) > 0) {
+		if(isset($_GET['_wpnonce']) && check_admin_referer('bt_appointment_nonce_edit') && isset($_GET['delete_bookingtimepageurl']) && is_numeric($_GET['delete_bookingtimepageurl']) && intval($_GET['delete_bookingtimepageurl']) > 0 && check_admin_referer('bt_appointment_nonce_edit')) {
 			$id = intval($_GET['delete_bookingtimepageurl']);
 			$this->appointment_delete($id);
 		}
 
 		//update
-		if(isset($_POST['appointment']) && !empty($_POST['appointment']['url']) && $this->validateUrl($_POST['appointment']['url']) && $this->validateTitle($_POST['appointment']['title'])) {
+		if(isset($_POST['_wpnonce']) && check_admin_referer('bt_appointment_nonce_edit') && isset($_POST['appointment']) && !empty($_POST['appointment']['url']) && $this->validateUrl($_POST['appointment']['url']) && $this->validateTitle($_POST['appointment']['title']) && check_admin_referer('bt_appointment_nonce_edit')) {
 			$data['url'] = sanitize_url($_POST['appointment']['url']);
 			$data['title'] = sanitize_text_field($_POST['appointment']['title']);
 			$data['id'] = intval($_POST['appointment']['id']);
@@ -464,6 +474,8 @@ class Appointment_Admin {
 			'locale' => $this->locale,
 			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
+			'nonceField' => wp_nonce_field('bt_appointment_nonce_edit'),
+			'nonce' => $nonce,
 		]),$this->getAllowedHtml());
 
 		unset($_SESSION['flashmessage']);
@@ -474,7 +486,7 @@ class Appointment_Admin {
 	 */
 	public function appointment_preview() {
 		$bookingtimepageurl = NULL;
-		if(isset($_GET['preview_bookingtimepageurl']) && $_GET['preview_bookingtimepageurl'] > 0) {
+		if(isset($_GET['_wpnonce']) && check_admin_referer('bt_appointment_nonce_list') &&  isset($_GET['preview_bookingtimepageurl']) && $_GET['preview_bookingtimepageurl'] > 0) {
  			$bookingtimepageurl = $this->findById((int) $_GET['preview_bookingtimepageurl']);
 		} else {
 			exit(esc_html(wp_redirect(WP_HOME . '/wp-admin/admin.php?page=appointment-list')));
