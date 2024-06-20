@@ -16,7 +16,7 @@
  * Plugin URI:        https://github.com/bookingtime/app-wp-appointment
  * Description:       Conveniently integrate bookingtime's online appointment booking into your wordpress website.
 
- * Version:           6.0.6
+ * Version:           6.0.7
  * Author:            bookingtime
  * Author URI:        https://www.bookingtime.com/
  * License: 			 MIT
@@ -41,23 +41,35 @@ function bta_blocks_bookingtime_appointment_init() {
 add_action( "init", "bta_blocks_bookingtime_appointment_init" );
 
 function bt_appointment_output_buffer() {
-	ob_start();
+	$routes = [
+		'appointment-init',
+        'appointment-step1',
+        'appointment-step2',
+        'appointment-step3',
+        'appointment-getbookingtimepageurls',
+        'appointment-list',
+        'appointment-edit',
+        'appointment-add',
+        'appointment-preview'
+	];
+    foreach ($routes as $route) {
+        if(strpos($_SERVER['REQUEST_URI'],$route) !== FALSE) {
+            ob_start();
+        }
+		//start session
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+    }
 }
 add_action('init', 'bt_appointment_output_buffer');
-
-function bt_appointment_session_start()  {
-	if (session_status() == PHP_SESSION_NONE) {
-		session_start();
-	}
-}
-add_action('init', 'bt_appointment_session_start');
 
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'APPOINTMENT_VERSION', '6.0.6' );
+define( 'APPOINTMENT_VERSION', '6.0.7' );
 
 if ( ! defined( 'APPOINTMENT_PLUGIN_URL' ) ) {
 	define( 'APPOINTMENT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
@@ -94,7 +106,8 @@ function bta_plugin_enqueue_scripts() {
         'bta-plugin-script',
         plugins_url( 'blocks/src/edit.js', __FILE__ ),
         array( 'wp-blocks', 'wp-element', 'wp-editor' ),
-        filemtime( plugin_dir_path( __FILE__ ) . 'blocks/src/edit.js' )
+        filemtime( plugin_dir_path( __FILE__ ) . 'blocks/src/edit.js' ),
+		  false
     );
 
     wp_localize_script(

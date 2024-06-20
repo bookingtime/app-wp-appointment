@@ -136,37 +136,6 @@ class Appointment_Admin {
 		}
 	}
 
-	public function checkIfFileExists($file) {
-		global $wp_filesystem;
-		// Initialize the WP filesystem, no more using 'file-put-contents' function
-		if (empty($wp_filesystem)) {
-			require_once (ABSPATH . '/wp-admin/includes/file.php');
-			WP_Filesystem();
-		}
-
-		// Überprüfen, ob das Dateisystem initialisiert ist
-		if ( ! is_wp_error( $wp_filesystem ) && WP_Filesystem() ) {
-			// Überprüfen, ob die Datei existiert
-			if ( ! $wp_filesystem->exists( $file ) ) {
-					$json = array(
-						'wp_home' => home_url() // WP_HOME ersetzt durch home_url()
-					);
-
-					// Dateiinhalt vorbereiten
-					$file_content = wp_json_encode( $json );
-
-					// Datei schreiben
-					if ( $wp_filesystem->put_contents( $file, $file_content, FS_CHMOD_FILE ) !== false ) {
-						// Erfolgsmeldung oder weitere Aktionen bei Bedarf
-						return;
-					} else {
-						// Fehlerbehandlung, falls das Schreiben der Datei fehlschlägt
-						return;
-					}
-			}
-		}
-  }
-
 	/**
 	 * getFromOptionsTable
 	 * Returns rows from the options table based on option_name
@@ -185,7 +154,6 @@ class Appointment_Admin {
 	 * @since    1.0.0
 	 */
 	public function enqueue_styles() {
-
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -246,10 +214,7 @@ class Appointment_Admin {
 	 * appointment_getbookingtimepageurls
 	 */
 	public function appointment_getbookingtimepageurls() {
-		if(check_admin_referer('bt_appointment_restApi')) {
 			return wp_send_json($this->findAll());
-		}
-
 	}
 
 	/**
@@ -290,7 +255,6 @@ class Appointment_Admin {
 	 * appointment_step2
 	 */
 	public function appointment_step2() {
-
 		//create nonce
 		$nonce = wp_create_nonce('bt_appointment_nonce_step2');
 
@@ -362,7 +326,6 @@ class Appointment_Admin {
 			}
 		}
 
-
     	echo wp_kses($this->twig->render('Appointment/Step2.html.twig', [
 			'currentNavItem' => 'step2',
 			'locale' => $this->locale,
@@ -396,7 +359,7 @@ class Appointment_Admin {
 	 * appointment_list
 	 */
 	public function appointment_list() {
-
+		//create nonce
 		$nonce = wp_create_nonce('bt_appointment_nonce_list');
 
 		$bookingtimepageurls = $this->findAll();
@@ -416,7 +379,6 @@ class Appointment_Admin {
 	 * appointment_add
 	 */
 	public function appointment_add() {
-
 		//create nonce
 		$nonce = wp_create_nonce('bt_appointment_nonce_add');
 
@@ -443,7 +405,6 @@ class Appointment_Admin {
 	 * appointment_edit
 	 */
 	public function appointment_edit() {
-
 		//create nonce
 		$nonce = wp_create_nonce('bt_appointment_nonce_edit');
 

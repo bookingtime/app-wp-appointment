@@ -161,7 +161,6 @@ class BTA_Appointment {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
 	}
 
 	/**
@@ -188,7 +187,7 @@ class BTA_Appointment {
 	public function run() {
 
 		//check if user is logged in
-		if(is_user_logged_in() && isset($_GET['page']) && $_GET['page'] === 'appointment-getbookingtimepageurls') {
+		if(is_user_logged_in() && isset($_GET['page']) && $_GET['page'] === 'appointment-getbookingtimepageurls' && check_admin_referer('bt_appointment_restApi')) {
 			$plugin_admin = new Appointment_Admin( $this->get_plugin_name(), $this->get_version() );
 			echo esc_html($plugin_admin->appointment_getbookingtimepageurls());
 			die();
