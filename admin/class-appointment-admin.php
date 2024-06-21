@@ -948,31 +948,4 @@ class Appointment_Admin {
 		return $allowedposttags;
 	}
 
-
-	/**
-	 * Sanitize an array of arguments by applying the sanitize_text_field function to each element.
-	 *
-	 * This function checks if the provided argument is an array. If it is, it loops through each
-	 * element of the array and sanitizes it using the sanitize_text_field function. The sanitized
-	 * array is then returned.
-	 *
-	 * @param array|string $args The input data to be sanitized. It can be an array or a single string.
-	 * @return array|string The sanitized input data. If the input was an array, an array with sanitized values is returned.
-	 *                      If the input was not an array, the original input is returned.
-	 */
-	public function sanitize($args) {
-		// Check if the input is an array
-		if (is_array($args)) {
-			// Loop through each element in the array
-			foreach ($args as $jey => $arg) {
-				foreach ($arg as $key => $value) {
-					// Sanitize each element using the sanitize_text_field function
-					$args[$jey][$key] = sanitize_text_field($value);
-				}
-			}
-		}
-		// Return the sanitized array or the original input if it was not an array
-		return $args;
-	}
-
 }
