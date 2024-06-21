@@ -55,11 +55,11 @@ function bt_appointment_output_buffer() {
     foreach ($routes as $route) {
         if(strpos($_SERVER['REQUEST_URI'],$route) !== FALSE) {
             ob_start();
+            //start session
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
         }
-		//start session
-		if (session_status() == PHP_SESSION_NONE) {
-			session_start();
-		}
     }
 }
 add_action('init', 'bt_appointment_output_buffer');

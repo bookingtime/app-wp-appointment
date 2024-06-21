@@ -42,7 +42,7 @@
 .mod-tx_bookingtime_appointment sub,.mod-tx_bookingtime_appointment sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}
 .mod-tx_bookingtime_appointment sub{bottom:-.25em}
 .mod-tx_bookingtime_appointment sup{top:-.5em}
-.mod-tx_bookingtime_appointment a{color:rgba(0,0,0,);text-decoration:underline}
+.mod-tx_bookingtime_appointment a{color:rgba(0,0,0,1);text-decoration:underline}
 .mod-tx_bookingtime_appointment a:hover{--bs-link-color-rgb:var(--bs-link-hover-color-rgb)}
 .mod-tx_bookingtime_appointment a:not([href]):not([class]),.mod-tx_bookingtime_appointment a:not([href]):not([class]):hover{color:inherit;text-decoration:none}
 .mod-tx_bookingtime_appointment code,.mod-tx_bookingtime_appointment kbd,.mod-tx_bookingtime_appointment pre,.mod-tx_bookingtime_appointment samp{font-family:var(--bs-font-monospace);font-size:1em}
@@ -605,15 +605,15 @@
 .mod-tx_bookingtime_appointment .valid-tooltip{position:absolute;top:100%;z-index:5;display:none;max-width:100%;padding:.25rem .5rem;margin-top:.1rem;font-size:.875rem;color:#fff;background-color:var(--bs-success);border-radius:var(--bs-border-radius)}
 .mod-tx_bookingtime_appointment .is-valid~.valid-feedback,.mod-tx_bookingtime_appointment .is-valid~.valid-tooltip,.mod-tx_bookingtime_appointment .was-validated :valid~.valid-feedback,.mod-tx_bookingtime_appointment .was-validated :valid~.valid-tooltip{display:block}
 .mod-tx_bookingtime_appointment .form-control.is-valid,.mod-tx_bookingtime_appointment .was-validated .form-control:valid{border-color:var(--bs-form-valid-border-color);padding-right:calc(1.5em + .75rem);background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right calc(.375em + .1875rem) center;background-size:calc(.75em + .375rem) calc(.75em + .375rem)}
-.mod-tx_bookingtime_appointment .form-control.is-valid:focus,.mod-tx_bookingtime_appointment .was-validated .form-control:valid:focus{border-color:var(--bs-form-valid-border-color);box-shadow:0 0 0 .25rem rgba(0,0,0,)}
+.mod-tx_bookingtime_appointment .form-control.is-valid:focus,.mod-tx_bookingtime_appointment .was-validated .form-control:valid:focus{border-color:var(--bs-form-valid-border-color);box-shadow:0 0 0 .25rem rgba(0,0,0,1)}
 .mod-tx_bookingtime_appointment .was-validated textarea.form-control:valid,.mod-tx_bookingtime_appointment textarea.form-control.is-valid{padding-right:calc(1.5em + .75rem);background-position:top calc(.375em + .1875rem) right calc(.375em + .1875rem)}
 .mod-tx_bookingtime_appointment .form-select.is-valid,.mod-tx_bookingtime_appointment .was-validated .form-select:valid{border-color:var(--bs-form-valid-border-color)}
 .mod-tx_bookingtime_appointment .form-select.is-valid:not([multiple]):not([size]),.mod-tx_bookingtime_appointment .form-select.is-valid:not([multiple])[size="1"],.mod-tx_bookingtime_appointment .was-validated .form-select:valid:not([multiple]):not([size]),.mod-tx_bookingtime_appointment .was-validated .form-select:valid:not([multiple])[size="1"]{--bs-form-select-bg-icon:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");padding-right:4.125rem;background-position:right .75rem center,center right 2.25rem;background-size:16px 12px,calc(.75em + .375rem) calc(.75em + .375rem)}
-.mod-tx_bookingtime_appointment .form-select.is-valid:focus,.mod-tx_bookingtime_appointment .was-validated .form-select:valid:focus{border-color:var(--bs-form-valid-border-color);box-shadow:0 0 0 .25rem rgba(0,0,0,)}
+.mod-tx_bookingtime_appointment .form-select.is-valid:focus,.mod-tx_bookingtime_appointment .was-validated .form-select:valid:focus{border-color:var(--bs-form-valid-border-color);box-shadow:0 0 0 .25rem rgba(0,0,0,1)}
 .mod-tx_bookingtime_appointment .form-control-color.is-valid,.mod-tx_bookingtime_appointment .was-validated .form-control-color:valid{width:calc(3rem + calc(1.5em + .75rem))}
 .mod-tx_bookingtime_appointment .form-check-input.is-valid,.mod-tx_bookingtime_appointment .was-validated .form-check-input:valid{border-color:var(--bs-form-valid-border-color)}
 .mod-tx_bookingtime_appointment .form-check-input.is-valid:checked,.mod-tx_bookingtime_appointment .was-validated .form-check-input:valid:checked{background-color:var(--bs-form-valid-color)}
-.mod-tx_bookingtime_appointment .form-check-input.is-valid:focus,.mod-tx_bookingtime_appointment .was-validated .form-check-input:valid:focus{box-shadow:0 0 0 .25rem rgba(0,0,0,)}
+.mod-tx_bookingtime_appointment .form-check-input.is-valid:focus,.mod-tx_bookingtime_appointment .was-validated .form-check-input:valid:focus{box-shadow:0 0 0 .25rem rgba(0,0,0,1)}
 .mod-tx_bookingtime_appointment .form-check-input.is-valid~.form-check-label,.mod-tx_bookingtime_appointment .was-validated .form-check-input:valid~.form-check-label{color:var(--bs-form-valid-color)}
 .mod-tx_bookingtime_appointment .form-check-inline .form-check-input~.valid-feedback{margin-left:.5em}
 .mod-tx_bookingtime_appointment .input-group>.form-control:not(:focus).is-valid,.mod-tx_bookingtime_appointment .input-group>.form-floating:not(:focus-within).is-valid,.mod-tx_bookingtime_appointment .input-group>.form-select:not(:focus).is-valid,.mod-tx_bookingtime_appointment .was-validated .input-group>.form-control:not(:focus):valid,.mod-tx_bookingtime_appointment .was-validated .input-group>.form-floating:not(:focus-within):valid,.mod-tx_bookingtime_appointment .was-validated .input-group>.form-select:not(:focus):valid{z-index:3}
@@ -621,15 +621,15 @@
 .mod-tx_bookingtime_appointment .invalid-tooltip{position:absolute;top:100%;z-index:5;display:none;max-width:100%;padding:.25rem .5rem;margin-top:.1rem;font-size:.875rem;color:#fff;background-color:var(--bs-danger);border-radius:var(--bs-border-radius)}
 .mod-tx_bookingtime_appointment .is-invalid~.invalid-feedback,.mod-tx_bookingtime_appointment .is-invalid~.invalid-tooltip,.mod-tx_bookingtime_appointment .was-validated :invalid~.invalid-feedback,.mod-tx_bookingtime_appointment .was-validated :invalid~.invalid-tooltip{display:block}
 .mod-tx_bookingtime_appointment .form-control.is-invalid,.mod-tx_bookingtime_appointment .was-validated .form-control:invalid{border-color:var(--bs-form-invalid-border-color);padding-right:calc(1.5em + .75rem);background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right calc(.375em + .1875rem) center;background-size:calc(.75em + .375rem) calc(.75em + .375rem)}
-.mod-tx_bookingtime_appointment .form-control.is-invalid:focus,.mod-tx_bookingtime_appointment .was-validated .form-control:invalid:focus{border-color:var(--bs-form-invalid-border-color);box-shadow:0 0 0 .25rem rgba(0,0,0,)}
+.mod-tx_bookingtime_appointment .form-control.is-invalid:focus,.mod-tx_bookingtime_appointment .was-validated .form-control:invalid:focus{border-color:var(--bs-form-invalid-border-color);box-shadow:0 0 0 .25rem rgba(0,0,0,1)}
 .mod-tx_bookingtime_appointment .was-validated textarea.form-control:invalid,.mod-tx_bookingtime_appointment textarea.form-control.is-invalid{padding-right:calc(1.5em + .75rem);background-position:top calc(.375em + .1875rem) right calc(.375em + .1875rem)}
 .mod-tx_bookingtime_appointment .form-select.is-invalid,.mod-tx_bookingtime_appointment .was-validated .form-select:invalid{border-color:var(--bs-form-invalid-border-color)}
 .mod-tx_bookingtime_appointment .form-select.is-invalid:not([multiple]):not([size]),.mod-tx_bookingtime_appointment .form-select.is-invalid:not([multiple])[size="1"],.mod-tx_bookingtime_appointment .was-validated .form-select:invalid:not([multiple]):not([size]),.mod-tx_bookingtime_appointment .was-validated .form-select:invalid:not([multiple])[size="1"]{--bs-form-select-bg-icon:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");padding-right:4.125rem;background-position:right .75rem center,center right 2.25rem;background-size:16px 12px,calc(.75em + .375rem) calc(.75em + .375rem)}
-.mod-tx_bookingtime_appointment .form-select.is-invalid:focus,.mod-tx_bookingtime_appointment .was-validated .form-select:invalid:focus{border-color:var(--bs-form-invalid-border-color);box-shadow:0 0 0 .25rem rgba(0,0,0,)}
+.mod-tx_bookingtime_appointment .form-select.is-invalid:focus,.mod-tx_bookingtime_appointment .was-validated .form-select:invalid:focus{border-color:var(--bs-form-invalid-border-color);box-shadow:0 0 0 .25rem rgba(0,0,0,1)}
 .mod-tx_bookingtime_appointment .form-control-color.is-invalid,.mod-tx_bookingtime_appointment .was-validated .form-control-color:invalid{width:calc(3rem + calc(1.5em + .75rem))}
 .mod-tx_bookingtime_appointment .form-check-input.is-invalid,.mod-tx_bookingtime_appointment .was-validated .form-check-input:invalid{border-color:var(--bs-form-invalid-border-color)}
 .mod-tx_bookingtime_appointment .form-check-input.is-invalid:checked,.mod-tx_bookingtime_appointment .was-validated .form-check-input:invalid:checked{background-color:var(--bs-form-invalid-color)}
-.mod-tx_bookingtime_appointment .form-check-input.is-invalid:focus,.mod-tx_bookingtime_appointment .was-validated .form-check-input:invalid:focus{box-shadow:0 0 0 .25rem rgba(0,0,0,)}
+.mod-tx_bookingtime_appointment .form-check-input.is-invalid:focus,.mod-tx_bookingtime_appointment .was-validated .form-check-input:invalid:focus{box-shadow:0 0 0 .25rem rgba(0,0,0,1)}
 .mod-tx_bookingtime_appointment .form-check-input.is-invalid~.form-check-label,.mod-tx_bookingtime_appointment .was-validated .form-check-input:invalid~.form-check-label{color:var(--bs-form-invalid-color)}
 .mod-tx_bookingtime_appointment .form-check-inline .form-check-input~.invalid-feedback{margin-left:.5em}
 .mod-tx_bookingtime_appointment .input-group>.form-control:not(:focus).is-invalid,.mod-tx_bookingtime_appointment .input-group>.form-floating:not(:focus-within).is-invalid,.mod-tx_bookingtime_appointment .input-group>.form-select:not(:focus).is-invalid,.mod-tx_bookingtime_appointment .was-validated .input-group>.form-control:not(:focus):invalid,.mod-tx_bookingtime_appointment .was-validated .input-group>.form-floating:not(:focus-within):invalid,.mod-tx_bookingtime_appointment .was-validated .input-group>.form-select:not(:focus):invalid{z-index:4}
@@ -1356,34 +1356,34 @@ to{transform:rotate(360deg)}
 100%{-webkit-mask-position:-200% 0;mask-position:-200% 0}
 }
 .mod-tx_bookingtime_appointment .clearfix::after{display:block;clear:both;content:""}
-.mod-tx_bookingtime_appointment .text-bg-primary{color:#fff!important;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-bg-secondary{color:#fff!important;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-bg-success{color:#fff!important;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-bg-info{color:#000!important;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-bg-warning{color:#000!important;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-bg-danger{color:#fff!important;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-bg-light{color:#000!important;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-bg-dark{color:#fff!important;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-primary{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .text-bg-primary{color:#fff!important;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-bg-secondary{color:#fff!important;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-bg-success{color:#fff!important;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-bg-info{color:#000!important;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-bg-warning{color:#000!important;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-bg-danger{color:#fff!important;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-bg-light{color:#000!important;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-bg-dark{color:#fff!important;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-primary{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-primary:focus,.mod-tx_bookingtime_appointment .link-primary:hover{color:rgba(10,88,202,var)!important;-webkit-text-decoration-color:rgba(10,88,202,var)!important;text-decoration-color:rgba(10,88,202,var)!important}
-.mod-tx_bookingtime_appointment .link-secondary{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-secondary{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-secondary:focus,.mod-tx_bookingtime_appointment .link-secondary:hover{color:rgba(86,94,100,var)!important;-webkit-text-decoration-color:rgba(86,94,100,var)!important;text-decoration-color:rgba(86,94,100,var)!important}
-.mod-tx_bookingtime_appointment .link-success{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-success{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-success:focus,.mod-tx_bookingtime_appointment .link-success:hover{color:rgba(20,108,67,var)!important;-webkit-text-decoration-color:rgba(20,108,67,var)!important;text-decoration-color:rgba(20,108,67,var)!important}
-.mod-tx_bookingtime_appointment .link-info{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-info{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-info:focus,.mod-tx_bookingtime_appointment .link-info:hover{color:rgba(61,213,243,var)!important;-webkit-text-decoration-color:rgba(61,213,243,var)!important;text-decoration-color:rgba(61,213,243,var)!important}
-.mod-tx_bookingtime_appointment .link-warning{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-warning{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-warning:focus,.mod-tx_bookingtime_appointment .link-warning:hover{color:rgba(255,205,57,var)!important;-webkit-text-decoration-color:rgba(255,205,57,var)!important;text-decoration-color:rgba(255,205,57,var)!important}
-.mod-tx_bookingtime_appointment .link-danger{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-danger{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-danger:focus,.mod-tx_bookingtime_appointment .link-danger:hover{color:rgba(176,42,55,var)!important;-webkit-text-decoration-color:rgba(176,42,55,var)!important;text-decoration-color:rgba(176,42,55,var)!important}
-.mod-tx_bookingtime_appointment .link-light{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-light{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-light:focus,.mod-tx_bookingtime_appointment .link-light:hover{color:rgba(249,250,251,var)!important;-webkit-text-decoration-color:rgba(249,250,251,var)!important;text-decoration-color:rgba(249,250,251,var)!important}
-.mod-tx_bookingtime_appointment .link-dark{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-dark{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-dark:focus,.mod-tx_bookingtime_appointment .link-dark:hover{color:rgba(26,30,33,var)!important;-webkit-text-decoration-color:rgba(26,30,33,var)!important;text-decoration-color:rgba(26,30,33,var)!important}
-.mod-tx_bookingtime_appointment .link-body-emphasis{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-body-emphasis:focus,.mod-tx_bookingtime_appointment .link-body-emphasis:hover{color:rgba(0,0,0,)!important;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-body-emphasis{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-body-emphasis:focus,.mod-tx_bookingtime_appointment .link-body-emphasis:hover{color:rgba(0,0,0,1)!important;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .focus-ring:focus{outline:0;box-shadow:var(--bs-focus-ring-x,0) var(--bs-focus-ring-y,0) var(--bs-focus-ring-blur,0) var(--bs-focus-ring-width) var(--bs-focus-ring-color)}
-.mod-tx_bookingtime_appointment .icon-link{display:inline-flex;gap:.375rem;align-items:center;-webkit-text-decoration-color:rgba(0,0,0,);text-decoration-color:rgba(0,0,0,);text-underline-offset:.25em;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.mod-tx_bookingtime_appointment .icon-link{display:inline-flex;gap:.375rem;align-items:center;-webkit-text-decoration-color:rgba(0,0,0,1);text-decoration-color:rgba(0,0,0,1);text-underline-offset:.25em;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .mod-tx_bookingtime_appointment .icon-link>.bi{flex-shrink:0;width:1em;height:1em;fill:currentcolor;transition:.2s ease-in-out transform}
 @media (prefers-reduced-motion:reduce){
 .mod-tx_bookingtime_appointment .icon-link>.bi{transition:none}
@@ -1511,16 +1511,16 @@ to{transform:rotate(360deg)}
 .mod-tx_bookingtime_appointment .border-bottom-0{border-bottom:0!important}
 .mod-tx_bookingtime_appointment .border-start{border-left:var(--bs-border-width) var(--bs-border-style) var(--bs-border-color)!important}
 .mod-tx_bookingtime_appointment .border-start-0{border-left:0!important}
-.mod-tx_bookingtime_appointment .border-primary{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-secondary{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-success{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-info{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-warning{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-danger{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-light{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-dark{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-black{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .border-white{--bs-border-opacity:1;border-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .border-primary{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-secondary{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-success{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-info{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-warning{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-danger{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-light{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-dark{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-black{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .border-white{--bs-border-opacity:1;border-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .border-primary-subtle{border-color:var(--bs-primary-border-subtle)!important}
 .mod-tx_bookingtime_appointment .border-secondary-subtle{border-color:var(--bs-secondary-border-subtle)!important}
 .mod-tx_bookingtime_appointment .border-success-subtle{border-color:var(--bs-success-border-subtle)!important}
@@ -1739,17 +1739,17 @@ to{transform:rotate(360deg)}
 .mod-tx_bookingtime_appointment .text-wrap{white-space:normal!important}
 .mod-tx_bookingtime_appointment .text-nowrap{white-space:nowrap!important}
 .mod-tx_bookingtime_appointment .text-break{word-wrap:break-word!important;word-break:break-word!important}
-.mod-tx_bookingtime_appointment .text-primary{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-secondary{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-success{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-info{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-warning{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-danger{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-light{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-dark{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-black{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-white{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .text-body{--bs-text-opacity:1;color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .text-primary{--bs-text-opacity:1;color:rgba(0, 154, 221,1)!important}
+.mod-tx_bookingtime_appointment .text-secondary{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-success{--bs-text-opacity:1;color:rgba(0,122,0,1)!important}
+.mod-tx_bookingtime_appointment .text-info{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-warning{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-danger{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-light{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-dark{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-black{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-white{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .text-body{--bs-text-opacity:1;color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .text-muted{--bs-text-opacity:1;color:var(--bs-secondary-color)!important}
 .mod-tx_bookingtime_appointment .text-black-50{--bs-text-opacity:1;color:rgba(0,0,0,.5)!important}
 .mod-tx_bookingtime_appointment .text-white-50{--bs-text-opacity:1;color:rgba(255,255,255,.5)!important}
@@ -1785,15 +1785,15 @@ to{transform:rotate(360deg)}
 .mod-tx_bookingtime_appointment .link-offset-2-hover:hover{text-underline-offset:.25em!important}
 .mod-tx_bookingtime_appointment .link-offset-3{text-underline-offset:.375em!important}
 .mod-tx_bookingtime_appointment .link-offset-3-hover:hover{text-underline-offset:.375em!important}
-.mod-tx_bookingtime_appointment .link-underline-primary{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-underline-secondary{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-underline-success{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-underline-info{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-underline-warning{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-underline-danger{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-underline-light{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-underline-dark{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .link-underline{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,)!important;text-decoration-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .link-underline-primary{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-underline-secondary{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-underline-success{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-underline-info{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-underline-warning{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-underline-danger{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-underline-light{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-underline-dark{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .link-underline{--bs-link-underline-opacity:1;-webkit-text-decoration-color:rgba(0,0,0,1)!important;text-decoration-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .link-underline-opacity-0{--bs-link-underline-opacity:0}
 .mod-tx_bookingtime_appointment .link-underline-opacity-0-hover:hover{--bs-link-underline-opacity:0}
 .mod-tx_bookingtime_appointment .link-underline-opacity-10{--bs-link-underline-opacity:0.1}
@@ -1806,20 +1806,20 @@ to{transform:rotate(360deg)}
 .mod-tx_bookingtime_appointment .link-underline-opacity-75-hover:hover{--bs-link-underline-opacity:0.75}
 .mod-tx_bookingtime_appointment .link-underline-opacity-100{--bs-link-underline-opacity:1}
 .mod-tx_bookingtime_appointment .link-underline-opacity-100-hover:hover{--bs-link-underline-opacity:1}
-.mod-tx_bookingtime_appointment .bg-primary{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-secondary{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-success{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-info{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-warning{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-danger{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-light{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-dark{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-black{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-white{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-body{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .bg-primary{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-secondary{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-success{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-info{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-warning{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-danger{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-light{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-dark{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-black{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-white{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-body{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .bg-transparent{--bs-bg-opacity:1;background-color:transparent!important}
-.mod-tx_bookingtime_appointment .bg-body-secondary{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
-.mod-tx_bookingtime_appointment .bg-body-tertiary{--bs-bg-opacity:1;background-color:rgba(0,0,0,)!important}
+.mod-tx_bookingtime_appointment .bg-body-secondary{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
+.mod-tx_bookingtime_appointment .bg-body-tertiary{--bs-bg-opacity:1;background-color:rgba(0,0,0,1)!important}
 .mod-tx_bookingtime_appointment .bg-opacity-10{--bs-bg-opacity:0.1}
 .mod-tx_bookingtime_appointment .bg-opacity-25{--bs-bg-opacity:0.25}
 .mod-tx_bookingtime_appointment .bg-opacity-50{--bs-bg-opacity:0.5}

@@ -242,7 +242,7 @@ class Appointment_Admin {
 
 		echo wp_kses($this->twig->render('Appointment/Step1.html.twig', [
 			'currentNavItem' => 'step1',
-			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
+			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
 			'locale' => $this->locale,
 			'WP_HOME' => WP_HOME,
 		]),$this->getAllowedHtml());
@@ -277,7 +277,7 @@ class Appointment_Admin {
 					$contractAccount=$this->sdk->contractAccount_add([],$this->makeContractAccountDataArray($step2Data['appointment']));
 				} catch(RequestException $e) {
 					//flashmessage
-					$_SESSION['flashmessage'][] = [
+					$_SESSION['bt_appointment_flashmessage'][] = [
 						'title' => $this->translator->trans('flashmessage.step2.error.contractAccount.title',['var1'=>$e->getCode()]),
 						'message' => $this->translator->trans('flashmessage.step2.error.contractAccount.body',['var1'=>$e->getMessage()]),
 						'alertclass' => 'error'
@@ -292,7 +292,7 @@ class Appointment_Admin {
 					$organizantion = $this->sdk->organization_add([],$this->makeParentOrganizationDataArray($step2Data['appointment']));
 				} catch(RequestException $e) {
 					//flashmessage
-					$_SESSION['flashmessage'][] = [
+					$_SESSION['bt_appointment_flashmessage'][] = [
 						'title' => $this->translator->trans('flashmessage.step2.error.organization.title',['var1'=>$e->getCode()]),
 						'message' => $this->translator->trans('flashmessage.step2.error.organization.body',['var1'=>$e->getMessage()]),
 						'alertclass' => 'error'
@@ -304,7 +304,7 @@ class Appointment_Admin {
 				//write to db
 				if($this->writeOrganizationResponseToDB($organizantion['recordList'])) {
 					//flashmessage
-					$_SESSION['flashmessage'][] = [
+					$_SESSION['bt_appointment_flashmessage'][] = [
 						'title' => $this->translator->trans('flashmessage.step2.title'),
 						'message' => $this->translator->trans('flashmessage.step2.body'),
 						'alertclass' => 'success'
@@ -313,7 +313,7 @@ class Appointment_Admin {
 					exit(esc_html(wp_redirect(WP_HOME . '/wp-admin/admin.php?page=appointment-step3')));
 				} else {
 					//flashmessage
-					$_SESSION['flashmessage'][] = [
+					$_SESSION['bt_appointment_flashmessage'][] = [
 						'title' => $this->translator->trans('flashmessage.step2.title.error'),
 						'message' => $this->translator->trans('flashmessage.step2.body.error'),
 						'alertclass' => 'error'
@@ -330,13 +330,13 @@ class Appointment_Admin {
 			'currentNavItem' => 'step2',
 			'locale' => $this->locale,
 			'countries' => $this->countries['recordList'],
-			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
+			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
 			'nonceField' => wp_nonce_field('bt_appointment_nonce_step2'),
 
 		]),$this->getAllowedHtml());
 
-		unset($_SESSION['flashmessage']);
+		unset($_SESSION['bt_appointment_flashmessage']);
 	}
 
 	/**
@@ -348,11 +348,11 @@ class Appointment_Admin {
 			'email' => isset($_SESSION['appointment']['email']) ? sanitize_email($_SESSION['appointment']['email']) : $this->translator->trans('step2.form.email.placeholder'),
 			'locale' => $this->locale,
 			'maxId' => 	$this->getMaxId(),
-			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
+			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
 		]),$this->getAllowedHtml());
 
-		unset($_SESSION['flashmessage']);
+		unset($_SESSION['bt_appointment_flashmessage']);
 	}
 
 	/**
@@ -367,12 +367,12 @@ class Appointment_Admin {
 			'currentNavItem' => 'list',
 			'bookingtimepageurls' => $bookingtimepageurls,
 			'locale' => $this->locale,
-			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
+			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
 			'nonce' => $nonce,
 		]),$this->getAllowedHtml());
 
-		unset($_SESSION['flashmessage']);
+		unset($_SESSION['bt_appointment_flashmessage']);
 	}
 
 	/**
@@ -393,12 +393,12 @@ class Appointment_Admin {
     	echo wp_kses($this->twig->render('Appointment/Add.html.twig', [
 			'currentNavItem' => 'add',
 			'locale' => $this->locale,
-			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
+			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
 			'nonceField' => wp_nonce_field('bt_appointment_nonce_add'),
 		]),$this->getAllowedHtml());
 
-		unset($_SESSION['flashmessage']);
+		unset($_SESSION['bt_appointment_flashmessage']);
 	}
 
 	/**
@@ -433,13 +433,13 @@ class Appointment_Admin {
 			'currentNavItem' => 'preview',
 			'bookingtimepageurl' => $bookingtimepageurl,
 			'locale' => $this->locale,
-			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
+			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
 			'nonceField' => wp_nonce_field('bt_appointment_nonce_edit'),
 			'nonce' => $nonce,
 		]),$this->getAllowedHtml());
 
-		unset($_SESSION['flashmessage']);
+		unset($_SESSION['bt_appointment_flashmessage']);
 	}
 
 	/**
@@ -457,11 +457,11 @@ class Appointment_Admin {
 			'currentNavItem' => 'preview',
 			'bookingtimepageurl' => $bookingtimepageurl,
 			'locale' => $this->locale,
-			'flashMessages' => (isset($_SESSION['flashmessage']) ? $_SESSION['flashmessage'] : NULL),
+			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
 			'WP_HOME' => WP_HOME,
 		]),$this->getAllowedHtml());
 
-		unset($_SESSION['flashmessage']);
+		unset($_SESSION['bt_appointment_flashmessage']);
 	}
 
 
@@ -478,14 +478,14 @@ class Appointment_Admin {
 
 			if($wpdb->delete( $table_name, ['id' => $bookingtimepageurl])) {
 				//flashmessage
-				$_SESSION['flashmessage'][] = [
+				$_SESSION['bt_appointment_flashmessage'][] = [
 					'title' => $this->translator->trans('flashmessage.delete.title',['var1'=>sanitize_text_field($res['title'])]),
 					'message' => $this->translator->trans('flashmessage.delete.body',['var1'=>sanitize_url($res['url'])]),
 					'alertclass' => 'success'
 				];
 			} else {
 				//flashmessage
-				$_SESSION['flashmessage'][] = [
+				$_SESSION['bt_appointment_flashmessage'][] = [
 					'title' => $this->translator->trans('flashmessage.delete.title.error'),
 					'message' => $this->translator->trans('flashmessage.delete.body.error'),
 					'alertclass' => 'error'
@@ -573,7 +573,7 @@ class Appointment_Admin {
 			return true;
 		} else {
 			//flashmessage
-			$_SESSION['flashmessage'][] = [
+			$_SESSION['bt_appointment_flashmessage'][] = [
 				'title' => $this->translator->trans('flashmessage.validateTitle.title'),
 				'message' => $this->translator->trans('flashmessage.validateTitle.body'),
 				'alertclass' => 'error'
@@ -593,7 +593,7 @@ class Appointment_Admin {
 			return true;
 		} else {
 			//flashmessage
-			$_SESSION['flashmessage'][] = [
+			$_SESSION['bt_appointment_flashmessage'][] = [
 				'title' => $this->translator->trans('flashmessage.validateUrl.title'),
 				'message' => $this->translator->trans('flashmessage.validateUrl.body'),
 				'alertclass' => 'error'
@@ -774,7 +774,7 @@ class Appointment_Admin {
 		));
 
 		//flashmessage
-		$_SESSION['flashmessage'][] = [
+		$_SESSION['bt_appointment_flashmessage'][] = [
 			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>sanitize_text_field(trim($data['title']))]),
 			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>sanitize_url($data['url'])]),
 			'alertclass' => 'success'
@@ -796,7 +796,7 @@ class Appointment_Admin {
 		$wpdb->update($tablename,['title' => sanitize_text_field(trim($data['title'])),'url' => sanitize_url($data['url'])],['id' => $data['id']]);
 
 		//flashmessage
-		$_SESSION['flashmessage'][] = [
+		$_SESSION['bt_appointment_flashmessage'][] = [
 			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>sanitize_text_field(trim($data['title']))]),
 			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>sanitize_url($data['url'])]),
 			'alertclass' => 'success'
@@ -847,9 +847,21 @@ class Appointment_Admin {
 		return 'Europe/Berlin';
 	}
 
+	/**
+	 * Define and return an array of allowed HTML tags and their attributes.
+	 *
+	 * This function sets the global $allowedposttags array to include various HTML tags and their
+	 * corresponding attributes that are allowed. The attributes array includes commonly used attributes
+	 * such as 'class', 'id', 'style', 'src', 'href', and others.
+	 *
+	 * @global array $allowedposttags The array of allowed HTML tags and attributes.
+	 * @return array The modified $allowedposttags array including the newly defined allowed tags and attributes.
+	 */
 	function getAllowedHtml() {
-
+		// Access the global $allowedposttags array
 		global $allowedposttags;
+
+		// Define an array of allowed attributes
 		$allowed_atts = [
 			'align' => [],
 			'class'=> [],
@@ -870,7 +882,6 @@ class Appointment_Admin {
 			'required' => [],
 			'checked' => [],
 			'selected' => [],
-			'type' => [],
 			'value'=> [],
 			'name' => [],
 			'tabindex' => [],
@@ -891,6 +902,8 @@ class Appointment_Admin {
 			'data-lightbox'=> [],
 			'data-title'=> [],
 		];
+
+		// Add allowed attributes to various HTML tags
 		$allowedposttags['button'] = $allowed_atts;
 		$allowedposttags['form'] = $allowed_atts;
 		$allowedposttags['label'] = $allowed_atts;
@@ -930,7 +943,36 @@ class Appointment_Admin {
 		$allowedposttags['a'] = $allowed_atts;
 		$allowedposttags['b'] = $allowed_atts;
 		$allowedposttags['i'] = $allowed_atts;
+
+		// Return the modified array of allowed HTML tags and attributes
 		return $allowedposttags;
+	}
+
+
+	/**
+	 * Sanitize an array of arguments by applying the sanitize_text_field function to each element.
+	 *
+	 * This function checks if the provided argument is an array. If it is, it loops through each
+	 * element of the array and sanitizes it using the sanitize_text_field function. The sanitized
+	 * array is then returned.
+	 *
+	 * @param array|string $args The input data to be sanitized. It can be an array or a single string.
+	 * @return array|string The sanitized input data. If the input was an array, an array with sanitized values is returned.
+	 *                      If the input was not an array, the original input is returned.
+	 */
+	public function sanitize($args) {
+		// Check if the input is an array
+		if (is_array($args)) {
+			// Loop through each element in the array
+			foreach ($args as $jey => $arg) {
+				foreach ($arg as $key => $value) {
+					// Sanitize each element using the sanitize_text_field function
+					$args[$jey][$key] = sanitize_text_field($value);
+				}
+			}
+		}
+		// Return the sanitized array or the original input if it was not an array
+		return $args;
 	}
 
 }
