@@ -217,6 +217,20 @@ class Appointment_Admin {
 			return wp_send_json($this->findAll());
 	}
 
+	public function cleanSessionVariable($sessionArray) {
+		$cleanedSessionArray=[];
+		if(isset($sessionArray['bt_appointment_flashmessage']) && count($sessionArray['bt_appointment_flashmessage']) > 0) {
+			foreach ($sessionArray['bt_appointment_flashmessage'] as $key => $value) {
+				$cleanedSessionArray['bt_appointment_flashmessage'][] = [
+					'title' => wp_kses($value['title'],$this->getAllowedHtml()),
+					'message' => wp_kses($value['message'],$this->getAllowedHtml()),
+					'alertclass' => wp_kses($value['alertclass'],$this->getAllowedHtml())
+				];
+			}
+		}
+		return $cleanedSessionArray['bt_appointment_flashmessage'];
+	}
+
 	/**
 	 * appointment_init
 	 */
@@ -242,7 +256,7 @@ class Appointment_Admin {
 
 		echo wp_kses($this->twig->render('Appointment/Step1.html.twig', [
 			'currentNavItem' => 'step1',
-			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
+			'flashMessages' => $this->cleanSessionVariable($_SESSION),
 			'locale' => $this->locale,
 			'WP_HOME' => WP_HOME,
 		]),$this->getAllowedHtml());
@@ -330,7 +344,7 @@ class Appointment_Admin {
 			'currentNavItem' => 'step2',
 			'locale' => $this->locale,
 			'countries' => $this->countries['recordList'],
-			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
+			'flashMessages' => $this->cleanSessionVariable($_SESSION),
 			'WP_HOME' => WP_HOME,
 			'nonceField' => wp_nonce_field('bt_appointment_nonce_step2'),
 
@@ -348,7 +362,7 @@ class Appointment_Admin {
 			'email' => isset($_SESSION['appointment']['email']) ? sanitize_email($_SESSION['appointment']['email']) : $this->translator->trans('step2.form.email.placeholder'),
 			'locale' => $this->locale,
 			'maxId' => 	$this->getMaxId(),
-			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
+			'flashMessages' => $this->cleanSessionVariable($_SESSION),
 			'WP_HOME' => WP_HOME,
 		]),$this->getAllowedHtml());
 
@@ -367,7 +381,7 @@ class Appointment_Admin {
 			'currentNavItem' => 'list',
 			'bookingtimepageurls' => $bookingtimepageurls,
 			'locale' => $this->locale,
-			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
+			'flashMessages' => $this->cleanSessionVariable($_SESSION),
 			'WP_HOME' => WP_HOME,
 			'nonce' => $nonce,
 		]),$this->getAllowedHtml());
@@ -393,7 +407,7 @@ class Appointment_Admin {
     	echo wp_kses($this->twig->render('Appointment/Add.html.twig', [
 			'currentNavItem' => 'add',
 			'locale' => $this->locale,
-			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
+			'flashMessages' => $this->cleanSessionVariable($_SESSION),
 			'WP_HOME' => WP_HOME,
 			'nonceField' => wp_nonce_field('bt_appointment_nonce_add'),
 		]),$this->getAllowedHtml());
@@ -433,7 +447,7 @@ class Appointment_Admin {
 			'currentNavItem' => 'preview',
 			'bookingtimepageurl' => $bookingtimepageurl,
 			'locale' => $this->locale,
-			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
+			'flashMessages' => $this->cleanSessionVariable($_SESSION),
 			'WP_HOME' => WP_HOME,
 			'nonceField' => wp_nonce_field('bt_appointment_nonce_edit'),
 			'nonce' => $nonce,
@@ -457,7 +471,7 @@ class Appointment_Admin {
 			'currentNavItem' => 'preview',
 			'bookingtimepageurl' => $bookingtimepageurl,
 			'locale' => $this->locale,
-			'flashMessages' => (isset($_SESSION['bt_appointment_flashmessage']) ? $_SESSION['bt_appointment_flashmessage'] : NULL),
+			'flashMessages' => $this->cleanSessionVariable($_SESSION),
 			'WP_HOME' => WP_HOME,
 		]),$this->getAllowedHtml());
 

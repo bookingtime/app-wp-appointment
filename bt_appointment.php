@@ -16,7 +16,7 @@
  * Plugin URI:        https://github.com/bookingtime/app-wp-appointment
  * Description:       Conveniently integrate bookingtime's online appointment booking into your wordpress website.
 
- * Version:           6.0.7
+ * Version:           6.0.8
  * Author:            bookingtime
  * Author URI:        https://www.bookingtime.com/
  * License: 			 MIT
@@ -69,7 +69,7 @@ add_action('init', 'bt_appointment_output_buffer');
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'APPOINTMENT_VERSION', '6.0.7' );
+define( 'APPOINTMENT_VERSION', '6.0.8' );
 
 if ( ! defined( 'APPOINTMENT_PLUGIN_URL' ) ) {
 	define( 'APPOINTMENT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
