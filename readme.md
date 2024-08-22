@@ -1,7 +1,7 @@
-# module-wp-appointment
+# app-wp-appointment
 Wordpress extension appointment, booking module wrapper for CMS Wordpress with included setup process.
 
-<img src="https://github.com/bookingtime/module-wp-appointment/blob/master/aws/logo_wordpress.png" alt="logo wordpress" width="200" />
+<img src="https://github.com/bookingtime/app-wp-appointment/blob/master/aws/logo_wordpress.png" alt="logo wordpress" width="200" />
 
 
 
@@ -19,9 +19,9 @@ Wordpress extension appointment, booking module wrapper for CMS Wordpress with i
 
 Another way to install the extension is through Composer.
 ```bash
-composer require bookingtime/module-wp-appointment
+composer require bookingtime/app-wp-appointment
 ```
-see: https://packagist.org/packages/bookingtime/module-wp-appointment
+see: https://packagist.org/packages/bookingtime/app-wp-appointment
 
 
 
