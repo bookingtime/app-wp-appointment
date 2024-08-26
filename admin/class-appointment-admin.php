@@ -125,10 +125,6 @@ class Appointment_Admin {
       $this->twig = new Environment(new FilesystemLoader(__DIR__.'/templates/'));
 		$this->twig->addExtension(new TranslationExtension($this->translator));
 
-		//build host
-		$this->host = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/';
-
-
 		if($this->getLocale() === 'de') {
 			$this->organizationTemplateLanguageSuffix = 'DE';
 		} else {

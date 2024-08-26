@@ -5,7 +5,7 @@ Donate link: https://www.bookingtime.com/
 Requires at least: 6.0
 Tested up to: 6.6
 Requires PHP: 7.4
-Stable tag: 6.0.8
+Stable tag: 6.0.9
 License: MIT
 License URI: https://opensource.org/license/mit
 
