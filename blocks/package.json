@@ -26,6 +26,7 @@
     "react-select": "^5.7.0"
   },
   "overrides": {
+    "@babel/plugin-transform-modules-systemjs": "^7.29.4",
     "@babel/traverse": "^7.23.2",
     "form-data": "^3.0.5",
     "webpack": "^5.104.1",
