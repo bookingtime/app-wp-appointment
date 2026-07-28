@@ -28,6 +28,7 @@
   "overrides": {
     "@babel/traverse": "^7.23.2",
     "form-data": "^3.0.5",
-    "webpack": "^5.104.1"
+    "webpack": "^5.104.1",
+    "websocket-driver": "^0.7.5"
   }
 }
