@@ -26,6 +26,7 @@
     "react-select": "^5.7.0"
   },
   "overrides": {
-    "@babel/traverse": "^7.23.2"
+    "@babel/traverse": "^7.23.2",
+    "form-data": "^3.0.5"
   }
 }
