@@ -46,6 +46,7 @@
     "svgo": "^2.8.1",
     "tar-fs": "^2.1.4",
     "webpack": "^5.104.1",
+    "webpack-dev-middleware": "^5.3.4",
     "websocket-driver": "^0.7.5"
   }
 }
