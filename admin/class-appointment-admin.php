@@ -328,9 +328,14 @@ class Appointment_Admin {
 					$contractAccount=$this->sdk->contractAccount_add([],$this->makeContractAccountDataArray($step2Data['appointment']));
 				} catch(RequestException $e) {
 					//flashmessage
+					// esc_html() um die Antwort der externen API: sie wird in
+					// einen Uebersetzungstext eingesetzt, der Markup enthaelt
+					// (<u>var1</u>) und deshalb im Template mit |raw ausgegeben
+					// wird. Ohne Escaping waere die API-Antwort damit ein
+					// direkter XSS-Vektor im Admin-Bereich.
 					$_SESSION['bt_appointment_flashmessage'][] = [
-						'title' => $this->translator->trans('flashmessage.step2.error.contractAccount.title',['var1'=>$e->getCode()]),
-						'message' => $this->translator->trans('flashmessage.step2.error.contractAccount.body',['var1'=>$e->getMessage()]),
+						'title' => $this->translator->trans('flashmessage.step2.error.contractAccount.title',['var1'=>esc_html($e->getCode())]),
+						'message' => $this->translator->trans('flashmessage.step2.error.contractAccount.body',['var1'=>esc_html($e->getMessage())]),
 						'alertclass' => 'error'
 					];
 					//redirect
@@ -343,9 +348,10 @@ class Appointment_Admin {
 					$organizantion = $this->sdk->organization_add([],$this->makeParentOrganizationDataArray($step2Data['appointment']));
 				} catch(RequestException $e) {
 					//flashmessage
+					// esc_html(): siehe Begruendung beim contractAccount-Block
 					$_SESSION['bt_appointment_flashmessage'][] = [
-						'title' => $this->translator->trans('flashmessage.step2.error.organization.title',['var1'=>$e->getCode()]),
-						'message' => $this->translator->trans('flashmessage.step2.error.organization.body',['var1'=>$e->getMessage()]),
+						'title' => $this->translator->trans('flashmessage.step2.error.organization.title',['var1'=>esc_html($e->getCode())]),
+						'message' => $this->translator->trans('flashmessage.step2.error.organization.body',['var1'=>esc_html($e->getMessage())]),
 						'alertclass' => 'error'
 					];
 					//redirect
@@ -398,7 +404,7 @@ class Appointment_Admin {
 
     	echo wp_kses($this->twig->render('Appointment/Step3.html.twig', [
 			'currentNavItem' => 'step3',
-			'email' => isset($_SESSION['appointment']['email']) ? sanitize_email($_SESSION['appointment']['email']) : $this->translator->trans('step2.form.email.placeholder'),
+			'email' => isset($_SESSION['appointment']['email']) ? esc_html(sanitize_email($_SESSION['appointment']['email'])) : $this->translator->trans('step2.form.email.placeholder'),
 			'locale' => $this->locale,
 			'maxId' => 	$this->getMaxId(),
 			'flashMessages' => $this->cleanSessionVariable($_SESSION),
@@ -542,8 +548,8 @@ class Appointment_Admin {
 			if($wpdb->delete( $table_name, ['id' => $bookingtimepageurl])) {
 				//flashmessage
 				$_SESSION['bt_appointment_flashmessage'][] = [
-					'title' => $this->translator->trans('flashmessage.delete.title',['var1'=>sanitize_text_field($res['title'])]),
-					'message' => $this->translator->trans('flashmessage.delete.body',['var1'=>sanitize_url($res['url'])]),
+					'title' => $this->translator->trans('flashmessage.delete.title',['var1'=>esc_html(sanitize_text_field($res['title']))]),
+					'message' => $this->translator->trans('flashmessage.delete.body',['var1'=>esc_html(sanitize_url($res['url']))]),
 					'alertclass' => 'success'
 				];
 			} else {
@@ -840,8 +846,8 @@ class Appointment_Admin {
 
 		//flashmessage
 		$_SESSION['bt_appointment_flashmessage'][] = [
-			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>sanitize_text_field(trim($data['title']))]),
-			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>sanitize_url($data['url'])]),
+			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>esc_html(sanitize_text_field(trim($data['title'])))]),
+			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>esc_html(sanitize_url($data['url']))]),
 			'alertclass' => 'success'
 		];
 
@@ -864,8 +870,8 @@ class Appointment_Admin {
 
 		//flashmessage
 		$_SESSION['bt_appointment_flashmessage'][] = [
-			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>sanitize_text_field(trim($data['title']))]),
-			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>sanitize_url($data['url'])]),
+			'title' => $this->translator->trans('flashmessage.add_edit.title',['var1'=>esc_html(sanitize_text_field(trim($data['title'])))]),
+			'message' => $this->translator->trans('flashmessage.add_edit.body',['var1'=>esc_html(sanitize_url($data['url']))]),
 			'alertclass' => 'success'
 		];
 
@@ -981,8 +987,14 @@ class Appointment_Admin {
 		$allowedposttags['checkbox'] = $allowed_atts;
 		$allowedposttags['radio'] = $allowed_atts;
 		$allowedposttags['iframe'] = $allowed_atts;
-		$allowedposttags['script'] = $allowed_atts;
-		$allowedposttags['style'] = $allowed_atts;
+		// 'script' und 'style' stehen hier bewusst NICHT mehr:
+		// wp_kses filtert Tags und Attribute, nicht den Textinhalt erlaubter
+		// Tags. Ein erlaubtes <script> haette also seinen kompletten Inhalt
+		// unveraendert passieren lassen und damit genau die Angriffsklasse
+		// durchgelassen, gegen die wp_kses hier eingesetzt wird.
+		// Keines der Admin-Templates verwendet <script> oder <style>; der
+		// <style>-Block in public/templates/Base.html.twig laeuft nicht ueber
+		// wp_kses und ist davon nicht betroffen.
 		$allowedposttags['strong'] = $allowed_atts;
 		$allowedposttags['small'] = $allowed_atts;
 		$allowedposttags['table'] = $allowed_atts;
