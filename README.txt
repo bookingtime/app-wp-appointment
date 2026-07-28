@@ -4,7 +4,7 @@ Tags: appointment,booking,appointment,calendar,event
 Donate link: https://www.bookingtime.com/
 Requires at least: 6.0
 Tested up to: 6.6
-Requires PHP: 7.4
+Requires PHP: 8.1
 Stable tag: 6.0.9
 License: MIT
 License URI: https://opensource.org/license/mit
