@@ -34,6 +34,7 @@
     "brace-expansion": "^1.1.16",
     "flatted": "^3.4.2",
     "form-data": "^3.0.5",
+    "immutable": "^4.3.9",
     "webpack": "^5.104.1",
     "websocket-driver": "^0.7.5"
   }
