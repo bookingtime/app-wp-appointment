@@ -29,6 +29,7 @@
     "@babel/plugin-transform-modules-systemjs": "^7.29.4",
     "@babel/traverse": "^7.23.2",
     "adm-zip": "^0.6.0",
+    "axios": "^0.33.0",
     "form-data": "^3.0.5",
     "webpack": "^5.104.1",
     "websocket-driver": "^0.7.5"
