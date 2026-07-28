@@ -43,6 +43,7 @@
     "node-forge": "^1.4.0",
     "semver@6": "^6.3.1",
     "serialize-javascript": "^7.0.5",
+    "svgo": "^2.8.1",
     "webpack": "^5.104.1",
     "websocket-driver": "^0.7.5"
   }
