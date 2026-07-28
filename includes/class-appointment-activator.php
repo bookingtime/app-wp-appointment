@@ -35,15 +35,16 @@ class Appointment_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-		if (!defined('WP_HOME')) {
-			$appointmentAdmin = new Appointment_Admin();
-			$wp_home_array = $appointmentAdmin->getFromOptionsTable('home');
-			if(!empty($wp_home_array)) {
-				define('WP_HOME',$wp_home_array[0]->option_value);
-			} else {
-				define('WP_HOME','');
-			}
-		}
+		// Der frueher hier stehende Block definierte WP_HOME ueber
+		// "new Appointment_Admin()" - ein Aufruf ohne Argumente, obwohl der
+		// Konstruktor $plugin_name und $version ohne Standardwerte erwartet.
+		// Unter PHP 8 haette das einen ArgumentCountError ausgeloest, sobald
+		// WP_HOME zum Aktivierungszeitpunkt nicht bereits definiert gewesen
+		// waere. Zusaetzlich haette der Konstruktor damals API-Requests
+		// waehrend der Aktivierung angestossen.
+		//
+		// WP_HOME wird jetzt in bt_appointment.php gesetzt und liegt hier
+		// bereits vor.
 		self::installDBAppointment();
 	}
 

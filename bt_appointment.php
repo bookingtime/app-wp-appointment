@@ -75,6 +75,22 @@ if ( ! defined( 'APPOINTMENT_PLUGIN_URL' ) ) {
 	define( 'APPOINTMENT_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
+/**
+ * WP_HOME sicherstellen.
+ *
+ * Die Konstante wird von den Admin-Templates fuer Links und Formular-Actions
+ * benoetigt. Frueher definierte sie der Konstruktor von Appointment_Admin -
+ * der laeuft jedoch seit der is_admin()-Kapselung nicht mehr bei jedem
+ * Request. Die Definition gehoert deshalb hierher, wo sie unabhaengig vom
+ * Kontext greift.
+ *
+ * get_option() ersetzt dabei die frueher verwendete direkte Abfrage der
+ * options-Tabelle.
+ */
+if ( ! defined( 'WP_HOME' ) ) {
+	define( 'WP_HOME', (string) get_option( 'home', '' ) );
+}
+
 
 /**
  * The code that runs during plugin activation.

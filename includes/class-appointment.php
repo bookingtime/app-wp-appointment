@@ -157,6 +157,23 @@ class BTA_Appointment {
 	 */
 	private function define_admin_hooks() {
 
+		// Nur im Administrationsbereich instanziieren.
+		//
+		// Zuvor wurde Appointment_Admin bei JEDEM Request erzeugt - auch im
+		// Frontend und auch fuer anonyme Besucher. Da der Konstruktor eine
+		// SDK-Verbindung aufbaute und zwei Stammdatenlisten abrief, loeste
+		// jeder Seitenaufruf der Website bis zu drei HTTP-Requests gegen
+		// api.bookingtime.com aus, bei einem Timeout von 15 Sekunden. Eine
+		// langsame oder nicht erreichbare API legte damit die gesamte Website
+		// lahm.
+		//
+		// Die beiden hier registrierten Hooks feuern ohnehin ausschliesslich
+		// im Adminbereich (admin_enqueue_scripts), die Kapselung aendert am
+		// Verhalten also nichts.
+		if ( ! is_admin() ) {
+			return;
+		}
+
 		$plugin_admin = new Appointment_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );

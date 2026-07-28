@@ -56,13 +56,11 @@ class Appointment_Admin {
 	public $locale;
 	public $timezone;
 	protected $user;
-	protected $sdk;
-	protected $sectorList = [];
+	protected $sdk = null;
 	protected $twig;
 	protected $host;
 	protected $framework;
 	protected $translator;
-	protected $countries;
 	protected $organizationTemplateLanguageSuffix = 'EN';
 
    const APPOINTMENT_MODULE_CONFIG_SHORT = 'MODULE_CONFIG_SHORT';
@@ -111,15 +109,8 @@ class Appointment_Admin {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
-		//check for WP_HOME
-		if (!defined('WP_HOME')) {
-			$wp_home_array = $this->getFromOptionsTable('home');
-			if(!empty($wp_home_array)) {
-				define('WP_HOME',$wp_home_array[0]->option_value);
-			} else {
-				define('WP_HOME','');
-			}
-		}
+		// WP_HOME wird in bt_appointment.php definiert, damit die Konstante
+		// unabhaengig davon vorliegt, ob diese Klasse instanziiert wird.
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
@@ -131,25 +122,11 @@ class Appointment_Admin {
 		$this->locale = $this->getLocale();
 		$this->timezone =  $this->getTimezone();
 
-      //sdk connection
-		$clientId = 'c5dIniVAkJUMQglgIeIOrKaDHiku3aCmBBKHU9uGH1jGm64gGcnYlsWJIseqgNrm';
-		$clientSecret = 'hX8gUbPMa1gJZpjruvfYRBnfTR0AmK2WJAC73KnjJN498jDzUkFSYCCbX7swYqga';
-		$configArray = [
-			'appApiUrl'=>'https://api.bookingtime.com/app/v3/',
-			'oauthUrl'=>'https://auth.bookingtime.com/oauth/token',
-			'locale'=>$this->locale,
-			'timeout'=>15,
-			'mock'=>FALSE,
-		];
-
-		//make sdk auth
-      $this->sdk = new Sdk($clientId,$clientSecret,$configArray);
-
-      //get static sector list
-      $this->sectorList = $this->sdk->static_sector_list([]);
-
-		//get all countries
-		$this->countries = $this->sdk->static_country_list([]);
+		// Die SDK-Verbindung wird hier bewusst NICHT mehr aufgebaut.
+		// Frueher erzeugte der Konstruktor eine Sdk-Instanz und rief direkt
+		// static_sector_list() und static_country_list() auf - zwei
+		// HTTP-Requests gegen api.bookingtime.com bei jeder Instanziierung.
+		// Siehe getSdk() und getCountries() weiter unten.
 
 		//init translator
 		$this->translator = new Translator($this->locale);
@@ -165,6 +142,66 @@ class Appointment_Admin {
 		} else {
 			$this->organizationTemplateLanguageSuffix = 'EN';
 		}
+	}
+
+	/**
+	 * Liefert die SDK-Instanz und erzeugt sie beim ersten Zugriff.
+	 *
+	 * Der Aufbau erfolgt bewusst erst bei tatsaechlichem Bedarf: die einzigen
+	 * Stellen, die das SDK benoetigen, sind getCountries() und die beiden
+	 * API-Aufrufe in appointment_step2(). Alle uebrigen Seiten des Plugins
+	 * arbeiten ausschliesslich auf der lokalen Datenbank.
+	 *
+	 * @return Sdk
+	 */
+	private function getSdk(): Sdk {
+		if ( null === $this->sdk ) {
+			$clientId = 'c5dIniVAkJUMQglgIeIOrKaDHiku3aCmBBKHU9uGH1jGm64gGcnYlsWJIseqgNrm';
+			$clientSecret = 'hX8gUbPMa1gJZpjruvfYRBnfTR0AmK2WJAC73KnjJN498jDzUkFSYCCbX7swYqga';
+			$configArray = [
+				'appApiUrl'=>'https://api.bookingtime.com/app/v3/',
+				'oauthUrl'=>'https://auth.bookingtime.com/oauth/token',
+				'locale'=>$this->locale,
+				'timeout'=>15,
+				'mock'=>FALSE,
+			];
+			$this->sdk = new Sdk($clientId,$clientSecret,$configArray);
+		}
+		return $this->sdk;
+	}
+
+	/**
+	 * Liefert die Laenderliste fuer das Formular in Schritt 2.
+	 *
+	 * Das Ergebnis wird fuer einen Tag als Transient zwischengespeichert. Die
+	 * Liste ist eine statische Stammdatenabfrage und aenderte sich zuvor
+	 * dennoch bei jedem Seitenaufruf ueber einen HTTP-Request.
+	 *
+	 * Faellt der API-Aufruf aus, wird ein leeres Array zurueckgegeben statt
+	 * eine Exception bis nach oben durchschlagen zu lassen - die Seite bleibt
+	 * damit bedienbar, auch wenn die externe API nicht erreichbar ist.
+	 *
+	 * @return array
+	 */
+	private function getCountries(): array {
+		$cacheKey = 'bt_appointment_countries_' . $this->locale;
+		$cached = get_transient( $cacheKey );
+		if ( false !== $cached && is_array( $cached ) ) {
+			return $cached;
+		}
+
+		try {
+			$countries = $this->getSdk()->static_country_list([]);
+		} catch ( \Throwable $e ) {
+			return [ 'recordList' => [] ];
+		}
+
+		if ( ! is_array( $countries ) ) {
+			return [ 'recordList' => [] ];
+		}
+
+		set_transient( $cacheKey, $countries, DAY_IN_SECONDS );
+		return $countries;
 	}
 
 	/**
@@ -325,7 +362,7 @@ class Appointment_Admin {
 
 				//create contractAccount
 				try {
-					$contractAccount=$this->sdk->contractAccount_add([],$this->makeContractAccountDataArray($step2Data['appointment']));
+					$contractAccount=$this->getSdk()->contractAccount_add([],$this->makeContractAccountDataArray($step2Data['appointment']));
 				} catch(RequestException $e) {
 					//flashmessage
 					// esc_html() um die Antwort der externen API: sie wird in
@@ -345,7 +382,7 @@ class Appointment_Admin {
 				//create organization
 				try {
 					$step2Data['appointment']['contractAccount'] = $contractAccount;
-					$organizantion = $this->sdk->organization_add([],$this->makeParentOrganizationDataArray($step2Data['appointment']));
+					$organizantion = $this->getSdk()->organization_add([],$this->makeParentOrganizationDataArray($step2Data['appointment']));
 				} catch(RequestException $e) {
 					//flashmessage
 					// esc_html(): siehe Begruendung beim contractAccount-Block
@@ -386,7 +423,7 @@ class Appointment_Admin {
     	echo wp_kses($this->twig->render('Appointment/Step2.html.twig', [
 			'currentNavItem' => 'step2',
 			'locale' => $this->locale,
-			'countries' => $this->countries['recordList'],
+			'countries' => $this->getCountries()['recordList'],
 			'flashMessages' => $this->cleanSessionVariable($_SESSION),
 			'WP_HOME' => WP_HOME,
 			'nonceField' => wp_nonce_field('bt_appointment_nonce_step2'),
