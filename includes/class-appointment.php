@@ -186,10 +186,21 @@ class BTA_Appointment {
 	 */
 	public function run() {
 
-		//check if user is logged in
-		if(is_user_logged_in() && isset($_GET['page']) && $_GET['page'] === 'appointment-getbookingtimepageurls' && check_admin_referer('bt_appointment_restApi')) {
+		// Lese-Endpunkt fuer den Gutenberg-Block.
+		// Berechtigung: edit_posts - wer Beitraege bearbeiten darf, muss den Block
+		// einfuegen und dafuer die Liste der Buchungsseiten laden koennen.
+		// is_user_logged_in() allein genuegte nicht: damit konnte jeder
+		// angemeldete Benutzer bis hinunter zum Abonnenten die vollstaendige
+		// Tabelle auslesen.
+		if( isset($_GET['page']) && $_GET['page'] === 'appointment-getbookingtimepageurls'
+		    && current_user_can( Appointment_Admin::CAP_READ_LIST )
+		    && check_admin_referer('bt_appointment_restApi') ) {
 			$plugin_admin = new Appointment_Admin( $this->get_plugin_name(), $this->get_version() );
-			echo esc_html($plugin_admin->appointment_getbookingtimepageurls());
+			// appointment_getbookingtimepageurls() ruft wp_send_json() auf, das
+			// die Ausgabe selbst erzeugt und beendet. Ein Rueckgabewert erreicht
+			// diese Stelle nie - das frueher hier stehende echo esc_html(...)
+			// war wirkungslos.
+			$plugin_admin->appointment_getbookingtimepageurls();
 			die();
 		}
 

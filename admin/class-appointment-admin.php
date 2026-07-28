@@ -69,6 +69,41 @@ class Appointment_Admin {
    const APPOINTMENT_MODULE_ID = '23C4ejWwJt9G78gSYIAmhTrTzs2PoHb2';
 
 	/**
+	 * Capability fuer die Verwaltungsseiten des Plugins.
+	 * Anlegen, Bearbeiten und Loeschen von Buchungsseiten sowie das Erstellen
+	 * eines bookingtime-Vertragskontos sind Administrationsvorgaenge.
+	 */
+	const CAP_MANAGE = 'manage_options';
+
+	/**
+	 * Capability fuer den Lese-Endpunkt, den der Gutenberg-Block nutzt.
+	 * Bewusst niedriger: Redakteure muessen den Block einfuegen koennen,
+	 * besitzen aber kein manage_options.
+	 */
+	const CAP_READ_LIST = 'edit_posts';
+
+	/**
+	 * Bricht die Ausfuehrung ab, wenn der aktuelle Benutzer die noetige
+	 * Berechtigung nicht besitzt.
+	 *
+	 * Notwendig zusaetzlich zur Capability in add_menu_page()/add_submenu_page():
+	 * mit null als parent_slug registrierte Seiten tauchen zwar in keinem Menue
+	 * auf, sind aber weiterhin direkt ueber admin.php?page=... erreichbar.
+	 *
+	 * @param string $capability
+	 * @return void
+	 */
+	private function requireCapability(string $capability = self::CAP_MANAGE):void {
+		if ( ! current_user_can( $capability ) ) {
+			wp_die(
+				esc_html__( 'Sie haben keine Berechtigung, auf diese Seite zuzugreifen.', 'bt_appointment' ),
+				esc_html__( 'Keine Berechtigung', 'bt_appointment' ),
+				array( 'response' => 403 )
+			);
+		}
+	}
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -195,21 +230,22 @@ class Appointment_Admin {
 	 * loads menu
 	 */
 	public function appointmentSetupMenu() {
-		add_menu_page( 'bookingtime', 'bookingtime', 'read', 'appointment-init', [$this, 'appointment_init'], WP_HOME . '/wp-content/plugins/bt_appointment/assets/icon.png' );
-		add_submenu_page( null, 'Appointment Step 1', 'Step 1', 'read', 'appointment-step1', [$this, 'appointment_step1'] );
-		add_submenu_page( null, 'Appointment Step 2', 'Step 2', 'read', 'appointment-step2', [$this, 'appointment_step2'] );
-		add_submenu_page( null, 'Appointment Step 3', 'Step 3', 'read', 'appointment-step3', [$this, 'appointment_step3'] );
-		add_submenu_page( null, 'Appointment get bookingtimepage-urls', 'Get bookingtimepage-urls', 'read', 'appointment-getbookingtimepageurls', [$this, 'appointment_getbookingtimepageurls'] );
-		add_submenu_page( null, 'Appointment List', 'List', 'read', 'appointment-list', [$this, 'appointment_list'] );
-		add_submenu_page( null, 'Appointment Edit', 'Edit', 'read', 'appointment-edit', [$this, 'appointment_edit'] );
-		add_submenu_page( null, 'Appointment Add', 'Add', 'read', 'appointment-add', [$this, 'appointment_add'] );
-		add_submenu_page( null, 'Appointment Preview', 'Preview', 'read', 'appointment-preview', [$this, 'appointment_preview'] );
+		add_menu_page( 'bookingtime', 'bookingtime', self::CAP_MANAGE, 'appointment-init', [$this, 'appointment_init'], WP_HOME . '/wp-content/plugins/bt_appointment/assets/icon.png' );
+		add_submenu_page( null, 'Appointment Step 1', 'Step 1', self::CAP_MANAGE, 'appointment-step1', [$this, 'appointment_step1'] );
+		add_submenu_page( null, 'Appointment Step 2', 'Step 2', self::CAP_MANAGE, 'appointment-step2', [$this, 'appointment_step2'] );
+		add_submenu_page( null, 'Appointment Step 3', 'Step 3', self::CAP_MANAGE, 'appointment-step3', [$this, 'appointment_step3'] );
+		add_submenu_page( null, 'Appointment get bookingtimepage-urls', 'Get bookingtimepage-urls', self::CAP_READ_LIST, 'appointment-getbookingtimepageurls', [$this, 'appointment_getbookingtimepageurls'] );
+		add_submenu_page( null, 'Appointment List', 'List', self::CAP_MANAGE, 'appointment-list', [$this, 'appointment_list'] );
+		add_submenu_page( null, 'Appointment Edit', 'Edit', self::CAP_MANAGE, 'appointment-edit', [$this, 'appointment_edit'] );
+		add_submenu_page( null, 'Appointment Add', 'Add', self::CAP_MANAGE, 'appointment-add', [$this, 'appointment_add'] );
+		add_submenu_page( null, 'Appointment Preview', 'Preview', self::CAP_MANAGE, 'appointment-preview', [$this, 'appointment_preview'] );
 	}
 
 	/**
 	 * appointment_getbookingtimepageurls
 	 */
 	public function appointment_getbookingtimepageurls() {
+			$this->requireCapability(self::CAP_READ_LIST);
 			return wp_send_json($this->findAll());
 	}
 
@@ -231,6 +267,7 @@ class Appointment_Admin {
 	 * appointment_init
 	 */
 	public function appointment_init() {
+		$this->requireCapability();
 		if($this->checkDBRows() < 1) {
 			exit(esc_html(wp_redirect(WP_HOME . '/wp-admin/admin.php?page=appointment-step1')));
 		} else {
@@ -245,6 +282,8 @@ class Appointment_Admin {
 	 * appointment_step1
 	 */
 	public function appointment_step1() {
+		$this->requireCapability();
+
 		//redirect to settings when rows in db
 		if($this->checkDBRows() > 0) {
 			exit(esc_html(wp_redirect(WP_HOME . '/wp-admin/admin.php?page=appointment-add')));
@@ -265,6 +304,8 @@ class Appointment_Admin {
 	 * appointment_step2
 	 */
 	public function appointment_step2() {
+		$this->requireCapability();
+
 		//create nonce
 		$nonce = wp_create_nonce('bt_appointment_nonce_step2');
 
@@ -353,6 +394,8 @@ class Appointment_Admin {
 	 * appointment_step3
 	 */
 	public function appointment_step3() {
+		$this->requireCapability();
+
     	echo wp_kses($this->twig->render('Appointment/Step3.html.twig', [
 			'currentNavItem' => 'step3',
 			'email' => isset($_SESSION['appointment']['email']) ? sanitize_email($_SESSION['appointment']['email']) : $this->translator->trans('step2.form.email.placeholder'),
@@ -369,6 +412,8 @@ class Appointment_Admin {
 	 * appointment_list
 	 */
 	public function appointment_list() {
+		$this->requireCapability();
+
 		//create nonce
 		$nonce = wp_create_nonce('bt_appointment_nonce_list');
 
@@ -389,6 +434,8 @@ class Appointment_Admin {
 	 * appointment_add
 	 */
 	public function appointment_add() {
+		$this->requireCapability();
+
 		//create nonce
 		$nonce = wp_create_nonce('bt_appointment_nonce_add');
 
@@ -415,6 +462,8 @@ class Appointment_Admin {
 	 * appointment_edit
 	 */
 	public function appointment_edit() {
+		$this->requireCapability();
+
 		//create nonce
 		$nonce = wp_create_nonce('bt_appointment_nonce_edit');
 
@@ -456,6 +505,8 @@ class Appointment_Admin {
 	 * appointment_preview
 	 */
 	public function appointment_preview() {
+		$this->requireCapability();
+
 		$bookingtimepageurl = NULL;
 		if(isset($_GET['_wpnonce']) && check_admin_referer('bt_appointment_nonce_list') &&  isset($_GET['preview_bookingtimepageurl']) && $_GET['preview_bookingtimepageurl'] > 0) {
  			$bookingtimepageurl = $this->findById((int) $_GET['preview_bookingtimepageurl']);
@@ -481,6 +532,8 @@ class Appointment_Admin {
 	 * @return void
 	 */
 	public function appointment_delete(int $bookingtimepageurl):void {
+		$this->requireCapability();
+
 		if($bookingtimepageurl > 0 && is_int($bookingtimepageurl)) {
 			global $wpdb;
 			$table_name = $wpdb->prefix . 'appointment';
@@ -774,6 +827,8 @@ class Appointment_Admin {
     * @return bool
     */
 	public function appointment_create(array $data):bool {
+		$this->requireCapability();
+
 		global $wpdb;
 		$tablename = $wpdb->prefix . 'appointment';
 
@@ -799,6 +854,8 @@ class Appointment_Admin {
     * @return bool
     */
 	public function appointment_update(array $data):bool {
+		$this->requireCapability();
+
 		global $wpdb;
 		$tablename = $wpdb->prefix . 'appointment';
 
