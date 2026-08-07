@@ -35,6 +35,9 @@ see: https://packagist.org/packages/bookingtime/app-wp-appointment
 ## Security
 If you discover a security vulnerability within this package, please send an email to support@bookingtime.com or create a [ticket](https://developer.bookingtime.com/hc/en-us/requests/new?ticket_form_id=9359661193628). All security vulnerabilities will be promptly addressed.
 
+### Known accepted advisories
+- [CVE-2024-1899](https://github.com/advisories/GHSA-rmmh-p597-ppvv) — showdown &le;&nbsp;2.1.0, ReDoS in link parsing (medium). showdown is only a transitive dependency of `@wordpress/blocks` in the block build toolchain (`blocks/package-lock.json`). The vulnerable code is not part of the shipped plugin: `@wordpress/*` packages are externalized to the WordPress core scripts at build time, so showdown does not appear in `blocks/build/`. No fixed release exists (all versions &le;&nbsp;2.1.0 are affected). Dependabot alert #105 was dismissed as "vulnerable code is not actually used" on 2026-08-07.
+
 
 
 ## License
