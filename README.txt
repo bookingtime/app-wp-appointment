@@ -1,15 +1,15 @@
 === bookingtime appointment ===
 Contributors: bookingtime
-Tags: appointment,booking,appointment,calendar,event
+Tags: appointment, booking, calendar, event
 Donate link: https://www.bookingtime.com/
 Requires at least: 6.0
-Tested up to: 6.6
+Tested up to: 7.0
 Requires PHP: 8.1
 Stable tag: 6.0.10
 License: MIT
 License URI: https://opensource.org/license/mit
 
-The bookingtime appointment plugin for Worpress.
+The bookingtime appointment plugin for WordPress.
 
 == Description ==
 = bookingtime appointment =
@@ -39,7 +39,7 @@ https://youtu.be/f73oHpU5O74
 == Installation ==
 = To install appointment, follow these steps: =
 
-1. Download and unzip the bookingtime oninetermine plugin
+1. Download and unzip the bookingtime appointment plugin
 2. Upload the entire appointment/ directory to the /wp-content/plugins/ directory
 3. Activate the appointment plugin through the Plugins menu in WordPress
 4. Register and configure the settings at the appointment menu.
@@ -82,10 +82,22 @@ This plugin uses external third-party services to provide certain functionalitie
     Terms of use: https://service.bookingtime.com/legal/de/agb/bookingtime_AGB.pdf (If the link is missing, please check the service's website)
 
 == Changelog ==
+= 6.0.10 =
+* Security: admin endpoints now require administrator capabilities.
+* Security: XSS hardening - API responses are escaped, script tags removed from the wp_kses allowlist.
+* Performance: the bookingtime API is no longer called on every page load.
+* Fixed: admin styles, scripts and the menu icon now load regardless of the plugin directory name.
+* Security updates of the JavaScript build dependencies.
+* Corrected minimum PHP version: 8.1 is required.
+* Tested up to WordPress 7.0.
+
 = 1.0.0 =
 * Initial release.
 
 == Upgrade Notice ==
+= 6.0.10 =
+* Security and performance release. Update recommended.
+
 = 1.0.0 =
 * Initial release.
 
