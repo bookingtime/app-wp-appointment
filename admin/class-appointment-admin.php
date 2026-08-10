@@ -233,9 +233,9 @@ class Appointment_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_style( $this->plugin_name . '-lightbox', '/wp-content/plugins/bt_appointment/assets/css/lightbox.min.css', [], $this->version, 'all');
-		wp_enqueue_style( $this->plugin_name . '-bootstrap-icons', '/wp-content/plugins/bt_appointment/assets/css/bootstrap-icons.min.css', [], $this->version, 'all');
-		wp_enqueue_style( $this->plugin_name . '-bootstrap', '/wp-content/plugins/bt_appointment/assets/css/bootstrap.min.css', [], $this->version, 'all');
+		wp_enqueue_style( $this->plugin_name . '-lightbox', APPOINTMENT_PLUGIN_URL . 'assets/css/lightbox.min.css', [], $this->version, 'all');
+		wp_enqueue_style( $this->plugin_name . '-bootstrap-icons', APPOINTMENT_PLUGIN_URL . 'assets/css/bootstrap-icons.min.css', [], $this->version, 'all');
+		wp_enqueue_style( $this->plugin_name . '-bootstrap', APPOINTMENT_PLUGIN_URL . 'assets/css/bootstrap.min.css', [], $this->version, 'all');
 		wp_enqueue_style( $this->plugin_name . '-style', plugin_dir_url( __FILE__ ) . 'css/appointment-admin.css',[], $this->version, 'all' );
 	}
 
@@ -257,8 +257,8 @@ class Appointment_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-		wp_enqueue_script( $this->plugin_name . '-lightbox', '/wp-content/plugins/bt_appointment/assets/js/lightbox.min.js', [], $this->version, false);
-		wp_enqueue_script( $this->plugin_name . '-bootstrap-bundle', '/wp-content/plugins/bt_appointment/assets/js/bootstrap.bundle.min.js', [], $this->version, false);
+		wp_enqueue_script( $this->plugin_name . '-lightbox', APPOINTMENT_PLUGIN_URL . 'assets/js/lightbox.min.js', [], $this->version, false);
+		wp_enqueue_script( $this->plugin_name . '-bootstrap-bundle', APPOINTMENT_PLUGIN_URL . 'assets/js/bootstrap.bundle.min.js', [], $this->version, false);
 		wp_enqueue_script( $this->plugin_name . '-script', plugin_dir_url( __FILE__ ) . 'js/appointment-admin.js',[], $this->version, false );
 	}
 
@@ -267,7 +267,7 @@ class Appointment_Admin {
 	 * loads menu
 	 */
 	public function appointmentSetupMenu() {
-		add_menu_page( 'bookingtime', 'bookingtime', self::CAP_MANAGE, 'appointment-init', [$this, 'appointment_init'], WP_HOME . '/wp-content/plugins/bt_appointment/assets/icon.png' );
+		add_menu_page( 'bookingtime', 'bookingtime', self::CAP_MANAGE, 'appointment-init', [$this, 'appointment_init'], APPOINTMENT_PLUGIN_URL . 'assets/icon.png' );
 		add_submenu_page( null, 'Appointment Step 1', 'Step 1', self::CAP_MANAGE, 'appointment-step1', [$this, 'appointment_step1'] );
 		add_submenu_page( null, 'Appointment Step 2', 'Step 2', self::CAP_MANAGE, 'appointment-step2', [$this, 'appointment_step2'] );
 		add_submenu_page( null, 'Appointment Step 3', 'Step 3', self::CAP_MANAGE, 'appointment-step3', [$this, 'appointment_step3'] );
