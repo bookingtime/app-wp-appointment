@@ -65,7 +65,7 @@ später reicht `svn update`.
 ```bash
 rsync -av --delete \
   --exclude .git --exclude .svn --exclude .claude --exclude .omc \
-  --exclude .gitignore --exclude blocks/node_modules \
+  --exclude .gitignore --exclude blocks/node_modules --exclude RELEASE.md \
   /development/app-wp-appointment/ /development/svn-bookingtime-appointment/trunk/
 ```
 
