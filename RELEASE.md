@@ -107,7 +107,7 @@ Deshalb vorher den trunk-Stand testinstallieren:
 ```bash
 cd /development/svn-bookingtime-appointment
 svn copy trunk tags/<version>
-svn checkin -m "Release <version>" --username bookingtime
+svn commit -m "Release <version>" --username bookingtime
 ```
 
 Ein Commit reicht für trunk + tag. Sobald `tags/<version>` existiert und
